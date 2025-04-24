@@ -7,7 +7,7 @@ const HomePage = () => (
     <Typography variant="h3" gutterBottom>
       Welcome to Digital Identification
     </Typography>
-    <Typography variant="h6" paragraph>
+    <Typography variant="h6" >
       Explore our innovative digital identification solutions.
     </Typography>
     <Button
@@ -20,7 +20,7 @@ const HomePage = () => (
     </Button>
     <Button variant="outlined" component={Link} to="/contact">
       Contact
-    </Button>
+    </Button>   
   </Container>
 )
 
