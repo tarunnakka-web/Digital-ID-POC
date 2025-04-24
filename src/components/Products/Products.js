@@ -4,6 +4,7 @@ import {
   Card, CardMedia, CardContent, Typography, Box, Button,
   Dialog, DialogTitle, DialogContent, DialogActions, Divider
 } from '@mui/material';
+import { useCart } from '../../context/CartContext';
 
 const Products = () => {
   // State for handling the dialog visibility, selected item, and user authorization
@@ -12,6 +13,7 @@ const Products = () => {
   const [authorizedUser, setAuthorizedUser] = useState(true);  // This should be dynamically set based on actual user authentication
 
   const navigate = useNavigate();
+  const { addToCart } = useCart();
 
 
   // Sample authorized products
@@ -44,11 +46,13 @@ const Products = () => {
   // Handle the confirmation and perform the buy action
   const handleConfirmBuy = () => {
     if (selectedItem) {
-      alert(`Buying: ${selectedItem.name}`);
+      addToCart(selectedItem); // Add item to cart
+      alert(`Successfully added "${selectedItem.name}" to cart.`);
     }
     setDialogOpen(false);
     setSelectedItem(null);
   };
+  
 
   // Close the dialog without buying
   const handleCancel = () => {

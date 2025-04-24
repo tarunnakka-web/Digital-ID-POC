@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
-import { Home, Storefront, ShoppingCart } from '@mui/icons-material'; // ShoppingCart is imported here
+import { Home, Storefront, ShoppingCart,AccountCircle } from '@mui/icons-material'; // ShoppingCart is imported here
 import { Link } from 'react-router-dom';
 
 const Header = () => (
@@ -11,7 +11,8 @@ const Header = () => (
         <Button component={Link} to="/" color="inherit" startIcon={<Home />}>Home</Button>
         <Button component={Link} to="/products" color="inherit" startIcon={<Storefront />}>Products</Button>
         <Button component={Link} to="/cart" color="inherit" startIcon={<ShoppingCart />}>Cart</Button> 
-        <Button component={Link} to="/user-details" color="inherit" startIcon={<ShoppingCart />}>UserDetails</Button> 
+        <Button component={Link} to="/user-details" color="inherit" startIcon={<AccountCircle />}>UserDetails</Button> 
+        
       </Box>
     </Toolbar>
   </AppBar>
