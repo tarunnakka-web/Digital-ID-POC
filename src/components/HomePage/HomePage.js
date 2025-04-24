@@ -20,7 +20,7 @@ const HomePage = () => (
     </Button>
     <Button variant="outlined" component={Link} to="/contact">
       Contact
-    </Button>   
+    </Button>
   </Container>
 )
 
