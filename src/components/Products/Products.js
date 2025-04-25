@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Card, CardMedia, CardContent, Typography, Box, Button,
-  Dialog, DialogTitle, DialogContent, DialogActions, Divider
+  Dialog, DialogTitle, DialogContent, DialogActions, Divider, Container
 } from '@mui/material';
 
 const Products = () => {
@@ -77,7 +77,8 @@ const Products = () => {
     ));
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+    <Container >
+    <Box maxWidth="lg" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop:"120px"}}>
       <Typography variant="h5" gutterBottom>Authorized Products</Typography>
       <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
         {renderCards(authorized)}
@@ -130,8 +131,8 @@ const Products = () => {
             <Button onClick={handleCancel} color="error">Cancel</Button>
         </DialogActions>
         </Dialog>
-
     </Box>
+    </Container>
   );
 };
 

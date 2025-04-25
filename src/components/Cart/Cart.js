@@ -1,12 +1,14 @@
 import React from 'react';
-import { Typography, Box } from '@mui/material';
+import { Typography, Box, Container } from '@mui/material';
 
 const Cart = () => {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+    <Container >
+    <Box  maxWidth="lg" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', marginTop:"120px"  }}>
       <Typography variant="h5" gutterBottom>My Cart</Typography>
       
     </Box>
+    </Container>
   );
 };
 

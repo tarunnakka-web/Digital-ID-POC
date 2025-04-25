@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Stepper, Step, StepLabel, TextField, Button, Input, FormHelperText, Modal, Typography } from '@mui/material';
+import { Box, Stepper, Step, StepLabel, TextField, Button, Input, FormHelperText, Modal, Typography, Container } from '@mui/material';
 
 // Step titles
 const steps = ['User Basic Details', 'Identity Verification (KYC)', 'Documents Submission'];
@@ -96,7 +96,8 @@ const RegistrationForm = () => {
   const handleCloseModal = () => setOpenModal(false);
 
   return (
-    <Box sx={{ width: '100%', padding: 2 }}>
+    <Container > 
+    <Box  maxWidth="lg" sx={{ width: '100%', padding: 2, marginTop:"120px"  }}>
       {/* Stepper component */}
       <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 3 }}>
         {steps.map((label, index) => <Step key={index}><StepLabel>{label}</StepLabel></Step>)}
@@ -139,6 +140,7 @@ const RegistrationForm = () => {
         </Box>
       </Modal>
     </Box>
+    </Container>
   );
 };
 

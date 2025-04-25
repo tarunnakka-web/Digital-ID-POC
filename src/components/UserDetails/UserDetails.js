@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, 
-         TableHead, TableRow, Paper, Button, TextField, Checkbox } from '@mui/material';
+         TableHead, TableRow, Paper, Button, TextField, Checkbox, Container } from '@mui/material';
 
 const UserDetails = () => {
   // State to hold the list of users
@@ -60,7 +60,8 @@ const UserDetails = () => {
   };
 
   return (
-    <Box sx={{ padding: 4 }}>
+    <Container maxWidth="lg" > 
+    <Box  sx={{ padding: 4, marginTop:"120px" }}>
       {/* Header */}
       <Typography variant="h5" sx={{ mb: 3 }}>Registered Users</Typography>
 
@@ -130,6 +131,7 @@ const UserDetails = () => {
         <Typography>No user data found.</Typography>
       )}
     </Box>
+    </Container>
   );
 };
 
