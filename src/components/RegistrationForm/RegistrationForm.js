@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Box, Stepper, Step, StepLabel, TextField, Button, Input, FormHelperText, Modal, Typography } from '@mui/material';
+import { Box, Stepper, Step, StepLabel, TextField, Button, Input,InputLabel, FormHelperText, Modal, Typography } from '@mui/material';
+
 
 // Step titles
 const steps = ['User Basic Details', 'Identity Verification (KYC)', 'Documents Submission'];
@@ -52,15 +53,19 @@ const RegistrationForm = () => {
     ))
   );
 
+ 
+
   // Render file inputs for a given list of fields
   const renderFileInputs = (fields) => (
     fields.map((field) => (
       <Box key={field} sx={{ mb: 2 }}>
-        <Input type="file" name={field} onChange={handleFileChange} fullWidth required />
+        <InputLabel htmlFor={field}>{field}</InputLabel>
+        <Input id={field} type="file" name={field} onChange={handleFileChange} fullWidth required />
         {errors[field] && <FormHelperText error>{errors[field]}</FormHelperText>}
       </Box>
     ))
   );
+
 
   // Handle form submission and show details in a popup
   const handleSubmit = () => {
