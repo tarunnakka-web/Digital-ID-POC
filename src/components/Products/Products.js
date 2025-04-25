@@ -19,17 +19,17 @@ const Products = () => {
   // Sample authorized products
   const authorized = [
     { id: 1, name: 'Smartphone', img: 'https://images.pexels.com/photos/607812/pexels-photo-607812.jpeg' },
-    { id: 2, name: 'Headphones', img: 'https://images.pexels.com/photos/159853/headphones-headset-audio-equipment-159853.jpeg' },
+    { id: 2, name: 'Headphones', img: 'https://res.cloudinary.com/df5ylurjb/image/upload/v1745567051/headphonesdownload_ctlhox.jpg' },
     { id: 3, name: 'Laptop', img: 'https://images.pexels.com/photos/18105/pexels-photo.jpg' },
     { id: 4, name: 'Smartwatch', img: 'https://images.pexels.com/photos/267394/pexels-photo-267394.jpeg' }
   ];
 
   // Sample unauthorized products
   const unauthorized = [
-    { id: 5, name: 'Gun', img: 'https://images.pexels.com/photos/164618/pexels-photo-164618.jpeg' },
-    { id: 6, name: 'Drugs', img: 'https://images.pexels.com/photos/365209/pexels-photo-365209.jpeg' },
-    { id: 7, name: 'Knife', img: 'https://images.pexels.com/photos/416430/pexels-photo-416430.jpeg' },
-    { id: 8, name: 'Explosives', img: 'https://images.pexels.com/photos/1115684/pexels-photo-1115684.jpeg' }
+    { id: 5, name: 'Gun', img: 'https://res.cloudinary.com/df5ylurjb/image/upload/v1745566866/gundownload_zxdeez.jpg' },
+    { id: 6, name: 'Drugs', img: 'https://res.cloudinary.com/df5ylurjb/image/upload/v1745566920/drugsdownload_en7mmy.jpg' },
+    { id: 7, name: 'Knife', img: 'https://res.cloudinary.com/df5ylurjb/image/upload/v1745566972/knifedownload_icekyd.jpg' },
+    { id: 8, name: 'Explosives', img: 'https://res.cloudinary.com/df5ylurjb/image/upload/v1745566943/explosivedownload_vh2u8d.jpg' }
   ];
 
   // Open the dialog and set the selected item
