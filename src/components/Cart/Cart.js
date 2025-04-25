@@ -1,15 +1,11 @@
 import React from 'react';
-<<<<<<< HEAD
 import { Typography, Box, Container } from '@mui/material';
-=======
 import { useCart } from '../../context/CartContext';
 import {
   Card,
   CardContent,
   CardMedia,
-  Typography,
   Button,
-  Box,
   Grid,
   IconButton,
 } from '@mui/material';
@@ -24,9 +20,9 @@ const CartPage = () => {
       removeFromCart(id);
     }
   };
->>>>>>> 63974120e3c003155066c079035b8982b2762502
 
   return (
+    <Container >
     <Box sx={{ padding: 3 }}>
       <Typography variant="h4" gutterBottom>
         🛒 My Cart
