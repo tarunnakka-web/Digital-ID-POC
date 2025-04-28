@@ -6,10 +6,12 @@ import Cart from './components/Cart/Cart';
 import RegistrationForm from './components/RegistrationForm/RegistrationForm';
 import UserDetails from './components/UserDetails/UserDetails';
 // import ProductDetails from './components/ProductDetails/ProductDetails'; // Import ProductDetails 
-import { CartProvider } from './context/CartContext';  // Import the CartProvider
+import { CartProvider  } from './context/CartContext';  // Import the CartProvider
+import {UserProvider} from "./context/UserContext" ; 
 
 function App() {
   return (
+    <UserProvider>  
     <CartProvider>  {/* Wrap your routes with CartProvider */}
       <BrowserRouter>
         <Header />
@@ -21,6 +23,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </CartProvider>
+    </UserProvider>
   );
 }
 

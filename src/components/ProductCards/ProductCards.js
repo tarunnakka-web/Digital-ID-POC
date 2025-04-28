@@ -46,39 +46,11 @@ const ProductCards = ({ item }) => {
         height: "100%", 
       }}
     >
-      <Box 
-        component="img"
-        src={url}
-        alt={name || "Product"}
-        sx={{ 
-          width: "100%", 
-          height: 200, 
-          objectFit: "contain", 
-          marginBottom: 2 
-        }}
-      />
-      <CardContent sx={{ textAlign: "center" }}>
-        <Typography variant="h6" sx={{ fontWeight: 600 }}>
-          {name || "Default Name"}
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ marginY: 1 }}>
-          {caption}
-        </Typography>
-        <Typography variant="h6" color="primary">
-          ₹{price}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          onClick={handleOpen}
-          sx={{ fontWeight: 600, marginTop:"0px" }}
-        >
-          Buy Now
-        </Button>
-      </CardActions>
+      <img src={url} alt={name || "Product"} style={{ width: '200px', height: '200px'}} />
+      <h3>{name  || "default name"}</h3>
+      <Typography variant="body2" color="text.secondary">{caption}</Typography>
+      <Typography variant="h6" color="text.primary">Price: ₹{price}</Typography>
+      <Button variant="contained" color="primary" onClick={handleOpen}>Buy Now </Button>
 
       {/* Dialog */}
       <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
@@ -87,27 +59,29 @@ const ProductCards = ({ item }) => {
         </DialogTitle>
 
         <DialogContent>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            This content is restricted due to age-sensitive material. Please verify your eligibility.
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+            This content is restricted due to age-sensitive material. Please verify your eligibility to proceed.
           </Typography>
 
-          <Select
-            value={dropdownValue}
-            onChange={handleDropdownChange}
-            fullWidth
-            displayEmpty
-            sx={{ backgroundColor: "#f9f9f9", borderRadius: "4px", marginBottom: 2 }}
-          >
-            <MenuItem value="" disabled>
-              Please Select an Option
-            </MenuItem>
-            <MenuItem value="1">Select ID</MenuItem>
-            <MenuItem value="2">Option A</MenuItem>
-            <MenuItem value="3">Option B</MenuItem>
-          </Select>
-
-          <Typography variant="caption" color="text.secondary">
-            Example: Accessing this content is restricted to users aged 18 or older.
+          {/* Dropdown */}
+          <Box sx={{ mt: 2 }}>
+            <Select
+              value={dropdownValue}
+              onChange={handleDropdownChange}
+              fullWidth
+              displayEmpty
+              sx={{ backgroundColor: "#f9f9f9", borderRadius: "4px" }}
+            >
+              <MenuItem value="" disabled>
+                Please Select an Option
+              </MenuItem>
+              <MenuItem value="1">Lloyds ID Provider</MenuItem>
+              <MenuItem value="2">Provider - A</MenuItem>
+              <MenuItem value="3">Provider - B</MenuItem>
+            </Select>
+          </Box>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+            Example: “Accessing this content is restricted to users aged 18 or older as per applicable law.”
           </Typography>
         </DialogContent>
 

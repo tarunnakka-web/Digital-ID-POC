@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, 
          TableHead, TableRow, Paper, Button, TextField, Checkbox, Container } from '@mui/material';
+import { useUser } from '../../context/UserContext'; // <-- Import your UserContext
 
 const UserDetails = () => {
+  const { isAuthorized, setIsAuthorized } = useUser(); // <-- Access context
+
   // State to hold the list of users
   const [userList, setUserList] = useState([]);
   
@@ -17,8 +20,11 @@ const UserDetails = () => {
     const savedUsers = localStorage.getItem('registeredUsers');
     if (savedUsers) {
       setUserList(JSON.parse(savedUsers));
+      setIsAuthorized(true); // If users exist, authorize the user
+    } else {
+      setIsAuthorized(false);
     }
-  }, []);
+  }, [setIsAuthorized]);
 
   // Function to handle search input change
   const handleSearchChange = (event) => {
@@ -51,86 +57,93 @@ const UserDetails = () => {
   // Function to handle delete action
   const handleDeleteSelected = () => {
     if (window.confirm('Are you sure you want to delete the selected users?')) {
-      // Filter out selected users from the user list
       const updatedUsers = userList.filter(user => !selectedUsers.includes(user));
       setUserList(updatedUsers);
       localStorage.setItem('registeredUsers', JSON.stringify(updatedUsers));
-      setSelectedUsers([]); // Clear selected users after deletion
+      setSelectedUsers([]);
+
+      // Update isAuthorized based on whether any users are left
+      if (updatedUsers.length === 0) {
+        setIsAuthorized(false);
+      }
     }
   };
 
   return (
-    <Container maxWidth="lg" > 
-    <Box  sx={{ padding: 4, marginTop:"120px" }}>
-      {/* Header */}
-      <Typography variant="h5" sx={{ mb: 3 }}>Registered Users</Typography>
+    <Container maxWidth="lg"> 
+      <Box sx={{ padding: 4, marginTop: "100px" }}>
+        {/* Header */}
+        <Typography variant="h5" sx={{ mb: 3 }}>
+          {isAuthorized ? 'Registered Users' : 'No Users Registered'}
+        </Typography>
 
-      {/* Search Box */}
-      <TextField
-        label="Search Users"
-        variant="outlined"
-        size="small"
-        value={searchTerm}
-        onChange={handleSearchChange}
-        sx={{ mb: 3, width: '300px' }}
-      />
+        {/* Search Box */}
+        {isAuthorized && (
+          <>
+            <TextField
+              label="Search Users"
+              variant="outlined"
+              size="small"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              sx={{ mb: 3, width: '300px' }}
+            />
 
-      {/* Delete Button */}
-      <Button
-        variant="contained"
-        color="error"
-        sx={{ mb: 3 }}
-        onClick={handleDeleteSelected}
-        disabled={selectedUsers.length === 0} // Disable if no user is selected
-      >
-        Delete Selected Users
-      </Button>
+            {/* Delete Button */}
+            <Button
+              variant="contained"
+              color="error"
+              sx={{ mb: 3 }}
+              onClick={handleDeleteSelected}
+              disabled={selectedUsers.length === 0}
+            >
+              Delete Selected Users
+            </Button>
 
-      {/* Users Table */}
-      {userList.length > 0 ? (
-        <TableContainer component={Paper}>
-          <Table size="small">
-            {/* Table Header */}
-            <TableHead>
-              <TableRow>
-                <TableCell>Checkbox</TableCell>
-                {Object.keys(userList[0]).map((key) => (
-                  <TableCell key={key}>{key.charAt(0).toUpperCase() + key.slice(1)}</TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
+            {/* Users Table */}
+            {userList.length > 0 ? (
+              <TableContainer component={Paper}>
+                <Table size="small">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Checkbox</TableCell>
+                      {Object.keys(userList[0]).map((key) => (
+                        <TableCell key={key}>
+                          {key.charAt(0).toUpperCase() + key.slice(1)}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </TableHead>
 
-            {/* Table Body */}
-            <TableBody>
-              {userList.filter((user) => {
-                return Object.values(user).some((value) =>
-                  value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                );
-              }).map((user, index) => (
-                <TableRow key={index}>
-                  {/* Checkbox for each user */}
-                  <TableCell>
-                    <Checkbox
-                      checked={selectedUsers.includes(user)}
-                      onChange={(event) => handleCheckboxChange(event, user)}
-                    />
-                  </TableCell>
-
-                  {/* User Details */}
-                  {Object.entries(user).map(([key, value]) => (
-                    <TableCell key={key}>
-                      {highlightText(value.toString())}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      ) : (
-        <Typography>No user data found.</Typography>
-      )}
-    </Box>
+                  <TableBody>
+                    {userList.filter((user) =>
+                      Object.values(user).some((value) =>
+                        value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                      )
+                    ).map((user, index) => (
+                      <TableRow key={index}>
+                        <TableCell>
+                          <Checkbox
+                            checked={selectedUsers.includes(user)}
+                            onChange={(event) => handleCheckboxChange(event, user)}
+                          />
+                        </TableCell>
+                        {Object.entries(user).map(([key, value]) => (
+                          <TableCell key={key}>
+                            {highlightText(value.toString())}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            ) : (
+              <Typography>No user data found.</Typography>
+            )}
+          </>
+        )}
+      </Box>
     </Container>
   );
 };
