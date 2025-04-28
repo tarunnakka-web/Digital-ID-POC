@@ -8,7 +8,7 @@ const ProductCards = (item) => {
   const [open, setOpen] = useState(false);
   const [dropdownValue, setDropDownValue] = useState("");
   const navigate = useNavigate();
-  const {name, url, caption, cost, criteria} = item.item || {};
+  const {name, url, caption, price, criteria} = item.item || {};
 
   const handleOpen = () => {
     if (criteria === "authorized"){
@@ -47,7 +47,7 @@ const ProductCards = (item) => {
       <img src={url} alt={name || "Product"} style={{ width: '200px', height: '200px'}} />
       <h3>{name  || "default name"}</h3>
       <Typography variant="body2" color="text.secondary">{caption}</Typography>
-      <Typography variant="h6" color="text.primary">Price: ${cost}</Typography>
+      <Typography variant="h6" color="text.primary">Price: ₹{price}</Typography>
       <Button variant="contained" color="primary" onClick={handleOpen}>Buy Now </Button>
 
      {/* Dialog Component */}
@@ -77,9 +77,10 @@ const ProductCards = (item) => {
               <MenuItem value="" disabled>
                 Please Select an Option
               </MenuItem>
-              <MenuItem value="1">Select ID</MenuItem>
+              <MenuItem value="1">Lloyds ID Provider</MenuItem>
               <MenuItem value="2">A</MenuItem>
               <MenuItem value="3">B</MenuItem>
+              <MenuItem value="3">C</MenuItem>
             </Select>
           </Box>
           <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
