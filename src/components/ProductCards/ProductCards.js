@@ -9,7 +9,7 @@ const ProductCards = ({ item }) => {  // Destructure item properly from props
   const [dropdownValue, setDropDownValue] = useState("");
   const navigate = useNavigate();
 
-  const {name, url, caption, cost, criteria} = item || {};  // Destructure item properly
+  const {name, url, caption, price, criteria} = item || {};  // Destructure item properly
 
   const handleOpen = () => {
     if (criteria === "authorized") {
@@ -50,7 +50,7 @@ const ProductCards = ({ item }) => {  // Destructure item properly from props
       <img src={url} alt={name || "Product"} style={{ width: '230px', height: '200px'}} />
       <h4>{name  || "default name"}</h4>
       <Typography variant="p" color="text.secondary" sx={{ mt: 2, fontWeight: 'normal', fontSize: '16px' }} >{caption}</Typography>
-      <Typography variant="h6" color="text.primary" sx={{ mt: 2, fontWeight: 'normal', fontSize: '16px' }}>Price: {cost}</Typography>
+      <Typography variant="h6" color="text.primary" sx={{ mt: 2, fontWeight: 'normal', fontSize: '16px' }}>Price: {price}</Typography>
       <Button variant="contained" color="primary" onClick={handleOpen}>Buy Now </Button>
 
       {/* Dialog Component */}
@@ -65,7 +65,7 @@ const ProductCards = ({ item }) => {  // Destructure item properly from props
         {/* Dialog Content */}
         <DialogContent>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-            This content is restricted due to age-sensitive material. Please verify your eligibility to proceed.
+          Access to this content is restricted due to age-sensitive material. Kindly verify your eligibility to proceed.
           </Typography>
 
           {/* Dropdown */}
@@ -86,7 +86,7 @@ const ProductCards = ({ item }) => {  // Destructure item properly from props
             </Select>
           </Box>
           <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-            Example: “Accessing this content is restricted to users aged 18 or older as per applicable law.”
+            "Example: Users must be at least 18 years old to access this content, in compliance with applicable legal requirements."
           </Typography>
         </DialogContent>
 

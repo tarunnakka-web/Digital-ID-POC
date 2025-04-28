@@ -9,7 +9,7 @@ const data = [
   {"id": 4, "name": "Adult Toy", "caption":"Crocodile leather sling bag", "price":800, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589779/adult_toys_as8s9q.jpg"},
   {"id": 5, "name": "White Shoes", "caption":"Crocodile leather sling bag", "price":900, "criteria":"authorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745559766/cld-sample-5.jpg"},
   {"id": 6, "name": "Analog watch", "caption":"Crocodile leather sling bag", "price":600, "criteria":"authorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745559755/samples/ecommerce/analog-classic.jpg"},
-  {"id": 7, "name": "Leather Bag", "caption":"Crocodile leather sling bag", "price":100, "criteria":"authorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589847/crocodile_leather_bags_mzpkvp.jpg"},
+  {"id": 7, "name": "Leather Bag", "caption":"Crocodile leather sling bag", "price":100, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589847/crocodile_leather_bags_mzpkvp.jpg"},
   {"id": 8, "name": "Cigarette Pack", "caption":"Crocodile leather sling bag", "price":200, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589902/cigaratte_drpste.webp"},
   {"id": 9, "name": "Prescription", "caption":"Crocodile leather sling bag", "price":100, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589973/priscription_pills_ba6eha.webp"},
   {"id": 10, "name": "Vaping Kit", "caption":"Crocodile leather sling bag", "price":100, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590076/bongs_su1maz.webp"},
