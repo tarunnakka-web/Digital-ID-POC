@@ -8,8 +8,7 @@ const ProductCards = ({ item }) => {  // Destructure item properly from props
   const [open, setOpen] = useState(false);
   const [dropdownValue, setDropDownValue] = useState("");
   const navigate = useNavigate();
-
-  const {name, url, caption, price, criteria} = item || {};  // Destructure item properly
+  const {name, url, caption, price, criteria} = item.item || {};
 
   const handleOpen = () => {
     if (criteria === "authorized") {
@@ -47,10 +46,10 @@ const ProductCards = ({ item }) => {  // Destructure item properly from props
         alignItems: "center",
       }}
     >
-      <img src={url} alt={name || "Product"} style={{ width: '230px', height: '200px'}} />
-      <h4>{name  || "default name"}</h4>
-      <Typography variant="p" color="text.secondary" sx={{ mt: 2, fontWeight: 'normal', fontSize: '16px' }} >{caption}</Typography>
-      <Typography variant="h6" color="text.primary" sx={{ mt: 2, fontWeight: 'normal', fontSize: '16px' }}>Price: {price}</Typography>
+      <img src={url} alt={name || "Product"} style={{ width: '200px', height: '200px'}} />
+      <h3>{name  || "default name"}</h3>
+      <Typography variant="body2" color="text.secondary">{caption}</Typography>
+      <Typography variant="h6" color="text.primary">Price: ₹{price}</Typography>
       <Button variant="contained" color="primary" onClick={handleOpen}>Buy Now </Button>
 
       {/* Dialog Component */}
