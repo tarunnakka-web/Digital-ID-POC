@@ -143,6 +143,30 @@ export default function HorizontalNonLinearStepper() {
     }
   };
 
+  const handleBiometricCapture = async () => {
+    try {
+      // Example: Simulate biometric capture (replace this with real WebAuthn if needed)
+      // Here, you would integrate real biometric auth like WebAuthn APIs
+      const fakeBiometricCredential = {
+        id: 'sample-biometric-id',
+        timestamp: new Date().toISOString(),
+      };
+  
+      // Simulate a successful biometric capture
+      setFormData((prev) => ({
+        ...prev,
+        biometricCaptured: true,
+        biometricCredential: fakeBiometricCredential,
+      }));
+  
+      alert("Biometric captured successfully ✅");
+    } catch (error) {
+      console.error("Biometric capture failed:", error);
+      alert("Failed to capture biometric ❌. Please try again.");
+    }
+  };
+  
+
   return (
     <Container maxWidth="lg" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '140px' }}>
       <Box sx={{ width: '100%' }}>
@@ -205,6 +229,25 @@ export default function HorizontalNonLinearStepper() {
                   </FormControl>
                   <input sx={{marginBottom:"20px"}} type="file" onChange={handleFileChange} required />
                   {errors.documentFile && <Typography color="error" variant="caption">{errors.documentFile}</Typography>}
+                  <FormControl fullWidth sx={{ mt: 2 }}>
+          <Typography variant="subtitle1" sx={{ mb: 1 }}>
+                    Biometric Authentication
+          </Typography>
+                  <Button 
+                      variant="contained" 
+                      color="secondary" 
+                        onClick={handleBiometricCapture}
+                        >
+                      Capture Biometric
+                      </Button>
+
+                        {/* Show result after capture */}
+                  {formData.biometricCaptured && (
+                        <Typography variant="body2" color="success.main" sx={{ mt: 1 }}>
+                              Biometric Captured Successfully ✅
+                        </Typography>
+                        )}  
+                      </FormControl>
                 </Box>
               )}
 

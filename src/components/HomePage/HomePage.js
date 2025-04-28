@@ -22,18 +22,38 @@ const data = [
 ]
 
 const HomePage = () => (
-  <Container maxWidth="lg" sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", marginTop: "100px" }}>
-    <Typography variant="h5" gutterBottom sx={{ marginBottom: "20px" }}>All Products</Typography>
-    <Container maxWidth="lg" sx={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between" }}>
-      <Grid container spacing={2}>
-        {data.map(item => (
-          <Grid item xs={12} sm={6} md={4} key={item.id}>
-            <ProductCards item={item} />
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
-  </Container>
-)
+  <Container 
+    maxWidth="lg" 
+    sx={{ 
+      display: "flex", 
+      flexDirection: "column", 
+      justifyContent: "center", 
+      alignItems: "center", 
+      marginTop: "80px", 
+      paddingBottom: "50px"
+    }}
+  >
+    <Typography 
+      variant="h4" 
+      gutterBottom 
+      sx={{ 
+        fontWeight: 'bold', 
+        marginBottom: "40px", 
+        textAlign: 'center', 
+        marginTop:"50px"
+      }}
+    >
+      All Products
+    </Typography>
 
-export default HomePage
+    <Grid container spacing={4} sx={{display:"flex", alignItems:"center", justifyContent:"center"}}>
+      {data.map((item) => (
+        <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
+          <ProductCards item={item} />
+        </Grid>
+      ))}
+    </Grid>
+  </Container>
+);
+
+export default HomePage;
