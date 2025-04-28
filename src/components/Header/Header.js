@@ -4,16 +4,8 @@ import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
-import Divider from '@mui/material/Divider';
-import MenuItem from '@mui/material/MenuItem';
-import Drawer from '@mui/material/Drawer';
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { Typography } from '@mui/material';
-// import ColorModeIconDropdown from '../../shared-theme/ColorModeIconDropdown';
-// import Sitemark from './SitemarkIcon';
 import {Link} from "react-router-dom";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
@@ -33,11 +25,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 }));
 
 export default function AppAppBar() {
-  const [open, setOpen] = React.useState(false);
-
-  const toggleDrawer = (newOpen) => () => {
-    setOpen(newOpen);
-  };
+  
 
   return (
     <AppBar
@@ -47,7 +35,7 @@ export default function AppAppBar() {
         boxShadow: 0,
         bgcolor: 'background.paper',
         backgroundImage: 'none',
-        mt: 'calc(var(--template-frame-height, 0px) + 28px)',
+        // mt: 'calc(var(--template-frame-height, 0px) + 28px)',
       }}
     >
       <Container maxWidth="lg">

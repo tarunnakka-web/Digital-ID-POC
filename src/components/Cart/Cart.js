@@ -44,10 +44,10 @@ const CartPage = () => {
   };
 
   return (
-    <Container>
-      <Box sx={{ padding: 3, marginTop: "140px" }}>
-        <Typography variant="h4" gutterBottom>
-          🛒 My Cart
+    <Container maxWidth="lg" sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", marginTop: "100px" }}>
+      <Box >
+        <Typography variant="h5" gutterBottom>
+         My Cart
         </Typography>
 
         {cartItems.length === 0 ? (
