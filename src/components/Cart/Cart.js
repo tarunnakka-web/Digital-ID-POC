@@ -1,14 +1,6 @@
 import React, { useEffect } from "react";
-import { Typography, Box, Container } from "@mui/material";
+import { Typography, Box, Container, Button, Card, CardContent, IconButton } from "@mui/material";
 import { useCart } from "../../context/CartContext";
-import {
-  Card,
-  CardContent,
-  CardMedia,
-  Button,
-  Grid,
-  IconButton,
-} from "@mui/material";
 import { Add, Remove } from "@mui/icons-material";
 import { useLocation } from "react-router-dom";
 
@@ -22,17 +14,16 @@ const CartPage = () => {
     decreaseQuantity,
   } = useCart();
   const location = useLocation();
-  const { item } = location.state || {};
-  console.log(item);
+  const { item } = location.state || {}; // Get item from location.state
+
   
+
   useEffect(() => {
     // Add the item to the cart only once when the component mounts
     if (item && item.id && item.name && item.price) {
       addToCart(item);
     }
   }, [item, addToCart]);
-
-  console.log("cartItems :" + cartItems);
 
   const handleRemove = (id) => {
     const confirmed = window.confirm(
@@ -44,79 +35,114 @@ const CartPage = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", marginTop: "100px" }}>
-      <Box >
-        <Typography variant="h5" gutterBottom>
-         My Cart
-        </Typography>
+    <Container
+      maxWidth="lg"
+      sx={{
+        marginTop: "100px",
+      }}
+    >
+      <Typography variant="h5" gutterBottom>
+        My Cart
+      </Typography>
 
-        {cartItems.length === 0 ? (
-          <Typography variant="body1">Your cart is empty.</Typography>
-        ) : (
-          <>
-            <Grid container spacing={2}>
-              {cartItems.map((cartItem) => (
-                <Grid item xs={12} sm={6} md={4} key={cartItem.id}>
-                  <Card sx={{ maxWidth: 345 }}>
-                    {cartItem.img && (
-                      <CardMedia
-                        component="img"
-                        height="140"
-                        image={cartItem.img}
-                        alt={cartItem.name}
-                      />
-                    )}
-                    <CardContent>
-                      <Typography
-                        gutterBottom
-                        variant="h6"
-                        component="div"
-                      >
-                        {cartItem.name}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{ mb: 1 }}
-                      >
-                        Price: ${cartItem.price} × {cartItem.quantity} = $
-                        {(cartItem.price * cartItem.quantity).toFixed(2)}
-                      </Typography>
-                      <Box display="flex" alignItems="center" gap={1}>
-                        <IconButton
-                          onClick={() => decreaseQuantity(cartItem.id)}
-                          disabled={cartItem.quantity === 1}
-                        >
-                          <Remove />
-                        </IconButton>
-                        <Typography>{cartItem.quantity}</Typography>
-                        <IconButton
-                          onClick={() => increaseQuantity(cartItem.id)}
-                        >
-                          <Add />
-                        </IconButton>
-                      </Box>
-                      <Button
-                        variant="outlined"
-                        color="error"
-                        onClick={() => handleRemove(cartItem.id)}
-                        sx={{ mt: 2 }}
-                      >
-                        Remove
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
-            <Box sx={{ textAlign: "right", mt: 4 }}>
-              <Button variant="contained" color="error" onClick={clearCart}>
-                Clear Cart
-              </Button>
-            </Box>
-          </>
-        )}
-      </Box>
+      {cartItems.length === 0 ? (
+        <Typography variant="body1">Your cart is empty.</Typography>
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap", // This will wrap the cards to the next line when the container is full
+            justifyContent: "start", // Add space between items
+          }}
+        >
+          {/* Loop through cart items and display each item in a Card */}
+          {cartItems.map((cartItem) => {
+            console.log(cartItem) ; 
+            const { name, url, caption, price, quantity, id } = cartItem || {};
+            
+
+            return (
+              <Card
+                key={id}
+                sx={{
+                  maxWidth: 345,
+                  marginBottom: 2,
+                  marginRight:"10px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "16px",
+                  backgroundColor: "#e4eff7",
+                }}
+              >
+                {/* Display Image */}
+                {url && (
+                  <img
+                    src={url}
+                    alt={name || "Product"}
+                    style={{ width: "230px", height: "200px", objectFit: "cover" }}
+                  />
+                )}
+
+                {/* Product Name */}
+                <Typography variant="h6">{name || "Default Name"}</Typography>
+
+                {/* Product Caption */}
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ mt: 2, fontWeight: "normal", fontSize: "16px" }}
+                >
+                  {caption || "No caption available"}
+                </Typography>
+
+                {/* Product Price */}
+                <Typography
+                  variant="h6"
+                  color="text.primary"
+                  sx={{ mt: 2, fontWeight: "normal", fontSize: "16px" }}
+                >
+                  Price: {price || "0.00"}
+                </Typography>
+
+                {/* Quantity Controls */}
+                <Box display="flex" alignItems="center" gap={1} sx={{ mt: 2 }}>
+                  <IconButton
+                    onClick={() => decreaseQuantity(id)}
+                    disabled={quantity === 1}
+                  >
+                    <Remove />
+                  </IconButton>
+                  <Typography>{quantity}</Typography>
+                  <IconButton onClick={() => increaseQuantity(id)}>
+                    <Add />
+                  </IconButton>
+                </Box>
+
+                {/* Remove Button */}
+                <Button
+                  variant="outlined"
+                  color="error"
+                  onClick={() => handleRemove(id)}
+                  sx={{ mt: 2 }}
+                >
+                  Remove
+                </Button>
+              </Card>
+            );
+          })}
+        </Box>
+      )}
+
+      {/* Clear Cart Button */}
+      {cartItems.length > 0 && (
+        <Box sx={{ textAlign: "right", mt: 4 }}>
+          <Button variant="contained" color="error" onClick={clearCart}>
+            Clear Cart
+          </Button>
+        </Box>
+      )}
     </Container>
   );
 };

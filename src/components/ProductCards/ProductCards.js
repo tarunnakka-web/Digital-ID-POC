@@ -14,6 +14,7 @@ const ProductCards = ({ item }) => {  // Destructure item properly from props
   const handleOpen = () => {
     if (criteria === "authorized") {
       addToCart(item);  // Add item to the cart if authorized
+      alert(`${name} is added to cart successfully`)
       // navigate("/cart", { state: { item } });
     } else {
       setOpen(true);
