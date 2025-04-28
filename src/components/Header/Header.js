@@ -39,7 +39,7 @@ export default function AppAppBar() {
         boxShadow: 0,
         bgcolor: 'background.paper',
         backgroundImage: 'none',
-        // mt: 'calc(var(--template-frame-height, 0px) + 28px)',
+        mt: 'calc(var(--template-frame-height, 0px) + 28px)',
       }}
     >
       <Container maxWidth="lg">

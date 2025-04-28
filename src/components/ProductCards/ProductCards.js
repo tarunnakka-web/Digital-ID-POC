@@ -22,7 +22,6 @@ const ProductCards = ({ item }) => {
   const [isNewUser, setIsNewUser] = useState(null);
   const [dropdownValue, setDropDownValue] = useState("");
   const navigate = useNavigate();
-
   const { name, url, caption, price, criteria } = item || {};
 
   // Handle Buy Now click
@@ -62,40 +61,35 @@ const ProductCards = ({ item }) => {
   return (
     <Card
       sx={{
-        borderRadius: "10px",
-        marginRight: "10px",
-        marginTop: "10px",
-        marginBottom: "10px",
-        backgroundColor: "#e4eff7",
-        padding: "10px",
+        borderRadius: "12px",
+        backgroundColor: "#fff",
+        boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+        transition: "transform 0.3s",
+        "&:hover": {
+          transform: "scale(1.03)",
+        },
+        display: "flex",
+        flexDirection: "column",
         alignItems: "center",
+        padding: 2,
+        height: "100%", 
       }}
     >
-      <img
-        src={url}
-        alt={name || "Product"}
-        style={{ width: '230px', height: '200px' }}
-      />
-      <Typography variant="h6" sx={{ mt: 2 }}>{name || "default name"}</Typography>
-      <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>{caption}</Typography>
-      <Typography variant="subtitle1" sx={{ mt: 1 }}>Price: {price}</Typography>
-      <Button variant="contained" color="primary" onClick={handleOpen} sx={{ mt: 2 }}>
-        Buy Now
-      </Button>
+      <img src={url} alt={name || "Product"} style={{ width: '200px', height: '200px'}} />
+      <h3>{name  || "default name"}</h3>
+      <Typography variant="body2" color="text.secondary">{caption}</Typography>
+      <Typography variant="h6" color="text.primary">Price: ₹{price}</Typography>
+      <Button variant="contained" color="primary" onClick={handleOpen}>Buy Now </Button>
 
-      {/* Dialog for restricted access */}
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle sx={{ bgcolor: "#1976D2", color: "#ffffff" }}>
+      {/* Dialog */}
+      <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+        <DialogTitle sx={{ bgcolor: "#1976D2", color: "#fff", textAlign: "center" }}>
           Restricted Access Alert
         </DialogTitle>
+
         <DialogContent>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            Access to this content is restricted. Please indicate whether you are a new user or already registered.
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+            This content is restricted due to age-sensitive material. Please verify your eligibility to proceed.
           </Typography>
 
           {/* New vs Existing User Buttons with dynamic variant */}
