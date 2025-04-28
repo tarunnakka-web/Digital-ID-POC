@@ -1,0 +1,114 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Card, Box, Button, Typography, Dialog, DialogActions, DialogContent, DialogTitle, Select, MenuItem} from "@mui/material";
+// import {Link} from "react-router-dom";
+
+
+const ProductCards = (item) => {
+  const [open, setOpen] = useState(false);
+  const [dropdownValue, setDropDownValue] = useState("");
+  const navigate = useNavigate();
+  const {name, url, caption, cost, criteria} = item.item || {};
+
+  const handleOpen = () => {
+    if (criteria === "authorized"){
+      setOpen(false);
+      navigate("/cart", {state :{item}})
+    }else{
+      setOpen(true)
+    }
+  }
+
+  const handleClose = () => {
+    setOpen(false);
+  }
+
+  const handleDropdownChange = (event) => {
+    setDropDownValue(event.target.value);
+  }
+
+  const handleProceed = () => { 
+   navigate("/register", {state : {item}}); // Navigate to the cart page with item data
+
+  }
+  
+  return(
+     <Card 
+      sx={{
+        borderRadius: "10px",
+        marginRight: "40px",
+        marginTop: "20px",
+        marginBottom: "20px",
+        backgroundColor: "#e4eff7",
+        padding: "10px",
+        alignItems: "center",
+      }}
+    >
+      <img src={url} alt={name || "Product"} style={{ width: '200px', height: '200px'}} />
+      <h3>{name  || "default name"}</h3>
+      <Typography variant="body2" color="text.secondary">{caption}</Typography>
+      <Typography variant="h6" color="text.primary">Price: ${cost}</Typography>
+      <Button variant="contained" color="primary" onClick={handleOpen}>Buy Now </Button>
+
+     {/* Dialog Component */}
+     <Dialog open={open} padding="10px" onClose={handleClose} maxWidth="sm" fullWidth border="1px solid #e4eff7">
+        {/* Dialog Title */}
+        <DialogTitle sx={{bgcolor:"#1976D2", marginBottom:"20px"}}>
+          <Typography variant="h6" color="#ffffff">
+            Restricted Access Alert
+          </Typography>
+        </DialogTitle>
+
+        {/* Dialog Content */}
+        <DialogContent>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                This content is restricted due to age-sensitive material. Please verify your eligibility to proceed.
+          </Typography>
+
+          {/* Dropdown */}
+          <Box sx={{ mt: 2 }}>
+            <Select
+              value={dropdownValue}
+              onChange={handleDropdownChange}
+              fullWidth
+              displayEmpty
+              sx={{ backgroundColor: "#f9f9f9", borderRadius: "4px" }}
+            >
+              <MenuItem value="" disabled>
+                Please Select an Option
+              </MenuItem>
+              <MenuItem value="1">Select ID</MenuItem>
+              <MenuItem value="2">A</MenuItem>
+              <MenuItem value="3">B</MenuItem>
+            </Select>
+          </Box>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+               Example: “Accessing this content is restricted to users aged 18 or older as per applicable law.”
+            </Typography>
+        </DialogContent>
+
+        {/* Dialog Actions */}
+        <DialogActions>
+        <Button
+          onClick={handleClose}
+          color="secondary"
+          aria-label="Cancel Button"
+          >
+           Cancel
+        </Button>
+
+          <Button
+          onClick={handleProceed}
+          color="primary"
+          disabled={!dropdownValue} // Disable Proceed if no option selected
+          >
+            Proceed
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+     </Card>
+  )
+}
+
+export default ProductCards

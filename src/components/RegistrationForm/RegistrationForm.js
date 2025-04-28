@@ -1,152 +1,292 @@
-import React, { useState } from 'react';
-import { Box, Stepper, Step, StepLabel, TextField, Button, Input,InputLabel, FormHelperText, Modal, Typography } from '@mui/material';
+import React, { useState } from "react";
+import {
+  TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  Button,
+  Typography,
+  TextareaAutosize,
+  Box,
+  Alert,
+  Container
+} from "@mui/material";
+import {DatePicker} from "@mui/x-date-pickers/DatePicker";
+import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
+import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 
 
-// Step titles
-const steps = ['User Basic Details', 'Identity Verification (KYC)', 'Documents Submission'];
-
-const RegistrationForm = () => {
-  // State hooks to manage form step, form data, error messages, and modal visibility
-  const [activeStep, setActiveStep] = useState(0);
+function ContactForm() {
+  // State for form inputs
   const [formData, setFormData] = useState({
-    fullName: '', email: '', phone: '', address: '', country: '',
-    aadhaar: '', passport: '', pan: '', idProof: null, addressProof: null, additionalDocuments: null
+    firstName: "",
+    lastName: "",
+    dateOfBirth: null,
+    email: "",
+    phone: "",
+    address: "",
+    identityDocumentFile:null,
+    state: "",
+    comment: "",
   });
-  const [errors, setErrors] = useState({});
-  const [openModal, setOpenModal] = useState(false);  // Modal visibility state
 
-  // Handle text field change
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  // State for validation messages
+  const [successMessage, setSuccessMessage] = useState(false);
 
-  // Handle file input change
-  const handleFileChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.files[0] });
-
-  // Validate required fields based on the current step
-  const validateFields = () => {
-    const requiredFields = activeStep === 0 ? ['fullName', 'email', 'phone', 'address', 'country'] :
-                           activeStep === 1 ? ['aadhaar', 'passport', 'pan'] : 
-                           ['idProof', 'addressProof', 'additionalDocuments'];
-
-    // Check if any required fields are empty
-    const tempErrors = requiredFields.reduce((acc, field) => {
-      if (!formData[field]) acc[field] = `${field} is required`;
-      return acc;
-    }, {});
-
-    setErrors(tempErrors);
-    return Object.keys(tempErrors).length === 0;
+  // Event handler for form inputs
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
-  // Handle next step
-  const handleNext = () => { if (validateFields()) setActiveStep((prev) => prev + 1); };
-
-  // Handle previous step
-  const handleBack = () => setActiveStep((prev) => prev - 1);
-
-  // Render the input fields for a given list of fields
-  const renderFields = (fields) => (
-    fields.map((field) => (
-      <TextField
-        key={field} label={field} name={field} value={formData[field]} onChange={handleChange}
-        fullWidth required sx={{ mb: 2 }} error={!!errors[field]} helperText={errors[field]}
-      />
-    ))
-  );
-
- 
-
-  // Render file inputs for a given list of fields
-  const renderFileInputs = (fields) => (
-    fields.map((field) => (
-      <Box key={field} sx={{ mb: 2 }}>
-        <InputLabel htmlFor={field}>{field}</InputLabel>
-        <Input id={field} type="file" name={field} onChange={handleFileChange} fullWidth required />
-        {errors[field] && <FormHelperText error>{errors[field]}</FormHelperText>}
-      </Box>
-    ))
-  );
-
-
-  // Handle form submission and show details in a popup
-  const handleSubmit = () => {
-    if (validateFields()) {
-      const formDataToStore = { ...formData };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+    // Validation: Check for empty fields
+    const areFieldsFilled = Object.values(formData).every((value) => {
+      // Check if value is a string
+      if (typeof value === "string") {
+        return value.trim() !== ""; // Use trim() only for strings
+      }
+      // Handle non-string values (e.g., file uploads, dates)
+      return value !== null && value !== undefined;
+    });
   
-      // Handle file fields by saving only file name or a message
-      const handleFileField = (fieldName) => {
-        const value = formData[fieldName];
-        if (value instanceof File) {
-          formDataToStore[fieldName] = value.name; // Save file name
-        } else if (value && Object.keys(value).length === 0) {
-          formDataToStore[fieldName] = 'No file uploaded'; // Handle empty file objects
-        }
-      };
-  
-      // Handle the file input fields
-      ['idProof', 'addressProof', 'additionalDocuments'].forEach(handleFileField);
-  
-      // Save data to localStorage (check for existing users array)
-      const existingUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-      existingUsers.push(formDataToStore);
-      localStorage.setItem('registeredUsers', JSON.stringify(existingUsers));
-  
-      setOpenModal(true);
+    if (areFieldsFilled) {
+      setSuccessMessage(true);
+      console.log("Form Data Submitted:", formData);
+    } else {
+      alert("Please fill out all fields.");
     }
   };
-  
-  
-  
 
-  // Close the modal
-  const handleCloseModal = () => setOpenModal(false);
+  const handleFileChange = (event) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      identityDocumentFile: event.target.files[0], // Capture the uploaded file
+    }));
+  };
 
   return (
-    <Container > 
-    <Box  maxWidth="lg" sx={{ width: '100%', padding: 2, marginTop:"120px"  }}>
-      {/* Stepper component */}
-      <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 3 }}>
-        {steps.map((label, index) => <Step key={index}><StepLabel>{label}</StepLabel></Step>)}
-      </Stepper>
-
-      {/* Render content based on active step */}
-      {activeStep === 0 && (
-        <Box sx={{ padding: 2 }}>
-          {renderFields(['fullName', 'email', 'phone', 'address', 'country'])}
-          <Button variant="contained" onClick={handleNext}>Next</Button>
-        </Box>
+    <Container
+  sx={{
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center", // Changed "start" to "flex-start" for proper CSS value
+    width: "75%",
+    marginTop: "140px",
+    border: "1px solid #e4eff7",
+  }}
+>
+    <Box sx={{ 
+      padding: "20px", maxWidth: "600px"}}>
+      <Typography variant="h4" sx={{ marginBottom: "20px"}}>
+         Identity Verification Form
+      </Typography>
+      {successMessage && (
+        <Alert severity="success" sx={{ marginBottom: "20px" }}>
+          Thanks for contacting us! We will get back to you shortly.
+        </Alert>
       )}
+      <form onSubmit={handleSubmit}>
+        {/* First Name */}
+        <TextField
+          name="firstName"
+          label="First Name"
+          value={formData.firstName}
+          onChange={handleInputChange}
+          fullWidth
+          required
+          sx={{ marginBottom: "16px" }}
+        />
 
-      {activeStep === 1 && (
-        <Box sx={{ padding: 2 }}>
-          {renderFields(['aadhaar', 'passport', 'pan'])}
-          <Button variant="contained" onClick={handleBack}>Back</Button>
-          <Button variant="contained" onClick={handleNext}>Next</Button>
-        </Box>
-      )}
+        {/* Last Name */}
+        <TextField
+          name="lastName"
+          label="Last Name"
+          value={formData.lastName}
+          onChange={handleInputChange}
+          fullWidth
+          required
+          sx={{ marginBottom: "16px" }}
+        />
+        
+        {/* Date of Birth */}
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker
+        label="Date of Birth"
+        value={formData.dateOfBirth}
+        onChange={(newValue) =>
+          setFormData((prevState) => ({
+            ...prevState,
+            dateOfBirth: newValue,
+          }))
+        }   
+        sx={{ marginBottom: "16px" }} 
+        />
+        </LocalizationProvider>
 
-      {activeStep === 2 && (
-        <Box sx={{ padding: 2 }}>
-          {renderFileInputs(['idProof', 'addressProof', 'additionalDocuments'])}
-          <Button variant="contained" onClick={handleBack}>Back</Button>
-          <Button variant="contained" onClick={handleSubmit}>Submit</Button>
-        </Box>
-      )}
 
-      {/* Modal to display form details on successful submission */}
-      <Modal open={openModal} onClose={handleCloseModal}>
-        <Box sx={{
-          position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-          backgroundColor: 'white', padding: 4, borderRadius: 2, boxShadow: 3, width: 400
-        }}>
-          <Typography variant="h6">Form Details</Typography>
-          <pre>{JSON.stringify(formData, null, 2)}</pre>
-          <Typography variant="h6" sx={{ mt: 2, color: 'green' }}>New user registration has been successfully completed!</Typography>
-          <Button variant="contained" onClick={handleCloseModal}>Close</Button>
-        </Box>
-      </Modal>
+        {/* Email */}
+        <TextField
+          name="email"
+          label="Email Address"
+          type="email"
+          value={formData.email}
+          onChange={handleInputChange}
+          fullWidth
+          required
+          sx={{ marginBottom: "16px" }}
+        />
+
+        {/* Phone */}
+        <TextField
+          name="phone"
+          label="Phone Number"
+          value={formData.phone}
+          onChange={handleInputChange}
+          fullWidth
+          required
+          sx={{ marginBottom: "16px" }}
+        />
+
+        {/* Address */}
+        <TextField
+          name="address"
+          label="Street Address"
+          value={formData.address}
+          onChange={handleInputChange}
+          fullWidth
+          required
+          sx={{ marginBottom: "16px" }}
+        />
+
+        {/* City */}
+        {/* <TextField
+          name="city"
+          label="City"
+          value={formData.city}
+          onChange={handleInputChange}
+          fullWidth
+          required
+          sx={{ marginBottom: "16px" }}
+        /> */}
+
+        {/* State Dropdown */}
+        <FormControl fullWidth sx={{ marginBottom: "16px" }}>
+          <Select
+            name="state"
+            value={formData.state}
+            onChange={handleInputChange}
+            displayEmpty
+            required
+          >
+            <MenuItem value="" disabled>
+              Please select your state
+            </MenuItem>
+            {[
+              "Alabama",
+              "Alaska",
+              "Arizona",
+              "Arkansas",
+              "California",
+              "Colorado",
+              "Connecticut",
+              "Delaware",
+              "District of Columbia",
+              "Florida",
+              "Georgia",
+              "Hawaii",
+              "Idaho",
+              "Illinois",
+              "Indiana",
+              "Iowa",
+              "Kansas",
+              "Kentucky",
+              "Louisiana",
+              "Maine",
+              "Maryland",
+              "Massachusetts",
+              "Michigan",
+              "Minnesota",
+              "Mississippi",
+              "Missouri",
+              "Montana",
+              "Nebraska",
+              "Nevada",
+              "New Hampshire",
+              "New Jersey",
+              "New Mexico",
+              "New York",
+              "North Carolina",
+              "North Dakota",
+              "Ohio",
+              "Oklahoma",
+              "Oregon",
+              "Pennsylvania",
+              "Rhode Island",
+              "South Carolina",
+              "South Dakota",
+              "Tennessee",
+              "Texas",
+              "Utah",
+              "Vermont",
+              "Virginia",
+              "Washington",
+              "West Virginia",
+              "Wisconsin",
+              "Wyoming",
+            ].map((state) => (
+              <MenuItem key={state} value={state}>
+                {state}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        {/* File Upload Field */}
+        <FormControl fullWidth required sx={{ marginBottom: "16px" }}>
+          <Typography variant="subtitle1" gutterBottom>
+            Upload (Passport / Driving Licence):
+          </Typography>
+          <input
+            type="file"
+            accept=".jpg,.jpeg,.png,.pdf" // Restrict file types
+            onChange={handleFileChange}
+            style={{ marginBottom: "8px" }}
+          />
+          {formData.identityDocumentFile && (
+            <Typography variant="body2">
+              File Selected: {formData.identityDocumentFile.name}
+            </Typography>
+          )}
+        </FormControl>
+
+
+
+        {/* Project Description */}
+        <TextareaAutosize
+          name="comment"
+          minRows={3}
+          placeholder="Identification Description"
+          value={formData.comment}
+          onChange={handleInputChange}
+          style={{ width: "100%", marginBottom: "16px", padding: "8px" }}
+          required
+        />
+
+        {/* Submit Button */}
+        <Button type="submit" variant="contained" color="primary" fullWidth>
+          Send
+        </Button>
+      </form>
     </Box>
     </Container>
   );
-};
+}
 
-export default RegistrationForm;
+export default ContactForm;

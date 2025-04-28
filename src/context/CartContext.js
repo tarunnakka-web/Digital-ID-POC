@@ -7,18 +7,18 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
-  // Add item to cart (handle duplicates by updating quantity)
   const addToCart = (item) => {
-    setCartItems(prevItems => {
-      const existingItem = prevItems.find(i => i.id === item.id);
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find((i) => i.id === item.id);
       if (existingItem) {
-        return prevItems.map(i =>
+        return prevItems.map((i) =>
           i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
         );
       }
       return [...prevItems, { ...item, quantity: 1 }];
     });
   };
+  
 
   // Remove a specific item
   const removeFromCart = (itemId) => {
