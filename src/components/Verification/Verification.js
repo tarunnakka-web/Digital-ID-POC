@@ -12,7 +12,7 @@ import {
 import { useUser } from '../../context/UserContext';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-const LoginPage = () => {
+const Verification = () => {
   const { setUser, setIsAuthorized, loadUserData } = useUser();
   const [dropdownValue, setDropDownValue] = useState("");
   const [ID, setID] = useState('');
@@ -68,11 +68,11 @@ const LoginPage = () => {
       <Paper elevation={3} sx={{ p: 4, width: '100%', maxWidth: 400 }}>
         <Box sx={{display:"flex", justifyContent:"center", alignItems:"center", marginBottom:5}}>
         <CheckCircleIcon sx={{ fontSize: 35, }} />
-        <Typography variant='h4' fontWeight={"bold"}>Verification</Typography>
+        <Typography variant='h4' fontWeight={"bold"}>Select ID</Typography>
         </Box>
       <Box mt={3} component="form" onSubmit={handleSubmit} noValidate>
         <Typography variant="subtitle2" sx={{ mb: 1 }}>
-          Select ID Verification Provider:
+          Select ID Provider:
         </Typography>
         <Select
           value={dropdownValue}
@@ -92,15 +92,7 @@ const LoginPage = () => {
           <MenuItem value="ProviderB">Provider B</MenuItem>
         </Select>
       
-        <TextField
-            label="ID"
-            type="text"
-            required
-            fullWidth
-            margin="normal"
-            value={ID}
-            onChange={(e) => setID(e.target.value)}
-          />
+        
 
       </Box>
         {error && (
@@ -114,20 +106,14 @@ const LoginPage = () => {
             variant="contained"
             fullWidth
             sx={{ mt: 2 }}
+            onClick={() => navigate('/login')}
           >
-            Submit
+            Select
           </Button>
-          <Button
-            variant="text"
-            fullWidth
-            sx={{ mt: 1 }}
-            onClick={() => navigate('/register')}
-          >
-            New user? Register here
-          </Button>
+          
       </Paper>
     </Box>
   );
 };
 
-export default LoginPage;
+export default Verification;

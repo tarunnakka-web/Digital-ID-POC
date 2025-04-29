@@ -6,15 +6,16 @@ import Cart from './components/Cart/Cart';
 import RegistrationForm from './components/RegistrationForm/RegistrationForm';
 import UserDetails from './components/UserDetails/UserDetails';
 import Verification from './components/Verification/Verification';
+import LoginPage from './components/LoginPage/LoginPage.js';
 import { CartProvider } from './context/CartContext';
 import { UserProvider } from './context/UserContext';
 
-// Wrapper to conditionally render Header based on current path
+
+// Wrapper to conditionally render Header on specific routes
 const HeaderWrapper = () => {
   const location = useLocation();
-  // Hide header on login page
-  if (location.pathname === '/login') return null;
-  return <Header />;
+  const hiddenHeaderRoutes = ['/login', '/verification'];
+  return hiddenHeaderRoutes.includes(location.pathname) ? null : <Header />;
 };
 
 function App() {
@@ -25,10 +26,12 @@ function App() {
           <HeaderWrapper />
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<Verification/>} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/verification" element={<Verification />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/register" element={<RegistrationForm />} />
             <Route path="/user-details" element={<UserDetails />} />
+            <Route path="*" element={<div style={{ padding: 20 }}>404 - Page Not Found</div>} />
           </Routes>
         </BrowserRouter>
       </CartProvider>

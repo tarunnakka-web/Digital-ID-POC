@@ -8,9 +8,10 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { TextField, FormControl, InputLabel, Select, MenuItem, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { Password } from '@mui/icons-material';
 
 
-const steps = ['Personal information', 'Contact details', 'Verification'];
+const steps = ['Personal information', 'Document Submission', 'email Verification',"Biometric Verification"];
 
 export default function HorizontalNonLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -20,11 +21,13 @@ export default function HorizontalNonLinearStepper() {
     lastName: '',
     gender: '',
     dob: '',
-    email: '',
     phoneNumber: '',
     address: '',
     documentType: '',
     documentFile: null,
+    email: '',
+    password : '', 
+    confirmPassword : ""
   });
   const [errors, setErrors] = React.useState({});
   const [openDialog, setOpenDialog] = React.useState(false);
@@ -43,13 +46,16 @@ export default function HorizontalNonLinearStepper() {
       if (!formData.lastName) newErrors.lastName = "Last Name is required";
       if (!formData.gender) newErrors.gender = "Gender is required";
       if (!formData.dob) newErrors.dob = "Date of Birth is required";
-      if (!formData.email) newErrors.email = "Email is required";
       if (!formData.phoneNumber) newErrors.phoneNumber = "Phone Number is required";
       if (!formData.address) newErrors.address = "Address is required";
     } else if (activeStep === 1) {
       if (!formData.documentType) newErrors.documentType = "Document Type is required";
       if (!formData.documentFile) newErrors.documentFile = "Document File is required";
     } else if (activeStep === 2) {
+      if (!formData.email) newErrors.email = "Email is required";
+      if (!formData.password) newErrors.password = "Email is required";
+      if (!formData.confirmPassword) newErrors.confirmPassword = "Email is required";
+    }else if (activeStep ==3){
       if (!formData.documentType) newErrors.documentType = "Document Type is required";
       if (!formData.documentFile) newErrors.documentFile = "Document File is required";
     }
@@ -85,7 +91,7 @@ export default function HorizontalNonLinearStepper() {
     handleNext();
 
     if (activeStep === 0){
-      if (formData.firstName !== "" && formData.lastName !== "" && formData.gender !== "" && formData.dob !== ""){
+      if (formData.firstName !== "" && formData.lastName !== "" && formData.gender !== "" && formData.dob !== "" && formData.phoneNumber !== "" && formData.address !== ""){
         setCompleted({
           ...completed,
           [activeStep]: true,
@@ -93,14 +99,23 @@ export default function HorizontalNonLinearStepper() {
         handleNext();   
       }
     }else if (activeStep === 1){
-      if (formData.email !== "" && formData.phoneNumber !== "" && formData.address !== ""){
+      if (formData.documentType !== "" && formData.documentFile !== "" ){
         setCompleted({
           ...completed,
           [activeStep]: true,
         });
         handleNext();  
       }
-    }else if (activeStep === 2){ 
+    }else if (activeStep === 2){
+      if (formData.email !== "" && formData.password !== "" && formData.confirmPassword !== ""){
+        setCompleted({
+          ...completed,
+          [activeStep]: true,
+        });
+        handleNext();  
+      }
+    }
+    else if (activeStep === 3){ 
       if (formData.documentType !== "" && formData.documentType === null){
       setCompleted({
           ...completed,
@@ -124,6 +139,9 @@ export default function HorizontalNonLinearStepper() {
       address: "",
       documentType: "",
       documentFile: null,
+      email : "", 
+      password : '',
+      confirmPassword : '' ,
     });
 
   };
@@ -161,12 +179,41 @@ export default function HorizontalNonLinearStepper() {
         biometricCredential: fakeBiometricCredential,
       }));
   
-      alert("Biometric captured successfully ✅");
+      alert("Biometric captured successfully ");
     } catch (error) {
       console.error("Biometric capture failed:", error);
-      alert("Failed to capture biometric ❌. Please try again.");
+      alert("Failed to capture biometric . Please try again.");
     }
   };
+
+  const handleFingerprintCapture = async () => {
+    try {
+      // Simulate fingerprint capture process (replace with actual fingerprint capture logic)
+      const fakeFingerprintCredential = {
+        id: 'sample-fingerprint-id',
+        timestamp: new Date().toISOString(),
+      };
+  
+      // Simulating a fingerprint capture success
+      setFormData((prev) => ({
+        ...prev,
+        fingerprintCaptured: true,
+        fingerprintCredential: fakeFingerprintCredential,
+      }));
+  
+      // You could add a condition to simulate failure
+      const captureSuccess = Math.random() > 0.2; // 80% chance of success
+      if (captureSuccess) {
+        alert("Fingerprint captured successfully ");
+      } else {
+        throw new Error("Fingerprint capture failed due to device error.");
+      }
+    } catch (error) {
+      console.error("Fingerprint capture failed:", error);
+      alert(`Failed to capture fingerprint ❌. Reason: ${error.message}`);
+    }
+  };
+  
   
 
   return (
@@ -207,7 +254,7 @@ export default function HorizontalNonLinearStepper() {
                     <Typography color="error" variant="caption">{errors.gender}</Typography>
                   </FormControl>
                   <TextField sx={{marginBottom:"20px"}} label="Date of Birth" type="date" name="dob" value={formData.dob} onChange={handleChange} InputLabelProps={{ shrink: true }} error={Boolean(errors.dob)} helperText={errors.dob} required />
-                  <TextField sx={{marginBottom:"20px"}} label="Email" name="email" value={formData.email} onChange={handleChange} error={Boolean(errors.email)} helperText={errors.email} required />
+                 
                   <TextField sx={{marginBottom:"20px"}} label="Phone Number" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} error={Boolean(errors.phoneNumber)} helperText={errors.phoneNumber} required />
                   <TextField sx={{marginBottom:"20px"}} label="Address" name="address" value={formData.address} onChange={handleChange} error={Boolean(errors.address)} helperText={errors.address} required />       
                   </Box>
@@ -228,14 +275,20 @@ export default function HorizontalNonLinearStepper() {
                 {errors.documentFile && <Typography color="error" variant="caption">{errors.documentFile}</Typography>}
               </Box>
               )}
+              {activeStep === 2 &&(
+                <Box sx={{ display: 'flex', flexDirection: 'column', py: 2, marginTop:"30px" }}>
+                <TextField sx={{marginBottom:"20px"}} label="Email" name="email" value={formData.email} onChange={handleChange} error={Boolean(errors.email)} helperText={errors.email} required />
+                <TextField sx={{marginBottom:"20px"}} label="password" name="password" value={formData.password} onChange={handleChange} error={Boolean(errors.password)} helperText={errors.password} required />
+                <TextField sx={{marginBottom:"20px"}} label="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} error={Boolean(errors.confirmPassword)} helperText={errors.confirmPassword} required />
+             </Box>
+              )
+              }
 
-              {activeStep === 2 && (
+              {activeStep === 3 && (
                 <Box sx={{ display: 'flex', flexDirection: 'column', py: 2, marginTop:"20px" }}>
                  
                   <FormControl fullWidth sx={{ mt: 2 }}>
-                    <Typography variant="subtitle1" sx={{ mb: 1 }}>
-                    Biometric Authentication
-                  </Typography>
+                    <Typography variant="subtitle1" sx={{ mb: 1 ,mb:1}}> Biometric Authentication</Typography>
                   <Button 
                       variant="contained" 
                       color="secondary" 
@@ -245,11 +298,18 @@ export default function HorizontalNonLinearStepper() {
                       </Button>
 
                         {/* Show result after capture */}
-                  {formData.biometricCaptured && (
-                        <Typography variant="body2" color="success.main" sx={{ mt: 1 }}>
-                              Biometric Captured Successfully ✅
-                        </Typography>
-                        )}  
+                  {formData.biometricCaptured && (<Typography variant="body2" color="success.main" sx={{ mt: 1, mb:3 }}>Biometric Captured Successfully  </Typography> )}  
+
+
+              <Typography variant="subtitle1" sx={{ mb: 1 }}> FingerPrint Authentication</Typography>
+              <Button  
+                      variant="contained" 
+                      color="secondary" 
+                      onClick={handleFingerprintCapture}
+                        >
+                      Capture FingerPrint
+                      </Button>
+                {formData.fingerprintCaptured && (<Typography variant="body2" color="success.main" sx={{ mt: 1 }}>FingerPrint Captured Successfully  </Typography> )}  
                       </FormControl>
                 </Box>
               )}
@@ -259,7 +319,7 @@ export default function HorizontalNonLinearStepper() {
                   Back
                 </Button>
                 <Box sx={{ flex: '1 1 auto' }} />
-                {activeStep !== 2 && 
+                {activeStep !== 3 && 
                 <Button onClick={handleNext} sx={{ mr: 1 }}>
                   Next
                 </Button> }

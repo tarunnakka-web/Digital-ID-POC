@@ -48,14 +48,19 @@ const ProductCards = ({ item }) => {
   };
 
   // Proceed after selection
+  // const handleProceed = () => {
+  //   setOpen(false);
+  //   if (isNewUser) {
+  //     navigate("/register", { state: { item, provider: dropdownValue } });
+  //   } else {
+  //     loadUserData();
+  //     navigate("/verification", { state: { item } });
+  //   }
+  // };
+
   const handleProceed = () => {
-    setOpen(false);
-    if (isNewUser) {
-      navigate("/register", { state: { item, provider: dropdownValue } });
-    } else {
-      loadUserData();
-      navigate("/login", { state: { item } });
-    }
+    loadUserData();
+    navigate("/verification", { state: { item } });
   };
 
   return (
@@ -82,124 +87,63 @@ const ProductCards = ({ item }) => {
       <Button variant="contained" color="primary" onClick={handleOpen}>Buy Now </Button>
 
       <Dialog
-  open={open}
-  onClose={handleClose}
-  maxWidth="sm"
-  fullWidth
-  PaperProps={{
-    sx: {
-      borderRadius: 4,
-      p: 2,
-      bgcolor: "#fefefe",
-    },
-  }}
->
-  <DialogTitle
-    sx={{
-      bgcolor: "#1976D2",
-      color: "#fff",
-      textAlign: "center",
-      borderTopLeftRadius: 8,
-      borderTopRightRadius: 8,
-      pb: 2,
-    }}
-  >
-    <Box display="flex" flexDirection="column" alignItems="center">
-      <Typography variant="h6" fontWeight={600}>
-        ⚠️ Restricted Access Alert
-      </Typography>
-      <Typography variant="caption" sx={{ color: "#e0e0e0", mt: 1 }}>
-        Age verification is required to proceed
-      </Typography>
-    </Box>
-  </DialogTitle>
-
-  <DialogContent sx={{ mt: 2 }}>
-    <Typography variant="body1" sx={{ mb: 2, fontWeight: 500 }}>
-      Please verify your identity to access this content.
-    </Typography>
-
-    {/* User Type Selection */}
-    <Box display="flex" gap={2} flexDirection={{ xs: "column", sm: "row" }} mt={2}>
-      <Button
-        variant={isNewUser === true ? "contained" : "outlined"}
-        color="primary"
+        open={open}
+        onClose={handleClose}
+        maxWidth="xs"
         fullWidth
-        onClick={() => setIsNewUser(true)}
+        PaperProps={{
+          sx: {
+            borderRadius: 4,
+            p: 2,
+            bgcolor: "#fefefe",
+          },
+        }}
       >
-        I'm a New User
-      </Button>
-      <Button
-        variant={isNewUser === false ? "contained" : "outlined"}
-        color="primary"
-        fullWidth
-        onClick={() => setIsNewUser(false)}
-      >
-        I'm Already Registered
-      </Button>
-    </Box>
-
-    {/* Conditional New User Section */}
-    {isNewUser && (
-      <Box mt={3}>
-        <Typography variant="subtitle2" sx={{ mb: 1 }}>
-          Select ID Verification Provider Type:
-        </Typography>
-        <Select
-          value={dropdownValue}
-          onChange={handleDropdownChange}
-          fullWidth
-          displayEmpty
+        <DialogTitle
           sx={{
-            backgroundColor: "#f5f5f5",
-            borderRadius: "6px",
+            bgcolor: "#1976D2",
+            color: "#fff",
+            textAlign: "center",
+            borderTopLeftRadius: 8,
+            borderTopRightRadius: 8,
+            pb: 2,
           }}
         >
-          <MenuItem value="" disabled>
-            Choose an ID provider Type
-          </MenuItem>
-          <MenuItem value="LloydsID">Lloyds ID Provider</MenuItem>
-          <MenuItem value="ProviderA">Provider A</MenuItem>
-          <MenuItem value="ProviderB">Provider B</MenuItem>
-        </Select>
-      </Box>
-    )}
+          <Box display="flex" flexDirection="column" alignItems="center">
+            <Typography variant="h6" fontWeight={200}>
+            ID required for restricted access.
+            </Typography>
+            {/* <Typography variant="h6" sx={{ color: "#e0e0e0", mt: 1 }}>
+              Need ID is required to access this restricted item.
+            </Typography> */}
+          </Box>
+        </DialogTitle>
 
-    {/* Existing User Message */}
-    {!isNewUser && (
-      <Box mt={3}>
-        <Typography variant="subtitle2" sx={{ mb: 1 }}>
-          You're already registered.
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Click proceed to continue with your existing registration.
-        </Typography>
-      </Box>
-    )}
-  </DialogContent>
+  
 
-  <DialogActions
-    sx={{
-      px: 3,
-      pb: 2,
-      pt: 1,
-      justifyContent: "space-between",
-      borderTop: "1px solid #eee",
-    }}
-  >
-    <Button onClick={handleClose} variant="outlined" color="secondary">
-      Cancel
-    </Button>
-    <Button
-      onClick={handleProceed}
-      variant="contained"
-      color="primary"
-      disabled={isNewUser && !dropdownValue}
-    >
-      Proceed
-    </Button>
-  </DialogActions>
-</Dialog>
+          <DialogActions
+            sx={{
+              px: 3,
+              pb: 2,
+              pt: 1,
+              justifyContent: "space-between",
+              borderTop: "1px solid #eee",
+            }}
+          >
+            <Button onClick={handleClose} variant="outlined" color="secondary" sx={{fontWeight:20 , fontSize:"12px"}}>
+              Cancel
+            </Button>
+            <Button
+              onClick={handleProceed}
+              variant="contained"
+              color="primary"
+              disabled={isNewUser && !dropdownValue}
+              sx={{fontWeight:20 , fontSize:"12px"}}
+            >
+              look for ID
+            </Button>
+          </DialogActions>
+        </Dialog>
 
     </Card>
   );
