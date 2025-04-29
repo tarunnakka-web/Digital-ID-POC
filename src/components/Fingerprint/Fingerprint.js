@@ -1,48 +1,89 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Paper, Typography, CircularProgress, Button, Box } from '@mui/material';
 import FingerprintIcon from '@mui/icons-material/Fingerprint';
 
+
 function FingerprintPage() {
   const navigate = useNavigate();
-  const [verifying, setVerifying] = useState(true);
+  
+  const [scanning, setScanning] = useState(false);
   const [verified, setVerified] = useState(false);
+  const [error, setError] = useState('');
 
-  useEffect(() => {
-    // Simulate fingerprint scanning delay
-    const timer = setTimeout(() => {
-      setVerifying(false);
-      setVerified(true);
-    }, 3000); // Simulate 3 seconds scan
+  const handleFingerprintScan = async () => {
+    setError('');
+    setScanning(true);
 
-    return () => clearTimeout(timer);
-  }, []);
+    try {
+      const publicKey = {
+        challenge: Uint8Array.from('randomChallengeHere', c => c.charCodeAt(0)),
+        timeout: 60000,
+        userVerification: 'preferred',
+        allowCredentials: [] // Leave empty to let browser pick
+      };
+
+      const assertion = await navigator.credentials.get({ publicKey });
+
+      if (assertion) {
+        setVerified(true);
+      } else {
+        throw new Error('Fingerprint authentication failed.');
+      }
+    } catch (err) {
+      setError('Fingerprint scan failed or was cancelled.');
+    } finally {
+      setScanning(false);
+    }
+  };
 
   const handleContinue = () => {
-    navigate('/'); // Navigate to home page
+    
+    navigate('/');
   };
 
   return (
-    <Paper  elevation={4} sx={{ width: 400, padding: 4, margin: 'auto', marginTop: 16, borderRadius: 2 }}>
+    <Paper elevation={4} sx={{ width: 400, padding: 4, margin: 'auto', marginTop: 16, borderRadius: 2 }}>
       <Typography variant="h6" align="center" sx={{ marginBottom: 2 }}>
         Fingerprint Authentication
       </Typography>
 
       <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" mt={3}>
-        <FingerprintIcon color="primary" sx={{ fontSize: 60 }} />
-        {verifying && (
+        <Box
+          onClick={handleFingerprintScan}
+          sx={{
+            cursor: scanning || verified ? 'not-allowed' : 'pointer',
+            opacity: scanning || verified ? 0.5 : 1,
+          }}
+        >
+          <FingerprintIcon color="primary" sx={{ fontSize: 80 }} />
+        </Box>
+
+        {error && (
+          <Typography variant="body2" align="center" color="error" sx={{ mt: 2 }}>
+            {error}
+          </Typography>
+        )}
+
+        {scanning && (
           <>
             <Typography variant="body2" align="center" sx={{ marginTop: 2 }}>
-              Scanning your fingerprint...
+              Waiting for fingerprint scan...
             </Typography>
             <CircularProgress sx={{ marginTop: 2 }} />
           </>
         )}
 
-        {!verifying && verified && (
+        {!scanning && !verified && !error && (
+          <Typography variant="body2" align="center" sx={{ marginTop: 2 }}>
+            Tap the fingerprint icon to scan
+          </Typography>
+        )}
+
+        {verified && (
           <>
             <Typography variant="body2" align="center" sx={{ marginTop: 2, color: 'green', fontWeight: 'bold' }}>
-              Fingerprint Verified Successfully!
+              Fingerprint Verified!
             </Typography>
             <Button
               variant="contained"
