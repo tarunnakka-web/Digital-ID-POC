@@ -1,73 +1,84 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Box, Button, TextField, Typography, Paper,
-} from '@mui/material';
+import { Tabs, Tab, Box, Typography, TextField, Button, Paper } from '@mui/material';
 
-const LoginPage = () => {
+function LoginPage() {
+  const [tabIndex, setTabIndex] = useState(0);
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = () => {
-    if (!formData.email || !formData.password) {
-      alert("Please enter both email and password");
-      return;
-    }
-
-    console.log("Logging in:", formData);
-    // TODO: Add backend integration here
+  const handleTabChange = (event, newValue) => {
+    setTabIndex(newValue);
   };
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" bgcolor="#f5f5f5">
-      <Paper elevation={3} sx={{ padding: 4, width: 400 }}>
-        <Typography variant="h5" align="center" fontWeight={600} gutterBottom>
-          Login
+    <Paper elevation={4} sx={{ width: 400, padding: 4, margin: 'auto', marginTop: 8, borderRadius: 2 }}>
+      <Typography variant="h6" align="center" sx={{ marginBottom: 2 }}>
+        Secure Login
+      </Typography>
+
+      <Typography variant="body2" align="center" sx={{ marginBottom: 3, color: 'text.secondary' }}>
+        If you are already logged in, select a method to continue.
+      </Typography>
+
+      <Tabs value={tabIndex} onChange={handleTabChange} centered>
+        <Tab label="Email" sx={{ fontWeight: 'bold' }} />
+        <Tab label="OTP" sx={{ fontWeight: 'bold' }} />
+        <Tab label="Fingerprint" sx={{ fontWeight: 'bold' }} />
+      </Tabs>
+
+      <Box mt={3}>
+        {tabIndex === 0 && (
+          <Box>
+            <Typography variant="body2" align="center" sx={{ color: 'text.secondary', marginBottom: 2 }}>
+              Enter your email and password to log in.
+            </Typography>
+            <TextField label="Username" fullWidth margin="normal" variant="outlined" />
+            <TextField label="Password" type="password" fullWidth margin="normal" variant="outlined" />
+            <Button variant="contained" fullWidth sx={{ marginTop: 2, backgroundColor: '#1976d2', '&:hover': { backgroundColor: '#1565c0' } }}>
+              Login
+            </Button>
+          </Box>
+        )}
+
+        {tabIndex === 1 && (
+          <Box>
+            <Typography variant="body2" align="center" sx={{ color: 'text.secondary', marginBottom: 2 }}>
+              Enter your phone/email and OTP to log in.
+            </Typography>
+            <TextField label="Phone or Email" fullWidth margin="normal" variant="outlined" />
+            <TextField label="OTP" fullWidth margin="normal" variant="outlined" />
+            <Button variant="contained" fullWidth sx={{ marginTop: 2, backgroundColor: '#1976d2', '&:hover': { backgroundColor: '#1565c0' } }}>
+              Login with OTP
+            </Button>
+          </Box>
+        )}
+
+        {tabIndex === 2 && (
+          <Box>
+            <Typography variant="body2" align="center" sx={{ color: 'text.secondary', marginBottom: 2 }}>
+              Use your fingerprint to log in.
+            </Typography>
+            <Button variant="contained" fullWidth sx={{ marginTop: 2, padding: '10px 0', backgroundColor: '#1976d2', '&:hover': { backgroundColor: '#1565c0' } }}>
+              Scan Fingerprint
+            </Button>
+          </Box>
+        )}
+
+        <Typography variant="body2" align="center" sx={{ marginTop: 3, color: 'text.secondary' }}>
+          Kindly Register if you are a new user.
         </Typography>
-        <Box mt={2} display="flex" flexDirection="column" gap={2}>
-          <TextField
-            name="email"
-            label="Email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            fullWidth
-          />
-          <TextField
-            name="password"
-            label="Password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            fullWidth
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSubmit}
-            sx={{ fontWeight: 600 }}
-          >
-            Login
-          </Button>
-          <Button
-            variant="text"
-            fullWidth
-            sx={{ mt: 1 }}
-            onClick={() => navigate('/register')}
-          >
-            Register
-          </Button>
-        </Box>
-      </Paper>
-    </Box>
+
+        <Button
+          variant="text"
+          fullWidth
+          sx={{ marginTop: 2, color: '#1976d2', fontWeight: 'bold' }}
+          onClick={() => navigate('/register')}
+        >
+          Register
+        </Button>
+      </Box>
+    </Paper>
   );
-};
+}
 
 export default LoginPage;
