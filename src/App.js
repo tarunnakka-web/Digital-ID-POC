@@ -7,6 +7,7 @@ import RegistrationForm from './components/RegistrationForm/RegistrationForm';
 import UserDetails from './components/UserDetails/UserDetails';
 import Verification from './components/Verification/Verification';
 import LoginPage from './components/LoginPage/LoginPage.js';
+import FingerprintPage from './components/Fingerprint/Fingerprint.js';
 import { CartProvider } from './context/CartContext';
 import { UserProvider } from './context/UserContext';
 
@@ -28,6 +29,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/verification" element={<Verification />} />
+            <Route path="/finger-print" element={<FingerprintPage />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/register" element={<RegistrationForm />} />
             <Route path="/user-details" element={<UserDetails />} />
