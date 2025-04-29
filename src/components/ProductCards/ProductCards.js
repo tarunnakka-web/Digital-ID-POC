@@ -111,7 +111,7 @@ const ProductCards = ({ item }) => {
         >
           <Box display="flex" flexDirection="column" alignItems="center">
             <Typography variant="h6" fontWeight={200}>
-            ID required for restricted access.
+            ID is required to purchase restricted items.
             </Typography>
             {/* <Typography variant="h6" sx={{ color: "#e0e0e0", mt: 1 }}>
               Need ID is required to access this restricted item.
@@ -140,7 +140,7 @@ const ProductCards = ({ item }) => {
               disabled={isNewUser && !dropdownValue}
               sx={{fontWeight:20 , fontSize:"12px"}}
             >
-              look for ID
+              Look Up IDP
             </Button>
           </DialogActions>
         </Dialog>
