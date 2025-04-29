@@ -5,7 +5,7 @@ import HomePage from './components/HomePage/HomePage';
 import Cart from './components/Cart/Cart';
 import RegistrationForm from './components/RegistrationForm/RegistrationForm';
 import UserDetails from './components/UserDetails/UserDetails';
-import LoginPage from './components/LoginPage/LoginPage';
+import Verification from './components/Verification/Verification';
 import { CartProvider } from './context/CartContext';
 import { UserProvider } from './context/UserContext';
 
@@ -25,7 +25,7 @@ function App() {
           <HeaderWrapper />
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/login" element={<Verification/>} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/register" element={<RegistrationForm />} />
             <Route path="/user-details" element={<UserDetails />} />

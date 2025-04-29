@@ -43,10 +43,12 @@ export default function HorizontalNonLinearStepper() {
       if (!formData.lastName) newErrors.lastName = "Last Name is required";
       if (!formData.gender) newErrors.gender = "Gender is required";
       if (!formData.dob) newErrors.dob = "Date of Birth is required";
-    } else if (activeStep === 1) {
       if (!formData.email) newErrors.email = "Email is required";
       if (!formData.phoneNumber) newErrors.phoneNumber = "Phone Number is required";
       if (!formData.address) newErrors.address = "Address is required";
+    } else if (activeStep === 1) {
+      if (!formData.documentType) newErrors.documentType = "Document Type is required";
+      if (!formData.documentFile) newErrors.documentFile = "Document File is required";
     } else if (activeStep === 2) {
       if (!formData.documentType) newErrors.documentType = "Document Type is required";
       if (!formData.documentFile) newErrors.documentFile = "Document File is required";
@@ -205,34 +207,35 @@ export default function HorizontalNonLinearStepper() {
                     <Typography color="error" variant="caption">{errors.gender}</Typography>
                   </FormControl>
                   <TextField sx={{marginBottom:"20px"}} label="Date of Birth" type="date" name="dob" value={formData.dob} onChange={handleChange} InputLabelProps={{ shrink: true }} error={Boolean(errors.dob)} helperText={errors.dob} required />
-                </Box>
+                  <TextField sx={{marginBottom:"20px"}} label="Email" name="email" value={formData.email} onChange={handleChange} error={Boolean(errors.email)} helperText={errors.email} required />
+                  <TextField sx={{marginBottom:"20px"}} label="Phone Number" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} error={Boolean(errors.phoneNumber)} helperText={errors.phoneNumber} required />
+                  <TextField sx={{marginBottom:"20px"}} label="Address" name="address" value={formData.address} onChange={handleChange} error={Boolean(errors.address)} helperText={errors.address} required />       
+                  </Box>
               )}
 
               {activeStep === 1 && (
                 <Box sx={{ display: 'flex', flexDirection: 'column', py: 2, marginTop:"30px" }}>
-                  <TextField sx={{marginBottom:"20px"}} label="Email" name="email" value={formData.email} onChange={handleChange} error={Boolean(errors.email)} helperText={errors.email} required />
-                  <TextField sx={{marginBottom:"20px"}} label="Phone Number" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} error={Boolean(errors.phoneNumber)} helperText={errors.phoneNumber} required />
-                  <TextField sx={{marginBottom:"20px"}} label="Address" name="address" value={formData.address} onChange={handleChange} error={Boolean(errors.address)} helperText={errors.address} required />
-                </Box>
+                <FormControl sx={{marginBottom:"20px"}} fullWidth required error={Boolean(errors.documentType)}>
+                  <InputLabel>Document Type</InputLabel>
+                  <Select name="documentType" value={formData.documentType} onChange={handleChange} label="Document Type">
+                    <MenuItem value="">-- Select Document Type --</MenuItem>
+                    <MenuItem value="passport">Passport</MenuItem>
+                    <MenuItem value="drivingLicense">Driving License</MenuItem>
+                  </Select>
+                  <Typography color="error" variant="caption">{errors.documentType}</Typography>
+                </FormControl>
+                <input sx={{marginBottom:"20px"}} type="file" onChange={handleFileChange} required />
+                {errors.documentFile && <Typography color="error" variant="caption">{errors.documentFile}</Typography>}
+              </Box>
               )}
 
               {activeStep === 2 && (
-                <Box sx={{ display: 'flex', flexDirection: 'column', py: 2, marginTop:"30px" }}>
-                  <FormControl sx={{marginBottom:"20px"}} fullWidth required error={Boolean(errors.documentType)}>
-                    <InputLabel>Document Type</InputLabel>
-                    <Select name="documentType" value={formData.documentType} onChange={handleChange} label="Document Type">
-                      <MenuItem value="">-- Select Document Type --</MenuItem>
-                      <MenuItem value="passport">Passport</MenuItem>
-                      <MenuItem value="drivingLicense">Driving License</MenuItem>
-                    </Select>
-                    <Typography color="error" variant="caption">{errors.documentType}</Typography>
-                  </FormControl>
-                  <input sx={{marginBottom:"20px"}} type="file" onChange={handleFileChange} required />
-                  {errors.documentFile && <Typography color="error" variant="caption">{errors.documentFile}</Typography>}
+                <Box sx={{ display: 'flex', flexDirection: 'column', py: 2, marginTop:"20px" }}>
+                 
                   <FormControl fullWidth sx={{ mt: 2 }}>
-          <Typography variant="subtitle1" sx={{ mb: 1 }}>
+                    <Typography variant="subtitle1" sx={{ mb: 1 }}>
                     Biometric Authentication
-          </Typography>
+                  </Typography>
                   <Button 
                       variant="contained" 
                       color="secondary" 

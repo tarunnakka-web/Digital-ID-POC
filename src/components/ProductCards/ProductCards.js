@@ -62,89 +62,145 @@ const ProductCards = ({ item }) => {
     <Card
       sx={{
         borderRadius: "12px",
-        backgroundColor: "#fff",
-        boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-        transition: "transform 0.3s",
-        "&:hover": {
-          transform: "scale(1.03)",
-        },
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        padding: 2,
-        height: "100%", 
+         backgroundColor: "#fff",
+         boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+         transition: "transform 0.3s",
+         "&:hover": {
+           transform: "scale(1.03)",
+         },
+         display: "flex",
+         flexDirection: "column",
+         alignItems: "center",
+         padding: 2,
+         height: "100%",
       }}
     >
       <img src={url} alt={name || "Product"} style={{ width: '200px', height: '200px'}} />
       <h3>{name  || "default name"}</h3>
       <Typography variant="body2" color="text.secondary">{caption}</Typography>
-      <Typography variant="h6" color="text.primary">Price: ₹{price}</Typography>
+      <Typography variant="h6" color="text.primary">Price: ₹{price}/-</Typography>
       <Button variant="contained" color="primary" onClick={handleOpen}>Buy Now </Button>
 
-      {/* Dialog */}
-      <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-        <DialogTitle sx={{ bgcolor: "#1976D2", color: "#fff", textAlign: "center" }}>
-          Restricted Access Alert
-        </DialogTitle>
+      <Dialog
+  open={open}
+  onClose={handleClose}
+  maxWidth="sm"
+  fullWidth
+  PaperProps={{
+    sx: {
+      borderRadius: 4,
+      p: 2,
+      bgcolor: "#fefefe",
+    },
+  }}
+>
+  <DialogTitle
+    sx={{
+      bgcolor: "#1976D2",
+      color: "#fff",
+      textAlign: "center",
+      borderTopLeftRadius: 8,
+      borderTopRightRadius: 8,
+      pb: 2,
+    }}
+  >
+    <Box display="flex" flexDirection="column" alignItems="center">
+      <Typography variant="h6" fontWeight={600}>
+        ⚠️ Restricted Access Alert
+      </Typography>
+      <Typography variant="caption" sx={{ color: "#e0e0e0", mt: 1 }}>
+        Age verification is required to proceed
+      </Typography>
+    </Box>
+  </DialogTitle>
 
-        <DialogContent>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-            This content is restricted due to age-sensitive material. Please verify your eligibility to proceed.
-          </Typography>
+  <DialogContent sx={{ mt: 2 }}>
+    <Typography variant="body1" sx={{ mb: 2, fontWeight: 500 }}>
+      Please verify your identity to access this content.
+    </Typography>
 
-          {/* New vs Existing User Buttons with dynamic variant */}
-          <Box sx={{ mt: 2 }}>
-            <Button
-              fullWidth
-              variant={isNewUser === true ? "contained" : "outlined"}
-              onClick={() => setIsNewUser(true)}
-            >
-              New User
-            </Button>
-            <Button
-              fullWidth
-              variant={isNewUser === false ? "contained" : "outlined"}
-              onClick={() => setIsNewUser(false)}
-              sx={{ mt: 2 }}
-            >
-              Already Registered
-            </Button>
-          </Box>
+    {/* User Type Selection */}
+    <Box display="flex" gap={2} flexDirection={{ xs: "column", sm: "row" }} mt={2}>
+      <Button
+        variant={isNewUser === true ? "contained" : "outlined"}
+        color="primary"
+        fullWidth
+        onClick={() => setIsNewUser(true)}
+      >
+        I'm a New User
+      </Button>
+      <Button
+        variant={isNewUser === false ? "contained" : "outlined"}
+        color="primary"
+        fullWidth
+        onClick={() => setIsNewUser(false)}
+      >
+        I'm Already Registered
+      </Button>
+    </Box>
 
-          {/* Dropdown for New Users */}
-          {isNewUser && (
-            <Box sx={{ mt: 2 }}>
-              <Select
-                value={dropdownValue}
-                onChange={handleDropdownChange}
-                fullWidth
-                displayEmpty
-                sx={{ backgroundColor: "#f9f9f9", borderRadius: "4px" }}
-              >
-                <MenuItem value="" disabled>
-                  Please Select ID Provider
-                </MenuItem>
-                <MenuItem value="LloydsID">Lloyds ID Provider</MenuItem>
-                <MenuItem value="Provider - A">Provider - A</MenuItem>
-                <MenuItem value="Provider - B">Provider - B</MenuItem>
-              </Select>
-            </Box>
-          )}
-        </DialogContent>
-        <DialogActions sx={{ justifyContent: 'space-between', px: 3, pb: 2 }}>
-          <Button onClick={handleClose} color="secondary">
-            Cancel
-          </Button>
-          <Button
-            onClick={handleProceed}
-            variant="contained"
-            color="primary"
-            disabled={isNewUser && !dropdownValue}
-          >
-            Proceed
-          </Button>
-        </DialogActions>
-      </Dialog>
+    {/* Conditional New User Section */}
+    {isNewUser && (
+      <Box mt={3}>
+        <Typography variant="subtitle2" sx={{ mb: 1 }}>
+          Select ID Verification Provider Type:
+        </Typography>
+        <Select
+          value={dropdownValue}
+          onChange={handleDropdownChange}
+          fullWidth
+          displayEmpty
+          sx={{
+            backgroundColor: "#f5f5f5",
+            borderRadius: "6px",
+          }}
+        >
+          <MenuItem value="" disabled>
+            Choose an ID provider Type
+          </MenuItem>
+          <MenuItem value="LloydsID">Lloyds ID Provider</MenuItem>
+          <MenuItem value="ProviderA">Provider A</MenuItem>
+          <MenuItem value="ProviderB">Provider B</MenuItem>
+        </Select>
+      </Box>
+    )}
+
+    {/* Existing User Message */}
+    {!isNewUser && (
+      <Box mt={3}>
+        <Typography variant="subtitle2" sx={{ mb: 1 }}>
+          You're already registered.
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Click proceed to continue with your existing registration.
+        </Typography>
+      </Box>
+    )}
+  </DialogContent>
+
+  <DialogActions
+    sx={{
+      px: 3,
+      pb: 2,
+      pt: 1,
+      justifyContent: "space-between",
+      borderTop: "1px solid #eee",
+    }}
+  >
+    <Button onClick={handleClose} variant="outlined" color="secondary">
+      Cancel
+    </Button>
+    <Button
+      onClick={handleProceed}
+      variant="contained"
+      color="primary"
+      disabled={isNewUser && !dropdownValue}
+    >
+      Proceed
+    </Button>
+  </DialogActions>
+</Dialog>
+
     </Card>
   );
 };

@@ -3,22 +3,22 @@ import { Container, Typography, Grid } from '@mui/material'
 import ProductCards from '../ProductCards/ProductCards'
 
 const data = [
-  {"id": 1, "name": "Whiskey Bottle", "caption":"Crocodile leather sling bag", "price":100, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589502/whisky_bottle_cxtmf7.webp"},
-  {"id": 2, "name": "Pocket Knife", "caption":"Crocodile leather sling bag", "price":200, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589576/pocket_knife_ldmu7y.jpg"},
-  {"id": 3, "name": "Fireworks", "caption":"Crocodile leather sling bag", "price":600, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589664/fireworks_poxtcm.webp"},
-  {"id": 4, "name": "Adult Toy", "caption":"Crocodile leather sling bag", "price":800, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589779/adult_toys_as8s9q.jpg"},
-  {"id": 5, "name": "White Shoes", "caption":"Crocodile leather sling bag", "price":900, "criteria":"authorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745559766/cld-sample-5.jpg"},
-  {"id": 6, "name": "Analog watch", "caption":"Crocodile leather sling bag", "price":600, "criteria":"authorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745559755/samples/ecommerce/analog-classic.jpg"},
-  {"id": 7, "name": "Leather Bag", "caption":"Crocodile leather sling bag", "price":100, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589847/crocodile_leather_bags_mzpkvp.jpg"},
-  {"id": 8, "name": "Cigarette Pack", "caption":"Crocodile leather sling bag", "price":200, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589902/cigaratte_drpste.webp"},
-  {"id": 9, "name": "Prescription", "caption":"Crocodile leather sling bag", "price":100, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589973/priscription_pills_ba6eha.webp"},
-  {"id": 10, "name": "Vaping Kit", "caption":"Crocodile leather sling bag", "price":100, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590076/bongs_su1maz.webp"},
-  {"id": 11, "name": "Hazardous Chemical", "caption":"Crocodile leather sling bag", "criteria":"unauthorized", "price":100, "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590322/Chemical_spill_z1nkai.webp"},
-  {"id": 12, "name": "Ivory Artifact", "caption":"Crocodile leather sling bag", "price":100, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590496/organic_capsules_wvk6zh.webp"},
-  {"id": 13, "name": "Alcohol making kits", "caption":"Crocodile leather sling bag", "criteria":"unauthorized", "price":100, "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590647/alcohol_making_kits_v93jkt.webp"},
-  {"id": 14, "name": "Books", "caption":"Crocodile leather sling bag", "price":100, "criteria":"authorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745591231/book_qt6xtm.webp"},
-  {"id": 15, "name": "iPhone", "caption":"Crocodile leather sling bag", "price":100, "criteria":"authorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745591309/iphone_yngytm.webp"},
-  {"id": 16, "name": "sports t-shirt", "caption":"Crocodile leather sling bag", "price":100, "criteria":"authorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745591363/sports_tshirt_gf4qz6.jpg"}
+  {"id": 1, "name": "Whiskey Bottle", "caption":"Crocodile leather sling bag", "price":1250, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589502/whisky_bottle_cxtmf7.webp"},
+  {"id": 2, "name": "Pocket Knife", "caption":"Crocodile leather sling bag", "price":199, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589576/pocket_knife_ldmu7y.jpg"},
+  {"id": 3, "name": "Fireworks", "caption":"Crocodile leather sling bag", "price":599, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589664/fireworks_poxtcm.webp"},
+  {"id": 4, "name": "Adult Toy", "caption":"Crocodile leather sling bag", "price":799, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589779/adult_toys_as8s9q.jpg"},
+  {"id": 5, "name": "White Shoes", "caption":"Crocodile leather sling bag", "price":1099, "criteria":"authorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745559766/cld-sample-5.jpg"},
+  {"id": 6, "name": "Analog watch", "caption":"Crocodile leather sling bag", "price":799, "criteria":"authorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745559755/samples/ecommerce/analog-classic.jpg"},
+  {"id": 7, "name": "Leather Bag", "caption":"Crocodile leather sling bag", "price":999, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589847/crocodile_leather_bags_mzpkvp.jpg"},
+  {"id": 8, "name": "Cigarette Pack", "caption":"Crocodile leather sling bag", "price":399, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589902/cigaratte_drpste.webp"},
+  {"id": 9, "name": "Prescription", "caption":"Crocodile leather sling bag", "price":499, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589973/priscription_pills_ba6eha.webp"},
+  {"id": 10, "name": "Vaping Kit", "caption":"Crocodile leather sling bag", "price":599, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590076/bongs_su1maz.webp"},
+  {"id": 11, "name": "Hazardous Chemical", "caption":"Crocodile leather sling bag", "criteria":"unauthorized", "price":1599, "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590322/Chemical_spill_z1nkai.webp"},
+  {"id": 12, "name": "Ivory Artifact", "caption":"Crocodile leather sling bag", "price":699, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590496/organic_capsules_wvk6zh.webp"},
+  {"id": 13, "name": "Alcohol making kits", "caption":"Crocodile leather sling bag", "criteria":"unauthorized", "price":2999, "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590647/alcohol_making_kits_v93jkt.webp"},
+  {"id": 14, "name": "Books", "caption":"Crocodile leather sling bag", "price":499, "criteria":"authorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745591231/book_qt6xtm.webp"},
+  {"id": 15, "name": "iPhone", "caption":"Crocodile leather sling bag", "price":87000, "criteria":"authorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745591309/iphone_yngytm.webp"},
+  {"id": 16, "name": "sports t-shirt", "caption":"Crocodile leather sling bag", "price":699, "criteria":"authorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745591363/sports_tshirt_gf4qz6.jpg"}
 ]
 
 const HomePage = () => (
@@ -34,7 +34,7 @@ const HomePage = () => (
     }}
   >
     <Typography 
-      variant="h4" 
+      variant="h5" 
       gutterBottom 
       sx={{ 
         fontWeight: 'bold', 
