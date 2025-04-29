@@ -9,7 +9,8 @@ import Container from '@mui/material/Container';
 import { TextField, FormControl, InputLabel, Select, MenuItem, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Password } from '@mui/icons-material';
-
+import FingerprintPage from '../Fingerprint/Fingerprint';
+import { useNavigate } from 'react-router-dom';
 
 const steps = ['Personal information', 'Document Submission', 'email Verification',"Biometric Verification"];
 
@@ -31,6 +32,7 @@ export default function HorizontalNonLinearStepper() {
   });
   const [errors, setErrors] = React.useState({});
   const [openDialog, setOpenDialog] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
   const totalSteps = () => steps.length;
   const completedSteps = () => Object.keys(completed).length;
@@ -55,7 +57,7 @@ export default function HorizontalNonLinearStepper() {
       if (!formData.email) newErrors.email = "Email is required";
       if (!formData.password) newErrors.password = "Email is required";
       if (!formData.confirmPassword) newErrors.confirmPassword = "Email is required";
-    }else if (activeStep ==3){
+    }else if (activeStep === 3){
       if (!formData.documentType) newErrors.documentType = "Document Type is required";
       if (!formData.documentFile) newErrors.documentFile = "Document File is required";
     }
@@ -171,15 +173,12 @@ export default function HorizontalNonLinearStepper() {
         id: 'sample-biometric-id',
         timestamp: new Date().toISOString(),
       };
-  
       // Simulate a successful biometric capture
       setFormData((prev) => ({
         ...prev,
         biometricCaptured: true,
         biometricCredential: fakeBiometricCredential,
       }));
-  
-      alert("Biometric captured successfully ");
     } catch (error) {
       console.error("Biometric capture failed:", error);
       alert("Failed to capture biometric . Please try again.");
@@ -213,7 +212,6 @@ export default function HorizontalNonLinearStepper() {
       alert(`Failed to capture fingerprint ❌. Reason: ${error.message}`);
     }
   };
-  
   
 
   return (
@@ -253,8 +251,7 @@ export default function HorizontalNonLinearStepper() {
                     </Select>
                     <Typography color="error" variant="caption">{errors.gender}</Typography>
                   </FormControl>
-                  <TextField sx={{marginBottom:"20px"}} label="Date of Birth" type="date" name="dob" value={formData.dob} onChange={handleChange} InputLabelProps={{ shrink: true }} error={Boolean(errors.dob)} helperText={errors.dob} required />
-                 
+                  <TextField sx={{marginBottom:"20px"}} label="Date of Birth" type="date" name="dob" value={formData.dob} onChange={handleChange} InputLabelProps={{ shrink: true }} error={Boolean(errors.dob)} helperText={errors.dob} required />          
                   <TextField sx={{marginBottom:"20px"}} label="Phone Number" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} error={Boolean(errors.phoneNumber)} helperText={errors.phoneNumber} required />
                   <TextField sx={{marginBottom:"20px"}} label="Address" name="address" value={formData.address} onChange={handleChange} error={Boolean(errors.address)} helperText={errors.address} required />       
                   </Box>
@@ -274,45 +271,34 @@ export default function HorizontalNonLinearStepper() {
                 <input sx={{marginBottom:"20px"}} type="file" onChange={handleFileChange} required />
                 {errors.documentFile && <Typography color="error" variant="caption">{errors.documentFile}</Typography>}
               </Box>
+
               )}
               {activeStep === 2 &&(
                 <Box sx={{ display: 'flex', flexDirection: 'column', py: 2, marginTop:"30px" }}>
-                <TextField sx={{marginBottom:"20px"}} label="Email" name="email" value={formData.email} onChange={handleChange} error={Boolean(errors.email)} helperText={errors.email} required />
-                <TextField sx={{marginBottom:"20px"}} label="password" name="password" value={formData.password} onChange={handleChange} error={Boolean(errors.password)} helperText={errors.password} required />
-                <TextField sx={{marginBottom:"20px"}} label="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} error={Boolean(errors.confirmPassword)} helperText={errors.confirmPassword} required />
+                <TextField sx={{marginBottom:"20px"}} type="email" label="Email" name="email" value={formData.email} onChange={handleChange} error={Boolean(errors.email)} helperText={errors.email} required />
+                <TextField sx={{marginBottom:"20px"}} type='password' label="password" name="password" value={formData.password} onChange={handleChange} error={Boolean(errors.password)} helperText={errors.password} required />
+                <TextField sx={{marginBottom:"20px"}} type='password' label="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} error={Boolean(errors.confirmPassword)} helperText={errors.confirmPassword} required />
              </Box>
-              )
-              }
+              )}
 
               {activeStep === 3 && (
-                <Box sx={{ display: 'flex', flexDirection: 'column', py: 2, marginTop:"20px" }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', py: 2, marginTop:"10px" }}>
                  
                   <FormControl fullWidth sx={{ mt: 2 }}>
-                    <Typography variant="subtitle1" sx={{ mb: 1 ,mb:1}}> Biometric Authentication</Typography>
+                    <Typography variant="subtitle1" sx={{ mb: 1}}> Biometric Authentication</Typography>
                   <Button 
                       variant="contained" 
                       color="secondary" 
-                        onClick={handleBiometricCapture}
+                      onClick={handleBiometricCapture}
                         >
                       Capture Biometric
                       </Button>
 
                         {/* Show result after capture */}
                   {formData.biometricCaptured && (<Typography variant="body2" color="success.main" sx={{ mt: 1, mb:3 }}>Biometric Captured Successfully  </Typography> )}  
-
-
-              <Typography variant="subtitle1" sx={{ mb: 1 }}> FingerPrint Authentication</Typography>
-              <Button  
-                      variant="contained" 
-                      color="secondary" 
-                      onClick={handleFingerprintCapture}
-                        >
-                      Capture FingerPrint
-                      </Button>
-                {formData.fingerprintCaptured && (<Typography variant="body2" color="success.main" sx={{ mt: 1 }}>FingerPrint Captured Successfully  </Typography> )}  
-                      </FormControl>
+                </FormControl>
                 </Box>
-              )}
+              )}    
 
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button color="inherit" disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 1 }}>

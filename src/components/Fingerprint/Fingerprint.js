@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Paper, Typography, CircularProgress, Button, Box } from '@mui/material';
+import { Paper, Typography, CircularProgress, Button, Box, Container } from '@mui/material';
 import FingerprintIcon from '@mui/icons-material/Fingerprint';
 
 
@@ -43,7 +43,9 @@ function FingerprintPage() {
   };
 
   return (
-    <Paper elevation={4} sx={{ width: 400, padding: 4, margin: 'auto', marginTop: 16, borderRadius: 2 }}>
+    <Container  sx={{height: '100vh', 
+      width: '100vw',  display:"flex", alignItems:"center", justifyContent:"center"}} >
+    <Paper elevation={4} sx={{ width: 400, padding: 4, margin: 'auto', borderRadius: 2 }}>
       <Typography variant="h6" align="center" sx={{ marginBottom: 2 }}>
         Fingerprint Authentication
       </Typography>
@@ -97,6 +99,7 @@ function FingerprintPage() {
         )}
       </Box>
     </Paper>
+    </Container>
   );
 }
 

@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Box,
   Button,
-  TextField,
   Typography,
   Paper,
   Select, 
@@ -11,6 +10,7 @@ import {
 } from '@mui/material';
 import { useUser } from '../../context/UserContext';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
 
 const Verification = () => {
   const { setUser, setIsAuthorized, loadUserData } = useUser();
@@ -57,7 +57,7 @@ const Verification = () => {
   }
 
   return (
-
+ <>
     <Box
       display="flex"
       justifyContent="center"
@@ -113,6 +113,7 @@ const Verification = () => {
           
       </Paper>
     </Box>
+    </>
   );
 };
 

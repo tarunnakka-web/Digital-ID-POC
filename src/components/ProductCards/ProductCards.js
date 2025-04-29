@@ -7,10 +7,7 @@ import {
   Typography,
   Dialog,
   DialogActions,
-  DialogContent,
-  DialogTitle,
-  Select,
-  MenuItem,
+  DialogTitle
 } from "@mui/material";
 import { useCart } from "../../context/CartContext";  // Import the useCart hook
 import { useUser } from "../../context/UserContext";  // Import the useUser hook
@@ -100,6 +97,7 @@ const ProductCards = ({ item }) => {
         }}
       >
         <DialogTitle
+        marginBottom={4}
           sx={{
             bgcolor: "#1976D2",
             color: "#fff",
@@ -107,6 +105,7 @@ const ProductCards = ({ item }) => {
             borderTopLeftRadius: 8,
             borderTopRightRadius: 8,
             pb: 2,
+            
           }}
         >
           <Box display="flex" flexDirection="column" alignItems="center">
@@ -118,9 +117,6 @@ const ProductCards = ({ item }) => {
             </Typography> */}
           </Box>
         </DialogTitle>
-
-  
-
           <DialogActions
             sx={{
               px: 3,

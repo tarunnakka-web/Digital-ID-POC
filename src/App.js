@@ -5,7 +5,7 @@ import HomePage from './components/HomePage/HomePage';
 import Cart from './components/Cart/Cart';
 import RegistrationForm from './components/RegistrationForm/RegistrationForm';
 import UserDetails from './components/UserDetails/UserDetails';
-import Verification from './components/Verification/Verification';
+import Verification from './components/SelectID/SelectID.js';
 import LoginPage from './components/LoginPage/LoginPage.js';
 import FingerprintPage from './components/Fingerprint/Fingerprint.js';
 import { CartProvider } from './context/CartContext';
