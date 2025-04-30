@@ -25,7 +25,8 @@ const Verification = () => {
   
 
   const handleDropdownChange = (e) => {
-    setDropDownValue(e.target.value)
+    setDropDownValue(e.target.value);
+    setError("");
   }
 
   return (

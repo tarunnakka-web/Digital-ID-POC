@@ -1,7 +1,9 @@
+// Importing necessary dependencies
 import React from 'react'
 import { Container, Typography, Grid } from '@mui/material'
 import ProductCards from '../ProductCards/ProductCards'
 
+// Sample product data used for rendering on the homepage
 const data = [
   {"id": 1, "name": "Whiskey Bottle", "caption":"Crocodile leather sling bag", "price":1250, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589502/whisky_bottle_cxtmf7.webp"},
   {"id": 2, "name": "Pocket Knife", "caption":"Crocodile leather sling bag", "price":199, "criteria":"unauthorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589576/pocket_knife_ldmu7y.jpg"},
@@ -21,34 +23,16 @@ const data = [
   {"id": 16, "name": "sports t-shirt", "caption":"Crocodile leather sling bag", "price":699, "criteria":"authorized", "url": "https://res.cloudinary.com/dpizvs16e/image/upload/v1745591363/sports_tshirt_gf4qz6.jpg"}
 ]
 
+// Functional component to display all products on the homepage
 const HomePage = () => (
-  <Container 
-    maxWidth="lg" 
-    sx={{ 
-      display: "flex", 
-      flexDirection: "column", 
-      justifyContent: "center", 
-      alignItems: "center", 
-      marginTop: "80px", 
-      paddingBottom: "50px"
-    }}
-  >
-    <Typography 
-      variant="h5" 
-      gutterBottom 
-      sx={{ 
-        fontWeight: 'bold', 
-        marginBottom: "40px", 
-        textAlign: 'center', 
-        marginTop:"50px"
-      }}
-    >
+  <Container maxWidth="xlg" sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginTop: "80px", paddingBottom: "50px" }}>
+    <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', marginBottom: "40px", textAlign: 'center', marginTop: "6px", fontSize: "20px" }}>
       All Products
     </Typography>
-
-    <Grid container spacing={4} sx={{display:"flex", alignItems:"center", justifyContent:"center"}}>
+    {/* Grid layout for product display with responsiveness */}
+    <Grid container spacing={{ xs: 1, sm: 2, md: 3, lg: 4 }} sx={{ display: "flex", alignItems: "center", justifyContent: { xs: "center", sm: "flex-start" } }}>
       {data.map((item) => (
-        <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
+        <Grid item xs={12} sm={6} md={4} lg={3} key={item.id} >
           <ProductCards item={item} />
         </Grid>
       ))}
@@ -56,4 +40,5 @@ const HomePage = () => (
   </Container>
 );
 
+// Exporting HomePage component as default
 export default HomePage;

@@ -8,6 +8,7 @@ import UserDetails from './components/UserDetails/UserDetails';
 import Verification from './components/SelectID/SelectID.js';
 import LoginPage from './components/LoginPage/LoginPage.js';
 import FingerprintPage from './components/Fingerprint/Fingerprint.js';
+import FingerprintScanner from './components/FingerprintScanner/FingerprintScanner.js';
 import { CartProvider } from './context/CartContext';
 import { UserProvider } from './context/UserContext';
 
@@ -27,6 +28,7 @@ function App() {
           <HeaderWrapper />
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/finger-print-Scanner" element={<FingerprintScanner />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/verification" element={<Verification />} />
             <Route path="/finger-print" element={<FingerprintPage />} />

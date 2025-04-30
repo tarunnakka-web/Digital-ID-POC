@@ -1,20 +1,36 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepButton from '@mui/material/StepButton';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { TextField, FormControl, InputLabel, Select, MenuItem, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from '@mui/material';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Password } from '@mui/icons-material';
-import FingerprintPage from '../Fingerprint/Fingerprint';
+// Same imports as before
+import React, {  useState } from 'react';
+import {
+  Box,
+  Stepper,
+  Step,
+  StepButton,
+  Button,
+  Typography,
+  Container,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  DialogContentText,
+  Paper,InputAdornment, IconButton
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-const steps = ['Personal information', 'Document Submission', 'email Verification',"Biometric Verification"];
+
+const steps = ['Personal Information', 'Document Submission', 'Set Password', 'Biometric Verification'];
 
 export default function HorizontalNonLinearStepper() {
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState({});
   const [formData, setFormData] = React.useState({
@@ -27,12 +43,12 @@ export default function HorizontalNonLinearStepper() {
     documentType: '',
     documentFile: null,
     email: '',
-    password : '', 
-    confirmPassword : ""
+    password: '',
+    confirmPassword: '',
+    biometricCaptured: false,
   });
   const [errors, setErrors] = React.useState({});
   const [openDialog, setOpenDialog] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
 
   const totalSteps = () => steps.length;
   const completedSteps = () => Object.keys(completed).length;
@@ -40,184 +56,160 @@ export default function HorizontalNonLinearStepper() {
   const allStepsCompleted = () => completedSteps() === totalSteps();
 
   const handleNext = () => {
-    const newErrors = {};
-
-    // Validate current step
-    if (activeStep === 0) {
-      if (!formData.firstName) newErrors.firstName = "First Name is required";
-      if (!formData.lastName) newErrors.lastName = "Last Name is required";
-      if (!formData.gender) newErrors.gender = "Gender is required";
-      if (!formData.dob) newErrors.dob = "Date of Birth is required";
-      if (!formData.phoneNumber) newErrors.phoneNumber = "Phone Number is required";
-      if (!formData.address) newErrors.address = "Address is required";
-    } else if (activeStep === 1) {
-      if (!formData.documentType) newErrors.documentType = "Document Type is required";
-      if (!formData.documentFile) newErrors.documentFile = "Document File is required";
-    } else if (activeStep === 2) {
-      if (!formData.email) newErrors.email = "Email is required";
-      if (!formData.password) newErrors.password = "Email is required";
-      if (!formData.confirmPassword) newErrors.confirmPassword = "Email is required";
-    }else if (activeStep === 3){
-      if (!formData.documentType) newErrors.documentType = "Document Type is required";
-      if (!formData.documentFile) newErrors.documentFile = "Document File is required";
-    }
-
+    const newErrors = validateStep(activeStep);
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      return; // Prevent navigation to next step
+      return;
     }
-
-    const newActiveStep =
-      isLastStep() && !allStepsCompleted()
-        ? steps.findIndex((step, i) => !(i in completed))
-        : activeStep + 1;
-    setActiveStep(newActiveStep);
+    const newStep = isLastStep() && !allStepsCompleted()
+      ? steps.findIndex((step, i) => !(i in completed))
+      : activeStep + 1;
+    setActiveStep(newStep);
   };
 
-  const handleBack = () => {
-    setActiveStep(prevActiveStep => prevActiveStep - 1);
-  };
-
-  const handleStep = step => () => {
-    setActiveStep(step);
-  };
+  const handleBack = () => setActiveStep((prev) => prev - 1);
+  const handleStep = (step) => () => setActiveStep(step);
 
   const handleComplete = () => {
-    if (completedSteps() === totalSteps() - 1) {
-      setOpenDialog(true); // Open the dialog when all steps are completed
+    const newErrors = validateStep(activeStep);
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
     }
-    setCompleted({
-      ...completed,
-      [activeStep]: true,
-    });
-    handleNext();
+    const updatedCompleted = { ...completed, [activeStep]: true };
+    setCompleted(updatedCompleted);
 
-    if (activeStep === 0){
-      if (formData.firstName !== "" && formData.lastName !== "" && formData.gender !== "" && formData.dob !== "" && formData.phoneNumber !== "" && formData.address !== ""){
-        setCompleted({
-          ...completed,
-          [activeStep]: true,
-        });
-        handleNext();   
-      }
-    }else if (activeStep === 1){
-      if (formData.documentType !== "" && formData.documentFile !== "" ){
-        setCompleted({
-          ...completed,
-          [activeStep]: true,
-        });
-        handleNext();  
-      }
-    }else if (activeStep === 2){
-      if (formData.email !== "" && formData.password !== "" && formData.confirmPassword !== ""){
-        setCompleted({
-          ...completed,
-          [activeStep]: true,
-        });
-        handleNext();  
-      }
+    if (completedSteps() === totalSteps() - 1) {
+      setOpenDialog(true);
+    } else {
+      handleNext();
     }
-    else if (activeStep === 3){ 
-      if (formData.documentType !== "" && formData.documentType === null){
-      setCompleted({
-          ...completed,
-          [activeStep]: true,
-        });
-        handleNext(); 
-    }
-  }
   };
 
   const handleReset = () => {
     setActiveStep(0);
     setCompleted({});
     setFormData({
-      firstName: "",
-      lastName: "",
-      gender: "",
-      dob: "",
-      email: "",
-      phoneNumber: "",
-      address: "",
-      documentType: "",
+      firstName: '',
+      lastName: '',
+      gender: '',
+      dob: '',
+      phoneNumber: '',
+      address: '',
+      documentType: '',
       documentFile: null,
-      email : "", 
-      password : '',
-      confirmPassword : '' ,
+      email: '',
+      password: '',
+      confirmPassword: '',
+      biometricCaptured: false,
     });
-
+    setErrors({});
+    setOpenDialog(false);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
+    }));
+    setErrors((prev) => ({
+      ...prev,
+      [name]: '',
     }));
   };
 
   const handleFileChange = (e) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setFormData(prev => ({
+    const file = e.target.files?.[0];
+    if (file) {
+      setFormData((prev) => ({
         ...prev,
-        documentFile: e.target.files[0],
+        documentFile: file,
+      }));
+      setErrors((prev) => ({
+        ...prev,
+        documentFile: '',
       }));
     }
   };
 
-  const handleBiometricCapture = async () => {
-    try {
-      // Example: Simulate biometric capture (replace this with real WebAuthn if needed)
-      // Here, you would integrate real biometric auth like WebAuthn APIs
-      const fakeBiometricCredential = {
-        id: 'sample-biometric-id',
-        timestamp: new Date().toISOString(),
-      };
-      // Simulate a successful biometric capture
-      setFormData((prev) => ({
-        ...prev,
-        biometricCaptured: true,
-        biometricCredential: fakeBiometricCredential,
-      }));
-    } catch (error) {
-      console.error("Biometric capture failed:", error);
-      alert("Failed to capture biometric . Please try again.");
-    }
+  const handleBiometricCapture = () => {
+    // Then navigate after updating state
+    navigate("/finger-print-Scanner")
+    // Update formData first
+    setFormData((prev) => ({
+      ...prev,
+      biometricCaptured: true,
+    }));
+  
+    
   };
+  
 
-  const handleFingerprintCapture = async () => {
-    try {
-      // Simulate fingerprint capture process (replace with actual fingerprint capture logic)
-      const fakeFingerprintCredential = {
-        id: 'sample-fingerprint-id',
-        timestamp: new Date().toISOString(),
-      };
-  
-      // Simulating a fingerprint capture success
-      setFormData((prev) => ({
-        ...prev,
-        fingerprintCaptured: true,
-        fingerprintCredential: fakeFingerprintCredential,
-      }));
-  
-      // You could add a condition to simulate failure
-      const captureSuccess = Math.random() > 0.2; // 80% chance of success
-      if (captureSuccess) {
-        alert("Fingerprint captured successfully ");
-      } else {
-        throw new Error("Fingerprint capture failed due to device error.");
+  const validateStep = (step) => {
+    const newErrors = {};
+    const {
+      firstName,
+      lastName,
+      gender,
+      dob,
+      phoneNumber,
+      address,
+      documentType,
+      documentFile,
+      email,
+      password,
+      confirmPassword,
+      biometricCaptured,
+    } = formData;
+
+    if (step === 0) {
+      if (!firstName.trim()) newErrors.firstName = 'First name is required';
+      if (!lastName.trim()) newErrors.lastName = 'Last name is required';
+      if (!gender) newErrors.gender = 'Gender is required';
+      if (!dob) newErrors.dob = 'Date of birth is required';
+      if (!phoneNumber.trim()) newErrors.phoneNumber = 'Phone number is required';
+      if (!address.trim()) newErrors.address = 'Address is required';
+    }
+
+    if (step === 1) {
+      if (!documentType) newErrors.documentType = 'Please select a document type';
+      if (!documentFile) newErrors.documentFile = 'Document upload is required';
+    }
+
+    if (step === 2) {
+      if (!email.trim()) {
+        newErrors.email = 'Email is required';
+      } else if (!email.includes('@')) {
+        newErrors.email = 'Enter a valid email address';
       }
-    } catch (error) {
-      console.error("Fingerprint capture failed:", error);
-      alert(`Failed to capture fingerprint ❌. Reason: ${error.message}`);
+
+      if (!password.trim()) {
+        newErrors.password = 'Password is required';
+      } else if (password.length < 6) {
+        newErrors.password = 'Password must be at least 6 characters';
+      }
+
+      if (!confirmPassword.trim()) {
+        newErrors.confirmPassword = 'Confirm your password';
+      } else if (confirmPassword !== password) {
+        newErrors.confirmPassword = 'Passwords do not match';
+      }
     }
+
+    if (step === 3) {
+      if (!biometricCaptured) {
+        newErrors.biometricCaptured = 'Please complete biometric verification';
+      }
+    }
+
+    return newErrors;
   };
-  
 
   return (
-    <Container maxWidth="lg" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '140px' }}>
-      <Box sx={{ width: '100%' }}>
-        <Stepper nonLinear activeStep={activeStep}>
+    <Container maxWidth="xlg" sx={{ mt: 10, mb: 6 }}>
+      <Paper elevation={3} sx={{ p: 4 }}>
+        <Stepper nonLinear activeStep={activeStep} sx={{ mb: 4 }}>
           {steps.map((label, index) => (
             <Step key={label} completed={completed[index]}>
               <StepButton color="inherit" onClick={handleStep(index)}>
@@ -226,123 +218,146 @@ export default function HorizontalNonLinearStepper() {
             </Step>
           ))}
         </Stepper>
-        <div>
-          {allStepsCompleted() ? (
-            <React.Fragment>
-              <Typography sx={{ mt: 2, mb: 1 }}>All steps completed - you&apos;re finished</Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                <Box sx={{ flex: '1 1 auto' }} />
-                <Button onClick={handleReset}>Reset</Button>
-              </Box>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
+
+        {allStepsCompleted() ? (
+          <>
+            <Typography variant="h6" gutterBottom align="center">
+              All steps completed - you’re finished
+            </Typography>
+            <Box display="flex" justifyContent="center">
+              <Button variant="outlined" onClick={handleReset}>
+                Reset
+              </Button>
+            </Box>
+          </>
+        ) : (
+          <>
+            <Box component="form" noValidate autoComplete="off">
               {activeStep === 0 && (
-                <Box sx={{ display: 'flex', flexDirection: 'column', py: 2, marginTop:"30px" }}>
-                  <TextField sx={{marginBottom:"20px"}} label="First Name" name="firstName" value={formData.firstName} onChange={handleChange} error={Boolean(errors.firstName)} helperText={errors.firstName} required />
-                  <TextField sx={{marginBottom:"20px"}} label="Last Name" name="lastName" value={formData.lastName} onChange={handleChange} error={Boolean(errors.lastName)} helperText={errors.lastName} required />
-                  <FormControl sx={{marginBottom:"20px"}} fullWidth required error={Boolean(errors.gender)}>
+                <>
+                  <TextField fullWidth label="First Name" name="firstName" value={formData.firstName} onChange={handleChange} margin="normal" error={!!errors.firstName} helperText={errors.firstName} />
+                  <TextField fullWidth label="Last Name" name="lastName" value={formData.lastName} onChange={handleChange} margin="normal" error={!!errors.lastName} helperText={errors.lastName} />
+                  <FormControl fullWidth margin="normal" error={!!errors.gender}>
                     <InputLabel>Gender</InputLabel>
                     <Select name="gender" value={formData.gender} onChange={handleChange} label="Gender">
-                      <MenuItem value="">-- Select Gender --</MenuItem>
+                      <MenuItem value="">Select Gender</MenuItem>
                       <MenuItem value="male">Male</MenuItem>
                       <MenuItem value="female">Female</MenuItem>
                       <MenuItem value="other">Other</MenuItem>
                     </Select>
-                    <Typography color="error" variant="caption">{errors.gender}</Typography>
+                    {errors.gender && <Typography color="error" variant="caption">{errors.gender}</Typography>}
                   </FormControl>
-                  <TextField sx={{marginBottom:"20px"}} label="Date of Birth" type="date" name="dob" value={formData.dob} onChange={handleChange} InputLabelProps={{ shrink: true }} error={Boolean(errors.dob)} helperText={errors.dob} required />          
-                  <TextField sx={{marginBottom:"20px"}} label="Phone Number" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} error={Boolean(errors.phoneNumber)} helperText={errors.phoneNumber} required />
-                  <TextField sx={{marginBottom:"20px"}} label="Address" name="address" value={formData.address} onChange={handleChange} error={Boolean(errors.address)} helperText={errors.address} required />       
-                  </Box>
+                  <TextField fullWidth type="date" name="dob" label="Date of Birth" value={formData.dob} onChange={handleChange} InputLabelProps={{ shrink: true }} margin="normal" error={!!errors.dob} helperText={errors.dob} />
+                  <TextField fullWidth label="Phone Number" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} margin="normal" error={!!errors.phoneNumber} helperText={errors.phoneNumber} />
+                  <TextField fullWidth label="Address" name="address" value={formData.address} onChange={handleChange} margin="normal" error={!!errors.address} helperText={errors.address} />
+                </>
               )}
 
               {activeStep === 1 && (
-                <Box sx={{ display: 'flex', flexDirection: 'column', py: 2, marginTop:"30px" }}>
-                <FormControl sx={{marginBottom:"20px"}} fullWidth required error={Boolean(errors.documentType)}>
-                  <InputLabel>Document Type</InputLabel>
-                  <Select name="documentType" value={formData.documentType} onChange={handleChange} label="Document Type">
-                    <MenuItem value="">-- Select Document Type --</MenuItem>
-                    <MenuItem value="passport">Passport</MenuItem>
-                    <MenuItem value="drivingLicense">Driving License</MenuItem>
-                  </Select>
-                  <Typography color="error" variant="caption">{errors.documentType}</Typography>
-                </FormControl>
-                <input sx={{marginBottom:"20px"}} type="file" onChange={handleFileChange} required />
-                {errors.documentFile && <Typography color="error" variant="caption">{errors.documentFile}</Typography>}
-              </Box>
-
+                <>
+                  <FormControl fullWidth margin="normal" error={!!errors.documentType}>
+                    <InputLabel>Document Type</InputLabel>
+                    <Select name="documentType" value={formData.documentType} onChange={handleChange} label="Document Type">
+                      <MenuItem value="">Select Document</MenuItem>
+                      <MenuItem value="passport">Passport</MenuItem>
+                      <MenuItem value="aadhaar">Aadhaar Card</MenuItem>
+                      <MenuItem value="license">Driving License</MenuItem>
+                    </Select>
+                    {errors.documentType && <Typography color="error" variant="caption">{errors.documentType}</Typography>}
+                  </FormControl>
+                  <Button variant="outlined" component="label" fullWidth sx={{ mt: 2 }}>
+                    Upload Document
+                    <input type="file" hidden onChange={handleFileChange} />
+                  </Button>
+                  {errors.documentFile && <Typography color="error" variant="caption">{errors.documentFile}</Typography>}
+                </>
               )}
-              {activeStep === 2 &&(
-                <Box sx={{ display: 'flex', flexDirection: 'column', py: 2, marginTop:"30px" }}>
-                <TextField sx={{marginBottom:"20px"}} type="email" label="Email" name="email" value={formData.email} onChange={handleChange} error={Boolean(errors.email)} helperText={errors.email} required />
-                <TextField sx={{marginBottom:"20px"}} type='password' label="password" name="password" value={formData.password} onChange={handleChange} error={Boolean(errors.password)} helperText={errors.password} required />
-                <TextField sx={{marginBottom:"20px"}} type='password' label="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} error={Boolean(errors.confirmPassword)} helperText={errors.confirmPassword} required />
-             </Box>
+
+              {activeStep === 2 && (
+                <>
+                  <TextField fullWidth type="email" label="Email" name="email" value={formData.email} onChange={handleChange} margin="normal" error={!!errors.email} helperText={errors.email} />
+                  <TextField
+                    fullWidth
+                    label="Password"
+                    name="password"
+                    type={showPassword ? 'text' : 'password'}
+                    value={formData.password}
+                    onChange={handleChange}
+                    margin="normal"
+                    error={!!errors.password}
+                    helperText={errors.password}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={() => setShowPassword((prev) => !prev)} edge="end">
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+
+                  <TextField
+                    fullWidth
+                    label="Confirm Password"
+                    name="confirmPassword"
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    margin="normal"
+                    error={!!errors.confirmPassword}
+                    helperText={errors.confirmPassword}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={() => setShowConfirmPassword((prev) => !prev)} edge="end">
+                            {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      )
+                    }}/>  </>
               )}
 
               {activeStep === 3 && (
-                <Box sx={{ display: 'flex', flexDirection: 'column', py: 2, marginTop:"10px" }}>
-                 
-                  <FormControl fullWidth sx={{ mt: 2 }}>
-                    <Typography variant="subtitle1" sx={{ mb: 1}}> Biometric Authentication</Typography>
-                  <Button 
-                      variant="contained" 
-                      color="secondary" 
-                      onClick={handleBiometricCapture}
-                        >
-                      Capture Biometric
-                      </Button>
+                <>
+                  <Typography variant="subtitle1" sx={{ mb: 2 }}>Biometric Authentication</Typography>
+                  <Button onClick={handleBiometricCapture} variant="contained" fullWidth sx={{ marginTop: 1, padding: '10px 0', backgroundColor: '#1976d2', '&:hover': { backgroundColor: '#1565c0' } }}>
+                    Scan Fingerprint
+                  </Button>
+                  
+                  {formData.biometricCaptured && <Typography sx={{ mt: 2 }} color="success.main">Fingerprint Captured Successfully</Typography>}
+                  {errors.biometricCaptured && <Typography color="error">{errors.biometricCaptured}</Typography>}
+                </>
+              )}
+            </Box>
 
-                        {/* Show result after capture */}
-                  {formData.biometricCaptured && (<Typography variant="body2" color="success.main" sx={{ mt: 1, mb:3 }}>Biometric Captured Successfully  </Typography> )}  
-                </FormControl>
-                </Box>
-              )}    
-
-              <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                <Button color="inherit" disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 1 }}>
-                  Back
-                </Button>
-                <Box sx={{ flex: '1 1 auto' }} />
-                {activeStep !== 3 && 
+            <Box display="flex" justifyContent="space-between" mt={4}>
+              <Button disabled={activeStep === 0} onClick={handleBack}>
+                Back
+              </Button>
+              <Box>
                 <Button onClick={handleNext} sx={{ mr: 1 }}>
                   Next
-                </Button> }
-                {activeStep !== steps.length &&
-                  (completed[activeStep] ? (
-                    <Typography variant="caption" sx={{ display: 'inline-block' }}>
-                      Step {activeStep + 1} already completed
-                    </Typography>
-                  ) : (
-                    <Button onClick={handleComplete}>
-                      {completedSteps() === totalSteps() - 1 ? 'Finish' : 'Complete Step'}
-                    </Button>
-                  ))}
+                </Button>
+                <Button variant="contained" onClick={handleComplete}>
+                  Complete Step
+                </Button>
               </Box>
-            </React.Fragment>
-          )}
-        </div>
-        {/* Dialog */}
-        <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-            <DialogTitle sx={{ textAlign: "center", p: 2 }}>
-              <CheckCircleIcon sx={{ fontSize: 60, color: "green", mb: 1 }} />
-                  <Typography variant="h5" sx={{ fontWeight: "bold", mt: 1 }}>
-                  Registration Successful
-                  </Typography>
-            </DialogTitle>
-        <DialogContent sx={{ textAlign: "center", p: 3 }}>
-                    <DialogContentText sx={{ fontSize: "18px" }}>
-                  Your completed registration, we will respond shortly.
-        </DialogContentText>
-          </DialogContent>
-              <DialogActions sx={{ justifyContent: "center", pb: 2 }}>
-            <Button variant="contained" color="success" onClick={() => setOpenDialog(false)}>
-                 OK
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </Box>
+            </Box>
+          </>
+        )}
+      </Paper>
+
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+        <DialogTitle>Registration Completed</DialogTitle>
+        <DialogContent>
+          <DialogContentText>All steps have been successfully completed!</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(false)}>Close</Button>
+          <Button onClick={handleReset}>Reset</Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }

@@ -70,10 +70,10 @@ const UserDetails = () => {
   };
 
   return (
-    <Container maxWidth="lg"> 
-      <Box sx={{ padding: 4, marginTop: "100px" }}>
+    <Container maxWidth="xlg"> 
+      <Box sx={{  marginTop: "100px" }}>
         {/* Header */}
-        <Typography variant="h5" sx={{ mb: 3 }}>
+        <Typography variant="h5" sx={{ mb: 3 , fontWeight: 'bold',  fontSize: "20px"  }}>
           {isAuthorized ? 'Registered Users' : 'No Users Registered'}
         </Typography>
 
@@ -86,14 +86,14 @@ const UserDetails = () => {
               size="small"
               value={searchTerm}
               onChange={handleSearchChange}
-              sx={{ mb: 3, width: '300px' }}
+              sx={{ mb: 3, width: '300px',height: '40px', }}
             />
 
             {/* Delete Button */}
             <Button
               variant="contained"
               color="error"
-              sx={{ mb: 3 }}
+              sx={{ mb: 3 , ml:2, height: '40px', }}
               onClick={handleDeleteSelected}
               disabled={selectedUsers.length === 0}
             >
