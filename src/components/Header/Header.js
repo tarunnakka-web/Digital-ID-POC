@@ -37,7 +37,7 @@ export default function Header() {
         boxShadow: 0,
         bgcolor: 'background.paper',
         borderRadius: '10px',
-        m: 1,
+        mt: 1,
       }}
     >
       <Container maxWidth="xlg">
