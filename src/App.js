@@ -7,8 +7,8 @@ import RegistrationForm from './components/RegistrationForm/RegistrationForm';
 import UserDetails from './components/UserDetails/UserDetails';
 import Verification from './components/SelectID/SelectID.js';
 import LoginPage from './components/LoginPage/LoginPage.js';
-import FingerprintPage from './components/Fingerprint/Fingerprint.js';
-import FingerprintScanner from './components/FingerprintScanner/FingerprintScanner.js';
+import FingerprintPage from './components/ScanFingerprint/ScanFingerprint.js';
+import FingerprintScanner from './components/AddFingerprint/AddFingerprint.js';
 import { CartProvider } from './context/CartContext';
 import { UserProvider } from './context/UserContext';
 
