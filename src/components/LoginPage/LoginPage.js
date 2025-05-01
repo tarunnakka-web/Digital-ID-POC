@@ -165,7 +165,7 @@ function LoginPage() {
               Use your fingerprint to log in.
             </Typography>
             <Button
-              onClick={() => navigate('/finger-print')}
+              onClick={() => navigate("/scan-finger-print-forLogin")}
               variant="contained"
               fullWidth
               sx={{ marginTop: 1, padding: '10px 0', backgroundColor: '#1976d2', '&:hover': { backgroundColor: '#1565c0' } }}

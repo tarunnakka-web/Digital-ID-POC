@@ -59,34 +59,34 @@ const ProductCards = ({ item }) => {
 
   return (
     <Card
-      sx={{
-        width: "100%", // Make sure card takes full width of its container
-        maxWidth: "300px", // Set a max width for consistency
-        height: "400px", // Set a fixed height for all cards
-        borderRadius: "10px",
-        backgroundColor: "#fff",
-        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-        transition: "transform 0.3s, box-shadow 0.3s, filter 0.3s",
-        "&:hover": {
-          transform: "scale(1.03)",
-          boxShadow: "0 6px 20px rgba(0, 0, 0, 0.2)",
-          filter: "brightness(1.05)",
-        },
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        padding: 2,
-        textAlign: "center",
-        overflow: "hidden",
-        justifyContent: "space-between", // Distribute content evenly
-      }}
+    sx={{
+      width:"240px" ,
+      borderRadius: "10px",
+      backgroundColor: "#fff",
+      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+      transition:
+        "transform 0.3s, box-shadow 0.3s, filter 0.3s",
+      "&:hover": {
+        transform: "scale(1.03)",
+        boxShadow: "0 6px 20px rgba(0, 0, 0, 0.2)",
+        filter: "brightness(1.05)",
+      },
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      padding: 2,
+      textAlign: "center",
+      overflow: "hidden",
+      marginBottom: 2,
+      // marginRight: "6px",
+    }}
     >
       {/* Product Image */}
       <img
         src={url}
         alt={name || "Product"}
         style={{
-          width: "180px",
+          width: "210px",
           height: "180px",
           objectFit: "cover",
           borderRadius: "12px",

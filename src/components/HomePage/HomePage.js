@@ -53,7 +53,7 @@ const HomePage = () => (
     {/* Responsive grid layout to display product cards */}
     <Grid
       container
-      spacing={{ xs: 1, sm: 2, md: 3, lg: 4 }}
+      spacing={{ xs: 1, sm: 2, md: 3, lg: 3 }}
       sx={{
         alignItems: 'center',
         justifyContent: { xs: 'center', sm: 'flex-start' }

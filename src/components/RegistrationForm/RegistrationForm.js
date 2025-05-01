@@ -144,7 +144,7 @@ export default function HorizontalNonLinearStepper() {
 
   // Biometric capture action (navigates to scanner route)
   const handleBiometricCapture = () => {
-    navigate("/finger-print-Scanner");
+    navigate("/add-finger-print-forRegistration");
     setFormData((prev) => ({ ...prev, biometricCaptured: true }));
   };
 

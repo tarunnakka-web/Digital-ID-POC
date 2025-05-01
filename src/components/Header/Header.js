@@ -37,12 +37,12 @@ export default function Header() {
         boxShadow: 0,
         bgcolor: 'background.paper',
         borderRadius: '10px',
-        m: 2
+        m: 1,
       }}
     >
-      <Container maxWidth="xl">
+      <Container maxWidth="xlg">
         <Toolbar
-          variant="dense"
+          // variant="dense"
           disableGutters
           sx={{
             display: 'flex',

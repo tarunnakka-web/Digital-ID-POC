@@ -7,8 +7,8 @@ import RegistrationForm from './components/RegistrationForm/RegistrationForm';
 import UserDetails from './components/UserDetails/UserDetails';
 import Verification from './components/SelectID/SelectID.js';
 import LoginPage from './components/LoginPage/LoginPage.js';
-import FingerprintPage from './components/ScanFingerprint/ScanFingerprint.js';
-import FingerprintScanner from './components/AddFingerprint/AddFingerprint.js';
+import ScanFingerprintForLogin from './components/ScanFingerprintForLogin/ScanFingerprintForLogin.js';
+import AddFingerprintForRegistration from './components/AddFingerprintForRegistration/AddFingerprintForRegistration.js';
 import { CartProvider } from './context/CartContext';
 import { UserProvider } from './context/UserContext';
 
@@ -28,10 +28,10 @@ function App() {
           <HeaderWrapper />
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/finger-print-Scanner" element={<FingerprintScanner />} />
+            <Route path="/add-finger-print-forRegistration" element={<AddFingerprintForRegistration />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/verification" element={<Verification />} />
-            <Route path="/finger-print" element={<FingerprintPage />} />
+            <Route path="/scan-finger-print-forLogin" element={<ScanFingerprintForLogin />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/register" element={<RegistrationForm />} />
             <Route path="/user-details" element={<UserDetails />} />
