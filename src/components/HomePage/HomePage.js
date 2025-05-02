@@ -1,6 +1,6 @@
 // Importing necessary dependencies
 import React from 'react';
-import { Container, Typography, Grid } from '@mui/material';
+import { Container, Typography, Grid, Box } from '@mui/material';
 import ProductCards from '../ProductCards/ProductCards';
 
 const data = [
@@ -56,14 +56,23 @@ const HomePage = () => (
       spacing={{ xs: 1, sm: 2, md: 3, lg: 3 }}
       sx={{
         alignItems: 'center',
-        justifyContent: { xs: 'center', sm: 'flex-start' }
+        justifyContent: { xs: 'center', sm: 'center' }
       }}
     >
       {data.map((item) => (
-        <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
-          {/* Individual product card */}
-          <ProductCards item={item} />
-        </Grid>
+       <Grid
+       item
+       xs={12}
+       sm={6}
+       md={4}
+       lg={3}
+       key={item.id}
+       sx={{ display: "flex", justifyContent: "center" }}
+     >
+       <Box sx={{ width: "100%", height: "100%", margin:"4px" }}>
+         <ProductCards item={item} />
+       </Box>
+     </Grid>
       ))}
     </Grid>
   </Container>

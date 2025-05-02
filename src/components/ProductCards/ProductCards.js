@@ -89,7 +89,7 @@ const ProductCards = ({ item }) => {
           width: "210px",
           height: "180px",
           objectFit: "cover",
-          borderRadius: "12px",
+          borderRadius: "5px",
           marginBottom: "20px",
           transition: "transform 0.3s ease",
         }}
