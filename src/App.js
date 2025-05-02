@@ -5,7 +5,7 @@ import HomePage from './components/HomePage/HomePage';
 import Cart from './components/Cart/Cart';
 import RegistrationForm from './components/RegistrationForm/RegistrationForm';
 import UserDetails from './components/UserDetails/UserDetails';
-import Verification from './components/SelectID/SelectID.js';
+import SelectID from './components/SelectID/SelectID.js';
 import LoginPage from './components/LoginPage/LoginPage.js';
 import ScanFingerprintForLogin from './components/ScanFingerprintForLogin/ScanFingerprintForLogin.js';
 import AddFingerprintForRegistration from './components/AddFingerprintForRegistration/AddFingerprintForRegistration.js';
@@ -16,7 +16,7 @@ import { UserProvider } from './context/UserContext';
 // Wrapper to conditionally render Header on specific routes
 const HeaderWrapper = () => {
   const location = useLocation();
-  const hiddenHeaderRoutes = ['/login', '/verification'];
+  const hiddenHeaderRoutes = ['/login', '/selectID' ,];
   return hiddenHeaderRoutes.includes(location.pathname) ? null : <Header />;
 };
 
@@ -30,12 +30,12 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/add-finger-print-forRegistration" element={<AddFingerprintForRegistration />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/verification" element={<Verification />} />
+            <Route path="/selectID" element={<SelectID />} />
             <Route path="/scan-finger-print-forLogin" element={<ScanFingerprintForLogin />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/register" element={<RegistrationForm />} />
             <Route path="/user-details" element={<UserDetails />} />
-            <Route path="*" element={<div style={{ padding: 20 }}>404 - Page Not Found</div>} />
+            <Route path="*" element={<div style={{ padding: 140 , fontSize:"22px" , textAlign:"center", fontWeight:"bold", color:"blue" }}>404 - Page Not Found</div>} />
           </Routes>
         </BrowserRouter>
       </CartProvider>

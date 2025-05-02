@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Button, Typography, Paper, Select, MenuItem } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-const Verification = () => {
+const SelectID = () => {
   // State for holding the selected dropdown value and error message
   const [dropdownValue, setDropDownValue] = useState("");
   const [error, setError] = useState('');
@@ -81,4 +81,4 @@ const Verification = () => {
   );
 };
 
-export default Verification;
+export default SelectID;

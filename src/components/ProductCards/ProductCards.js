@@ -54,7 +54,7 @@ const ProductCards = ({ item }) => {
   // Navigate to verification page
   const handleProceed = () => {
     loadUserData();
-    navigate("/verification", { state: { item } });
+    navigate("/selectID", { state: { item } });
   };
 
   return (
