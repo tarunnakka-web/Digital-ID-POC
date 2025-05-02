@@ -60,25 +60,25 @@ const ProductCards = ({ item }) => {
   return (
     <Card
     sx={{
-      width: "100%", // fill parent Grid item
-      height: "100%", // fill parent Grid item
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-between",
-      alignItems: "center",
+      width:"240px" ,
       borderRadius: "10px",
       backgroundColor: "#fff",
       boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-      transition: "transform 0.3s, box-shadow 0.3s, filter 0.3s",
-      paddingTop:"10px",
-      paddingBottom:"10px",
-      paddingLeft:"5px",
-      paddingRight:"5px",
+      transition:
+        "transform 0.3s, box-shadow 0.3s, filter 0.3s",
       "&:hover": {
         transform: "scale(1.03)",
         boxShadow: "0 6px 20px rgba(0, 0, 0, 0.2)",
         filter: "brightness(1.05)",
       },
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      padding: 2,
+      textAlign: "center",
+      overflow: "hidden",
+      marginBottom: 2,
+      // marginRight: "6px",
     }}
     >
       {/* Product Image */}
@@ -86,8 +86,8 @@ const ProductCards = ({ item }) => {
         src={url}
         alt={name || "Product"}
         style={{
-          width: "200px",
-          height: "200px",
+          width: "210px",
+          height: "180px",
           objectFit: "cover",
           borderRadius: "5px",
           marginBottom: "20px",

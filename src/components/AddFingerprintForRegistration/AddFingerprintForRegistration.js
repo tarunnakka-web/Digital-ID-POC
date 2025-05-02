@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
  * FingerprintScanner simulates a fingerprint scanning interface.
  * Replace timeout logic with actual fingerprint scanner integration as needed.
  */
-const FingerprintScanner = () => {
+const AddFingerprintForRegistration = () => {
   const [isScanning, setIsScanning] = useState(false);
   const [scanStatus, setScanStatus] = useState('');
   const [scanSuccess, setScanSuccess] = useState(false);
@@ -167,4 +167,4 @@ const FingerprintScanner = () => {
   );
 };
 
-export default FingerprintScanner;
+export default AddFingerprintForRegistration;

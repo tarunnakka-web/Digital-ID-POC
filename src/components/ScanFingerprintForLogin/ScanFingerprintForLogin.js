@@ -13,7 +13,7 @@ import FingerprintIcon from '@mui/icons-material/Fingerprint';
 /**
  * FingerprintPage handles fingerprint-based user authentication using the WebAuthn API.
  */
-function FingerprintPage() {
+function ScanFingerprintForLogin() {
   const navigate = useNavigate();
 
   // State to manage fingerprint scan status
@@ -172,4 +172,4 @@ function FingerprintPage() {
   );
 }
 
-export default FingerprintPage;
+export default ScanFingerprintForLogin;
