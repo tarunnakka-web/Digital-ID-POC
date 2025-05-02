@@ -9,6 +9,14 @@ import {
 // Utility function to simulate OTP generation (6-digit number)
 const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
 
+const maskedPhoneNumber = (phoneNumber) => {
+    const visibleDigits = 4;
+    if (phoneNumber.length <= visibleDigits) return phoneNumber;
+    const maskedPart = "*".repeat(phoneNumber.length - visibleDigits);
+    const visiblePart = phoneNumber.slice(-visibleDigits);
+    return maskedPart + visiblePart;
+}
+
 // LoginPage component
 function LoginPage() {
   // State variables
@@ -19,7 +27,8 @@ function LoginPage() {
   const [otpSent, setOtpSent] = useState(false);             // Whether OTP has been sent
   const [verified, setVerified] = useState(false);           // Whether OTP was verified
   const [error, setError] = useState('');                    // Error message
-  const [successMsg, setSuccessMsg] = useState('');          // Success message
+  const [successMsg, setSuccessMsg] = useState('');
+  const [isFocused, setIsFocused] = useState(false);          // Success message
 
   const navigate = useNavigate();
 
@@ -38,7 +47,7 @@ function LoginPage() {
     setGeneratedOtp(otpCode);
     setOtpSent(true);
     setError('');
-    setSuccessMsg(`OTP sent to ${identifier}. (Simulated OTP: ${otpCode})`);
+    setSuccessMsg(`OTP sent to ${maskedPhoneNumber(identifier)}. (Simulated OTP: ${otpCode})`);
     console.log("Simulated OTP:", otpCode); // Debug log
   };
 
@@ -58,6 +67,8 @@ function LoginPage() {
   const handleTabChange = (event, newValue) => {
     setTabIndex(newValue);
   };
+
+  const displayNumber = isFocused ? identifier : maskedPhoneNumber(identifier);
 
   return (
     <Paper elevation={4} sx={{ width: 400, padding: 4, margin: 'auto', marginTop: 8, borderRadius: 2 }}>
@@ -110,9 +121,11 @@ function LoginPage() {
               fullWidth
               margin="normal"
               variant="outlined"
-              value={identifier}
+              value={displayNumber}
               onChange={(e) => setIdentifier(e.target.value)}
               disabled={otpSent}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
             />
 
             {/* OTP input (if OTP has been sent) */}
