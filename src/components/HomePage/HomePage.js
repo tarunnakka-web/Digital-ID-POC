@@ -1,6 +1,6 @@
 // Importing necessary dependencies
 import React from 'react';
-import { Container, Typography, Grid } from '@mui/material';
+import { Container, Typography, Box } from '@mui/material';
 import ProductCards from '../ProductCards/ProductCards';
 
 const data = [
@@ -22,7 +22,6 @@ const data = [
   { id: 16, name: "sports t-shirt", caption: "Breathable activewear for workouts", price: 699, criteria: "authorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745591363/sports_tshirt_gf4qz6.jpg" }
 ];
 
-
 // Functional component to render homepage with all products
 const HomePage = () => (
   <Container
@@ -30,11 +29,9 @@ const HomePage = () => (
     sx={{
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'center',
       alignItems: 'center',
       marginTop: '85px',
       paddingBottom: '50px',
-      
     }}
   >
     {/* Page Title */}
@@ -51,24 +48,21 @@ const HomePage = () => (
       All Products
     </Typography>
 
-    {/* Responsive grid layout to display product cards */}
-    <Grid
-      container
-      spacing={{ xs: 1, sm: 2, md: 3, lg: 3 }}
+    {/* Flexbox container for product cards */}
+    <Box
       sx={{
-        alignItems: 'center',
-        justifyContent: { xs: 'center', sm: 'flex-start' }
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: { md: 'center', lg: 'flex-start' },
+        gap: 3, // spacing between cards
       }}
     >
       {data.map((item) => (
-        <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
-          {/* Individual product card */}
-          <ProductCards item={item} />
-        </Grid>
+        <ProductCards key={item.id} item={item} />
       ))}
-    </Grid>
+    </Box>
+
   </Container>
 );
 
-// Exporting the HomePage component
 export default HomePage;
