@@ -38,9 +38,9 @@ const SelectID = () => {
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="70vh" padding={5}>
         <Paper elevation={3} sx={{ p: 4, width: '100%', maxWidth: 400 }}>
           {/* Header section with a check icon and title */}
-          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: 5 }}>
+          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: 3 }}>
             <CheckCircleIcon sx={{ fontSize: 35 }} />
-            <Typography variant='h4' fontWeight={"bold"}>Select ID</Typography>
+            <Typography variant='h4' sx={{ fontSize: 30 }} fontWeight={"bold"}>Select ID</Typography>
           </Box>
 
           {/* Form section for selecting ID provider */}
@@ -71,7 +71,7 @@ const SelectID = () => {
             )}
 
             {/* Submit button to select the provider */}
-            <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
+            <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 ,backgroundColor:"#006A4D" , }}>
               Select
             </Button>
           </Box>

@@ -31,34 +31,34 @@ export default function Header() {
 
   return (
     <AppBar
+      width="100%"
       position="fixed"
-      enableColorOnDark
       sx={{
         boxShadow: 0,
         bgcolor: 'background.paper',
         borderRadius: '10px',
-        m: 2
+        backgroundColor: '#006A4D',
       }}
     >
-      <Container maxWidth="xlg">
+      <Container width="100%">
         <Toolbar
-          // variant="dense"
           disableGutters
           sx={{
+            width: '100%',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            backdropFilter: 'blur(24px)',
-            border: '1px solid',
-            borderColor: 'divider',
-            backgroundColor: '#0288d1',
-            boxShadow: 1,
-            px: 2,
-            borderRadius: '10px'
+            // backdropFilter: 'blur(24px)',
+            // border: '1px solid',
+            // borderColor: 'divider',
+            // backgroundColor: '#006A4D',
+            // boxShadow: 1,
+            // px: 2,
+            // borderRadius: '10px'
           }}
         >
           {/* Logo/Title */}
-          <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#ffffff' }}>
+          <Typography variant="p" sx={{ fontWeight: 'bold', color: '#ffffff' }}>
             DIGITAL IDENTIFICATION
           </Typography>
 
@@ -110,14 +110,16 @@ export default function Header() {
           <List>
             {navItems.map((item) => (
               <ListItem
-                button
+                key={item.text}
                 component={Link}
                 to={item.to}
-                key={item.text}
                 sx={{ color: '#ffffff' }}
                 onClick={toggleDrawer(false)}
               >
-                <ListItemText primary={item.text} />
+                <ListItemText
+                  primary={item.text}
+                  primaryTypographyProps={{ fontSize: '16px', fontWeight: 500 }}
+                />
               </ListItem>
             ))}
           </List>

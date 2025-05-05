@@ -96,55 +96,24 @@ const ProductCards = ({ item }) => {
       />
 
       {/* Product Name */}
-      <Typography
-        variant="h6"
-        sx={{
-          fontSize: "16px",
-          fontWeight: "bold",
-          marginBottom: "12px",
-          color: "#333",
-          "&:hover": { color: "#1976D2" },
-        }}
-      >
-        {name || "Default Name"}
-      </Typography>
+      <Typography variant="h6"> {name || "Default Name"}  </Typography>
 
       {/* Product Description */}
-      <Typography
-        variant="body2"
-        color="text.secondary"
-        sx={{
-          marginBottom: "14px",
-          fontSize: "14px",
-          lineHeight: "1.5",
-        }}
-      >
-        {caption}
-      </Typography>
-
+      <Typography variant="body2"  color="text.secondary" > {caption} </Typography>
+        
       {/* Product Price */}
-      <Typography
-        variant="h6"
-        color="primary"
-        sx={{
-          marginBottom: "20px",
-          fontSize: "16px",
-          fontWeight: "bold",
-        }}
-      >
-        ₹{price}/-
-      </Typography>
-
+      <Typography  variant="h6" color="primary" > ₹{price}/- </Typography>
+       
       {/* Buy Now Button */}
       <Button
         variant="contained"
         color="primary"
         onClick={handleOpen}
         sx={{
+          backgroundColor:"#006A4D" , 
           borderRadius: "20px",
           padding: "10px 24px",
           textTransform: "none",
-          fontWeight: "bold",
           boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
           "&:hover": {
             boxShadow: "0 6px 15px rgba(0, 0, 0, 0.3)",
@@ -205,12 +174,15 @@ const ProductCards = ({ item }) => {
           <Button
             onClick={handleClose}
             variant="outlined"
-            color="secondary"
+            color="primary"
             sx={{
-              fontWeight: 600,
-              fontSize: "14px",
+              borderRadius: "20px",
+              padding: "10px 24px",
               textTransform: "none",
-              "&:hover": { backgroundColor: "#f1f1f1" },
+              boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
+              "&:hover": {
+                boxShadow: "0 6px 15px rgba(0, 0, 0, 0.3)",
+              },
             }}
           >
             Cancel
@@ -223,10 +195,13 @@ const ProductCards = ({ item }) => {
             color="primary"
             disabled={isNewUser && !dropdownValue}
             sx={{
-              fontWeight: 600,
-              fontSize: "14px",
+              borderRadius: "20px",
+              padding: "10px 24px",
               textTransform: "none",
-              "&:hover": { backgroundColor: "#1976D2" },
+              boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
+              "&:hover": {
+                boxShadow: "0 6px 15px rgba(0, 0, 0, 0.3)",
+              },
             }}
           >
             Look Up IDP

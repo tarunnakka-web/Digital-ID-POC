@@ -11,6 +11,8 @@ import ScanFingerprintForLogin from './components/ScanFingerprintForLogin/ScanFi
 import AddFingerprintForRegistration from './components/AddFingerprintForRegistration/AddFingerprintForRegistration.js';
 import { CartProvider } from './context/CartContext';
 import { UserProvider } from './context/UserContext';
+import theme from './context/theme'; 
+import { ThemeProvider } from '@mui/material/styles';
 
 
 // Wrapper to conditionally render Header on specific routes
@@ -22,6 +24,7 @@ const HeaderWrapper = () => {
 
 function App() {
   return (
+    <ThemeProvider theme={theme}> 
     <UserProvider>
       <CartProvider>
         <BrowserRouter>
@@ -40,6 +43,7 @@ function App() {
         </BrowserRouter>
       </CartProvider>
     </UserProvider>
+    </ThemeProvider>
   );
 }
 

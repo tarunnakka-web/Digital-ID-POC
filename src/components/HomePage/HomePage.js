@@ -13,7 +13,7 @@ const data = [
   { id: 7, name: "Leather Bag", caption: "Genuine leather office sling bag", price: 999, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589847/crocodile_leather_bags_mzpkvp.jpg" },
   { id: 8, name: "Cigarette Pack", caption: "Premium tobacco cigarette pack", price: 399, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589902/cigaratte_drpste.webp" },
   { id: 9, name: "Prescription", caption: "Bottle of regulated prescription pills", price: 499, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589973/priscription_pills_ba6eha.webp" },
-  { id: 10, name: "Vaping Kit", caption: "Rechargeable vape kit with flavored cartridges", price: 599, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590076/bongs_su1maz.webp" },
+  { id: 10, name: "Vaping Kit", caption: "Rechargeable vape kit with ....", price: 599, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590076/bongs_su1maz.webp" },
   { id: 11, name: "Hazardous Chemical", caption: "Highly reactive laboratory chemical", price: 1599, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590322/Chemical_spill_z1nkai.webp" },
   { id: 12, name: "Ivory Artifact", caption: "Traditional ornament made from ivory", price: 699, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590496/organic_capsules_wvk6zh.webp" },
   { id: 13, name: "Alcohol making kits", caption: "Home brewing equipment for alcohol", price: 2999, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590647/alcohol_making_kits_v93jkt.webp" },
@@ -26,6 +26,7 @@ const data = [
 const HomePage = () => (
   <Container
     maxWidth="xlg"
+    width="100%" 
     sx={{
       display: 'flex',
       flexDirection: 'column',
