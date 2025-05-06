@@ -47,8 +47,8 @@ const SelectID = () => {
       <Paper elevation={6} sx={{ p: 4, width: '100%', maxWidth: 420, borderRadius: 3 }}>
         <Box textAlign="center" mb={4}>
           <CheckCircleIcon sx={{ fontSize: 40, color: 'primary.main' }} />
-          <Typography variant="h5" fontWeight="bold" mt={1}>
-            Select ID Provider
+          <Typography variant="h3" fontWeight="bold" mt={1}>
+            Select ID
           </Typography>
         </Box>
 

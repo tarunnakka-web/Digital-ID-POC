@@ -139,6 +139,7 @@ export default function RegistrationStepper() {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 5, mb: 6 }}>
+      <Typography variant='h4' fontWeight={"bold"} mb={4}>Registration Form for Select ID</Typography>
       <Paper elevation={4} sx={{ p: 4 }}>
         <Stepper nonLinear activeStep={activeStep} sx={{ mb: 4 }}>
           {steps.map((label, index) => (

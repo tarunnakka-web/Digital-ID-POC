@@ -6,22 +6,22 @@ import SortIcon from '@mui/icons-material/Sort';
 
 // Functional component to render homepage with all products
 const data = [
-  { id: 1, name: "Whiskey Bottle", caption: "Premium aged malt whiskey", price: 1250, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589502/whisky_bottle_cxtmf7.webp" },
-  { id: 2, name: "Pocket Knife", caption: "Compact stainless steel utility knife", price: 199, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589576/pocket_knife_ldmu7y.jpg" },
-  { id: 3, name: "Fireworks", caption: "Vibrant and colorful celebration fireworks", price: 599, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589664/fireworks_poxtcm.webp" },
-  { id: 4, name: "Adult Toy", caption: "Discreet and personal wellness product", price: 799, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589779/adult_toys_as8s9q.jpg" },
-  { id: 5, name: "White Shoes", caption: "Stylish all-white sneakers for everyday use", price: 1099, criteria: "authorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745559766/cld-sample-5.jpg" },
-  { id: 6, name: "Analog watch", caption: "Classic timepiece with leather strap", price: 799, criteria: "authorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745559755/samples/ecommerce/analog-classic.jpg" },
-  { id: 7, name: "Leather Bag", caption: "Genuine leather office sling bag", price: 999, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589847/crocodile_leather_bags_mzpkvp.jpg" },
-  { id: 8, name: "Cigarette Pack", caption: "Premium tobacco cigarette pack", price: 399, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589902/cigaratte_drpste.webp" },
-  { id: 9, name: "Prescription", caption: "Bottle of regulated prescription pills", price: 499, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589973/priscription_pills_ba6eha.webp" },
-  { id: 10, name: "Vaping Kit", caption: "Rechargeable vape kit with ....", price: 599, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590076/bongs_su1maz.webp" },
-  { id: 11, name: "Hazardous Chemical", caption: "Highly reactive laboratory chemical", price: 1599, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590322/Chemical_spill_z1nkai.webp" },
-  { id: 12, name: "Ivory Artifact", caption: "Traditional ornament made from ivory", price: 699, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590496/organic_capsules_wvk6zh.webp" },
-  { id: 13, name: "Alcohol making kits", caption: "Home brewing equipment for alcohol", price: 2999, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590647/alcohol_making_kits_v93jkt.webp" },
-  { id: 14, name: "Books", caption: "Bestselling fiction and non-fiction books", price: 499, criteria: "authorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745591231/book_qt6xtm.webp" },
-  { id: 15, name: "iPhone", caption: "Latest generation Apple smartphone", price: 87000, criteria: "authorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745591309/iphone_yngytm.webp" },
-  { id: 16, name: "sports t-shirt", caption: "Breathable activewear for workouts", price: 699, criteria: "authorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745591363/sports_tshirt_gf4qz6.jpg" }
+  { id: 1, name: "Whiskey Bottle", caption: "Premium aged malt whiskey", price: 1250, rating:3.4, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589502/whisky_bottle_cxtmf7.webp" },
+  { id: 2, name: "Pocket Knife", caption: "Compact stainless steel utility knife", price: 199, rating:4.4, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589576/pocket_knife_ldmu7y.jpg" },
+  { id: 3, name: "Fireworks", caption: "Vibrant and colorful celebration fireworks", price: 599, rating:3.2, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589664/fireworks_poxtcm.webp" },
+  { id: 4, name: "Adult Toy", caption: "Discreet and personal wellness product", price: 799, rating:3.1, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589779/adult_toys_as8s9q.jpg" },
+  { id: 5, name: "White Shoes", caption: "Stylish all-white sneakers for everyday use", price: 1099, rating:4.1, criteria: "authorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745559766/cld-sample-5.jpg" },
+  { id: 6, name: "Analog watch", caption: "Classic timepiece with leather strap", price: 799, rating:4.6, criteria: "authorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745559755/samples/ecommerce/analog-classic.jpg" },
+  { id: 7, name: "Leather Bag", caption: "Genuine leather office sling bag", price: 999, rating:3.0, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589847/crocodile_leather_bags_mzpkvp.jpg" },
+  { id: 8, name: "Cigarette Pack", caption: "Premium tobacco cigarette pack", price: 399, rating:4.5, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589902/cigaratte_drpste.webp" },
+  { id: 9, name: "Prescription", caption: "Bottle of regulated prescription pills", price: 499, rating:3.0, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589973/priscription_pills_ba6eha.webp" },
+  { id: 10, name: "Vaping Kit", caption: "Rechargeable vape kit with ....", price: 599, rating:4.1, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590076/bongs_su1maz.webp" },
+  { id: 11, name: "Hazardous Chemical", caption: "Highly reactive laboratory chemical", price: 1599, rating:3.4, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590322/Chemical_spill_z1nkai.webp" },
+  { id: 12, name: "Ivory Artifact", caption: "Traditional ornament made from ivory", price: 699, rating:2.4, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590496/organic_capsules_wvk6zh.webp" },
+  { id: 13, name: "Alcohol making kits", caption: "Home brewing equipment for alcohol", price: 2999, rating:2.8, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590647/alcohol_making_kits_v93jkt.webp" },
+  { id: 14, name: "Books", caption: "Bestselling fiction and non-fiction books", price: 499, rating:5.0, criteria: "authorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745591231/book_qt6xtm.webp" },
+  { id: 15, name: "iPhone", caption: "Latest generation Apple smartphone", price: 87000, rating:4.9, criteria: "authorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745591309/iphone_yngytm.webp" },
+  { id: 16, name: "sports t-shirt", caption: "Breathable activewear for workouts", price: 699, rating:5.0, criteria: "authorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745591363/sports_tshirt_gf4qz6.jpg" }
 ];
 
 const HomePage = () => {
