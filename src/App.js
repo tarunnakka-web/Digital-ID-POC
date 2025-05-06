@@ -20,7 +20,7 @@ import { ThemeProvider } from '@mui/material/styles';
 // Wrapper to conditionally render Header on specific routes
 const HeaderWrapper = () => {
   const location = useLocation();
-  const hiddenHeaderRoutes = ['/login', '/selectID' ,];
+  const hiddenHeaderRoutes = ['/login' ,'/register','/selectID','/scan-finger-print-forLogin', '/add-finger-print-forRegistration'];
   return hiddenHeaderRoutes.includes(location.pathname) ? null : <Header />;
 };
 
