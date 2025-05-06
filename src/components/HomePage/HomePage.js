@@ -44,7 +44,7 @@ const HomePage = () => {
     sx={{
       width: "100vw",
       overflowX: 'hidden',
-      marginTop: "30px",
+      marginTop: "90px",
       paddingBottom: '50px',
     }}
   >
@@ -70,7 +70,7 @@ const HomePage = () => {
     variant="h5"
     sx={{
       fontWeight: 'bold',
-      fontSize: '25px',
+      fontSize: '24px',
       flexGrow: 1,
       textAlign: { xs: 'center', sm: 'left' }
     }}
