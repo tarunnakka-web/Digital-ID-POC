@@ -23,7 +23,7 @@ import { useCart } from '../../context/CartContext';
 const pages = ['Home', 'Cart'];
 const settings = ['Profile', 'Logout'];
 
-const Navbar = () => {
+const Header = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -219,4 +219,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Header;

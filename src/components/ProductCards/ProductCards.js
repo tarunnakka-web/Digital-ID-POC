@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -27,7 +28,7 @@ const ProductCards = ({ item }) => {
   const [dropdownValue, setDropDownValue] = useState(""); // Placeholder for any dropdown future use
 
   // Destructure product info
-  const { name, url, caption, price, criteria, id, rating } = item || {};
+  const { name, url, caption, price, criteria, id } = item || {};
 
   // Handle "Buy Now" button click
   const handleOpen1 = () => {
@@ -64,13 +65,8 @@ const ProductCards = ({ item }) => {
     navigate("/selectID", { state: { item } });
   };
 
-  const handleProductClick = (item) => {
-    navigate(`/product/${item.id}`, { state: {item} } )
-  }
-
   return (
     <Card
-    onClick={() => handleProductClick(item)}
     sx={{
       width:"240px" ,
       borderRadius: "10px",
@@ -128,7 +124,7 @@ const ProductCards = ({ item }) => {
       <Typography  variant="h6" color="primary" > ₹{price}/- </Typography>
        
       {/* Buy Now Button */}
-      {/* <Button
+      <Button
         variant="contained"
         color="primary"
         onClick={handleOpen}
@@ -231,9 +227,7 @@ const ProductCards = ({ item }) => {
           </Button>
         </DialogActions>
       </Dialog>
-      
-      </Card>
-    
+    </Card>
   );
 };
 

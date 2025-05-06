@@ -1,5 +1,6 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Header from './components/Header/Header'; 
+import React from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import Header from './components/Header/Header';
 import HomePage from './components/HomePage/HomePage';
 import Cart from './components/Cart/Cart';
 import RegistrationForm from './components/RegistrationForm/RegistrationForm';
