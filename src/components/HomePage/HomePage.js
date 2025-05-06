@@ -55,7 +55,7 @@ const HomePage = () => (
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: { md: 'center', lg: 'flex-start' },
-        gap: 3, // spacing between cards
+        gap: 2, // spacing between cards
       }}
     >
       {data.map((item) => (
