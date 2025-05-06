@@ -30,7 +30,7 @@ const ProductCards = ({ item }) => {
   const { name, url, caption, price, criteria, id } = item || {};
 
   // Handle "Buy Now" button click
-  const handleOpen = () => {
+  const handleOpen1 = () => {
     if (criteria === "authorized") {
       addToCart(item); // Add item directly if user is authorized
       alert(`${name} is added to cart successfully`);
@@ -41,6 +41,10 @@ const ProductCards = ({ item }) => {
       setDropDownValue("");
     }
   };
+
+  const handleOpen = () => {
+    navigate("/product-detail", { state: { item } }); // Passing the clicked product item to the detail page
+  }
 
   // Handle dialog close
   const handleClose = () => {
@@ -134,7 +138,7 @@ const ProductCards = ({ item }) => {
           },
         }}
       >
-        Buy Now
+        View Details
       </Button>
 
       {/* Dialog for Restricted Products */}
