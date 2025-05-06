@@ -1,83 +1,100 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Typography, Paper, Select, MenuItem } from '@mui/material';
+import {
+  Box,
+  Button,
+  Typography,
+  Paper,
+  Select,
+  MenuItem,
+  Collapse,
+  FormControl,
+  InputLabel
+} from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const Verification = () => {
-  // State for holding the selected dropdown value and error message
-  const [dropdownValue, setDropDownValue] = useState("");
+  const [dropdownValue, setDropDownValue] = useState('');
   const [error, setError] = useState('');
-  
-  // useNavigate hook for navigating programmatically
   const navigate = useNavigate();
 
-  // Handler for form submission
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setError(''); // Reset error message
+    setError('');
 
-    // Validate if a provider is selected
     if (!dropdownValue) {
       setError('Please select an ID provider.');
-      return; // Stop further execution if validation fails
+      return;
     }
 
-    // If valid, navigate to the login page and pass the selected provider state
-    navigate("/login", { state: { selectedProvider: dropdownValue } });
+    navigate('/login', { state: { selectedProvider: dropdownValue } });
   };
 
-  // Handler for dropdown value change
   const handleDropdownChange = (e) => {
-    setDropDownValue(e.target.value); // Update selected provider
-    setError(""); // Clear error when dropdown changes
+    setDropDownValue(e.target.value);
+    if (error) setError('');
   };
 
   return (
-    <>
-      {/* Main container to center the form */}
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="70vh" padding={5}>
-        <Paper elevation={3} sx={{ p: 4, width: '100%', maxWidth: 400 }}>
-          {/* Header section with a check icon and title */}
-          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: 5 }}>
-            <CheckCircleIcon sx={{ fontSize: 35 }} />
-            <Typography variant='h4' fontWeight={"bold"}>Select ID</Typography>
-          </Box>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="100vh"
+      padding={2}
+      sx={{ backgroundColor: '#f0f2f5' }}
+    >
+      <Paper elevation={6} sx={{ p: 4, width: '100%', maxWidth: 420, borderRadius: 3 }}>
+        <Box textAlign="center" mb={4}>
+          <CheckCircleIcon sx={{ fontSize: 40, color: 'primary.main' }} />
+          <Typography variant="h5" fontWeight="bold" mt={1}>
+            Select ID Provider
+          </Typography>
+        </Box>
 
-          {/* Form section for selecting ID provider */}
-          <Box mt={3} component="form" onSubmit={handleSubmit} noValidate>
-            <Typography variant="subtitle2" sx={{ mb: 1 }}>
-              Select ID Provider:
-            </Typography>
-
-            {/* Dropdown for selecting the ID provider */}
+        <form onSubmit={handleSubmit} noValidate>
+          <FormControl fullWidth sx={{ mb: 2 }} error={Boolean(error)}>
+            <InputLabel id="provider-label">ID Provider</InputLabel>
             <Select
+              labelId="provider-label"
+              id="provider-select"
               value={dropdownValue}
+              label="ID Provider"
               onChange={handleDropdownChange}
-              fullWidth
-              displayEmpty
-              sx={{ backgroundColor: "#f5f5f5", borderRadius: "6px" }}
+              aria-describedby="provider-helper-text"
             >
-              <MenuItem value="" disabled>Choose an ID provider</MenuItem>
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
               <MenuItem value="LloydsID">Lloyds ID Provider</MenuItem>
               <MenuItem value="ProviderA">Provider A</MenuItem>
               <MenuItem value="ProviderB">Provider B</MenuItem>
             </Select>
+          </FormControl>
 
-            {/* Display error message if validation fails */}
-            {error && (
-              <Typography color="error" sx={{ mt: 2 }}>
-                {error}
-              </Typography>
-            )}
+          <Collapse in={Boolean(error)}>
+            <Typography
+              id="provider-helper-text"
+              color="error"
+              variant="body2"
+              sx={{ mb: 2 }}
+            >
+              {error}
+            </Typography>
+          </Collapse>
 
-            {/* Submit button to select the provider */}
-            <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
-              Select
-            </Button>
-          </Box>
-        </Paper>
-      </Box>
-    </>
+          <Button
+            type="submit"
+            variant="contained"
+            fullWidth
+            disabled={!dropdownValue}
+            sx={{ mt: 1, textTransform: 'none', fontWeight: 'bold' }}
+          >
+            Continue
+          </Button>
+        </form>
+      </Paper>
+    </Box>
   );
 };
 

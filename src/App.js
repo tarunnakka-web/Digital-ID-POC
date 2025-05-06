@@ -11,7 +11,7 @@ import ScanFingerprintForLogin from './components/ScanFingerprintForLogin/ScanFi
 import AddFingerprintForRegistration from './components/AddFingerprintForRegistration/AddFingerprintForRegistration.js';
 import { CartProvider } from './context/CartContext';
 import { UserProvider } from './context/UserContext';
-
+import ProductDetails from './components/ProductDetails/ProductDetails';
 
 // Wrapper to conditionally render Header on specific routes
 const HeaderWrapper = () => {
@@ -33,6 +33,7 @@ function App() {
             <Route path="/verification" element={<Verification />} />
             <Route path="/scan-finger-print-forLogin" element={<ScanFingerprintForLogin />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/product:id" element={<ProductDetails />} />
             <Route path="/register" element={<RegistrationForm />} />
             <Route path="/user-details" element={<UserDetails />} />
             <Route path="*" element={<div style={{ padding: 20 }}>404 - Page Not Found</div>} />

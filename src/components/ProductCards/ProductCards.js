@@ -11,12 +11,15 @@ import {
 } from "@mui/material";
 import { useCart } from "../../context/CartContext"; // Access cart context for add-to-cart functionality
 import { useUser } from "../../context/UserContext"; // Access user context for user data and authentication
+import { Link } from "react-router-dom";
 
 // Component to render individual product card
 const ProductCards = ({ item }) => {
   const navigate = useNavigate();
   const { addToCart } = useCart(); // Function to add item to cart
   const { loadUserData, user } = useUser(); // Load user data and user info
+  
+  console.log(user);
 
   // UI State
   const [open, setOpen] = useState(false); // Dialog open/close
@@ -24,7 +27,7 @@ const ProductCards = ({ item }) => {
   const [dropdownValue, setDropDownValue] = useState(""); // Placeholder for any dropdown future use
 
   // Destructure product info
-  const { name, url, caption, price, criteria } = item || {};
+  const { name, url, caption, price, criteria, id } = item || {};
 
   // Handle "Buy Now" button click
   const handleOpen = () => {
@@ -47,9 +50,9 @@ const ProductCards = ({ item }) => {
   };
 
   // Handle optional dropdown (not currently shown in UI)
-  const handleDropdownChange = (event) => {
-    setDropDownValue(event.target.value);
-  };
+  // const handleDropdownChange = (event) => {
+  //   setDropDownValue(event.target.value);
+  // };
 
   // Navigate to verification page
   const handleProceed = () => {
@@ -78,6 +81,7 @@ const ProductCards = ({ item }) => {
       textAlign: "center",
       overflow: "hidden",
       marginBottom: 2,
+      cursor:"pointer",
       // marginRight: "6px",
     }}
     >
@@ -110,7 +114,7 @@ const ProductCards = ({ item }) => {
       </Typography>
 
       {/* Product Description */}
-      <Typography
+      {/* <Typography
         variant="body2"
         color="text.secondary"
         sx={{
@@ -120,7 +124,7 @@ const ProductCards = ({ item }) => {
         }}
       >
         {caption}
-      </Typography>
+      </Typography> */}
 
       {/* Product Price */}
       <Typography
