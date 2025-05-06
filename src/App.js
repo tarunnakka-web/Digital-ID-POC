@@ -36,7 +36,6 @@ function App() {
             <Route path="/selectID" element={<SelectID />} />
             <Route path="/scan-finger-print-forLogin" element={<ScanFingerprintForLogin />} />
             <Route path="/cart" element={<Cart />} />
-            <Route path="/product:id" element={<ProductDetails />} />
             <Route path="/register" element={<RegistrationForm />} />
             <Route path="/user-details" element={<UserDetails />} />
             <Route path="*" element={<div style={{ padding: 140 , fontSize:"22px" , textAlign:"center", fontWeight:"bold", color:"blue" }}>404 - Page Not Found</div>} />

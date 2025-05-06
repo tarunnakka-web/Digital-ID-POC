@@ -1,6 +1,6 @@
 // Importing necessary dependencies
 import React from 'react';
-import { Container, Typography, Grid, Box } from '@mui/material';
+import { Container, Typography, Grid, Box, MenuItem, Select, TextField } from '@mui/material';
 import ProductCards from '../ProductCards/ProductCards';
 import SortIcon from '@mui/icons-material/Sort';
 
@@ -150,6 +150,6 @@ const HomePage = () => {
     </Grid>
   </Box>
 );
-
+}
 // Exporting the HomePage component
 export default HomePage;
