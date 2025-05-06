@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-const Verification = () => {
+const SelectID = () => {
   const [dropdownValue, setDropDownValue] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -98,4 +98,4 @@ const Verification = () => {
   );
 };
 
-export default Verification;
+export default SelectID;

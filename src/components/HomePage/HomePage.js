@@ -1,6 +1,6 @@
 // Importing necessary dependencies
 import React from 'react';
-import { Typography, Grid, Box, TextField, Select, MenuItem } from '@mui/material';
+import { Container, Typography, Grid, Box } from '@mui/material';
 import ProductCards from '../ProductCards/ProductCards';
 import SortIcon from '@mui/icons-material/Sort';
 
@@ -15,7 +15,7 @@ const data = [
   { id: 7, name: "Leather Bag", caption: "Genuine leather office sling bag", price: 999, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589847/crocodile_leather_bags_mzpkvp.jpg" },
   { id: 8, name: "Cigarette Pack", caption: "Premium tobacco cigarette pack", price: 399, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589902/cigaratte_drpste.webp" },
   { id: 9, name: "Prescription", caption: "Bottle of regulated prescription pills", price: 499, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745589973/priscription_pills_ba6eha.webp" },
-  { id: 10, name: "Vaping Kit", caption: "Rechargeable vape kit with flavored cartridges", price: 599, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590076/bongs_su1maz.webp" },
+  { id: 10, name: "Vaping Kit", caption: "Rechargeable vape kit with ....", price: 599, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590076/bongs_su1maz.webp" },
   { id: 11, name: "Hazardous Chemical", caption: "Highly reactive laboratory chemical", price: 1599, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590322/Chemical_spill_z1nkai.webp" },
   { id: 12, name: "Ivory Artifact", caption: "Traditional ornament made from ivory", price: 699, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590496/organic_capsules_wvk6zh.webp" },
   { id: 13, name: "Alcohol making kits", caption: "Home brewing equipment for alcohol", price: 2999, criteria: "unauthorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745590647/alcohol_making_kits_v93jkt.webp" },
@@ -23,7 +23,6 @@ const data = [
   { id: 15, name: "iPhone", caption: "Latest generation Apple smartphone", price: 87000, criteria: "authorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745591309/iphone_yngytm.webp" },
   { id: 16, name: "sports t-shirt", caption: "Breathable activewear for workouts", price: 699, criteria: "authorized", url: "https://res.cloudinary.com/dpizvs16e/image/upload/v1745591363/sports_tshirt_gf4qz6.jpg" }
 ];
-
 
 const HomePage = () => {
     const [search, setSearch]= React.useState('');
@@ -151,5 +150,6 @@ const HomePage = () => {
     </Grid>
   </Box>
 );
-}
+
+// Exporting the HomePage component
 export default HomePage;

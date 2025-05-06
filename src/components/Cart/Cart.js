@@ -50,7 +50,7 @@ const CartPage = () => {
   };
 
   return (
-    <Container maxWidth="xlg" sx={{ marginTop: "80px" }}>
+    <Container maxWidth="xlg" sx={{ marginTop: "80px" }} width="100%">
       <Typography
         variant="h5"
         gutterBottom
