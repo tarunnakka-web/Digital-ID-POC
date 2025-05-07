@@ -61,8 +61,8 @@ const ProductDetails = () => {
   };
 
   return (
-    <Container sx={{ paddingTop: "40px", height: '80vh', display: 'flex', flexDirection: 'column'}}>
-      <Grid container spacing={3} sx={{ height: '100%', padding:"20px",  display:"flex", justifyContent:'center', boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)" }}>
+    <Container sx={{ paddingTop: "40px", height: '80vh',  marginTop:"40px",  display: 'flex', flexDirection: 'column'}}>
+      <Grid container spacing={3} sx={{ height: '100%',padding:"20px",  display:"flex", justifyContent:'center', boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)" }}>
         {/* Image Section */}
         <Grid item xs={12} md={6} sx={{ display: "flex", justifyContent: "center",  height: '50%' }}>
           <Box
