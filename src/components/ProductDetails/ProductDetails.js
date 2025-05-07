@@ -1,68 +1,118 @@
 
-import { Container, Typography, Box, Grid, Button, Dialog, DialogTitle, DialogActions } from '@mui/material';
-import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-// import StarBorderIcon from '@mui/icons-material/StarBorder';
-
-import { useCart } from "../../context/CartContext"; // Access cart context for add-to-cart functionality
+import React, { useState, useEffect } from "react";
+import { useLocation, Link } from "react-router-dom";
+import {
+  Card,
+  Box,
+  Typography,
+  Button,
+  Container,
+  TextField,
+  Rating,
+  IconButton,
+  Grid,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { AddCircleOutline, FavoriteBorder } from "@mui/icons-material";
+import { useCart } from "../../context/CartContext";
 import { useUser } from "../../context/UserContext"; // Access user context for user data and authentication
 
+const ProductDetail = () => {
+    const navigate = useNavigate();
+    const { loadUserData, user } = useUser(); // Load user data and user info
+    const { addToCart } = useCart(); // Get addToCart from context
+    const [open, setOpen] = useState(false); // Dialog open state
+    const [isNewUser, setIsNewUser] = useState(null); // State for new user check
+    const [dropDownValue, setDropDownValue] = useState(""); // State for dropdown selection
+    const { state } = useLocation();
+    const { item } = state || {};
+    const { name, description, price, features, sellerPrice, reviews, thumbnails, criteria } = item;
 
-const ProductDetails = () => {
-  const location = useLocation(); // Get location object
-  const { item } = location.state || {};
-  const navigate = useNavigate();
-  const { addToCart } = useCart(); // Function to add item to cart
-  const { loadUserData, user } = useUser(); // Load user data and user info
+    const [quantity, setQuantity] = useState(1);
+    const [inStock, setInStock] = useState(false);
+    const [wishlist, setWishlist] = useState(false);
+    const [mainImage, setMainImage] = useState("");
+    const [selectedThumbnail, setSelectedThumbnail] = useState(null);
+    const [zoomOpen, setZoomOpen] = useState(false); // For full image modal
+
+    useEffect(() => {
+        if (item) {
+            setInStock(item.availability === "In Stock");
+            setMainImage(item.url);
+            setSelectedThumbnail(item.url);
+        }
+    }, [item]);
+
+    const handleQuantityChange = (event) => {
+        let newQuantity = parseInt(event.target.value, 10);
+        if (newQuantity < 1) newQuantity = 1;  // Ensuring min value is 1
+        setQuantity(newQuantity);
+      };
     
-    console.log(user);
-  // Destructure product information
-  const { name, caption, price, url, criteria } = item || {};
-  // UI State
-    const [open, setOpen] = useState(false); // Dialog open/close
-    const [isNewUser, setIsNewUser] = useState(null); // Not used actively, placeholder for future user check
-    const [dropdownValue, setDropDownValue] = useState(""); // Placeholder for any dropdown future use
-  
 
-  if (!item) {
-    return <Typography variant="h6" sx={{ textAlign: "center", marginTop: 4 }}>Product details not available.</Typography>;
-  }
+   
+    const handleWishlistToggle = () => {
+        setWishlist((prev) => !prev);
+    };
 
+    const handleAddToCart = () => {
+        if (criteria === "authorized") {
+            addToCart(item); // Add item directly if user is authorized
+            alert(`${name} is added to cart successfully`);
+        } else {
+            // If not authorized, show dialog for ID verification
+            setOpen(true);
+            setIsNewUser(null);
+            setDropDownValue(""); // Reset dropdown value
+        }
+    };
 
-  // Handle "Buy Now" button click
-  const handleOpen = () => {
-    if (criteria === "authorized") {
-      addToCart(item); // Add item directly if user is authorized
-      alert(`${name} is added to cart successfully`);
-    } else {
-      // If not authorized, show dialog for ID verification
-      setOpen(true);
-      setIsNewUser(null);
-      setDropDownValue("");
+    const handleDropdownChange = (event) => {
+        setDropDownValue(event.target.value);
+    };
+
+    const handleOpen = () => {
+        if (criteria === "authorized") {
+            addToCart(item, quantity); // Add quantity to cart
+            alert(`${name} with quantity ${quantity} is added to cart successfully`);
+        } else {
+            setOpen(true);
+            setIsNewUser(null);
+            setDropDownValue(""); // Reset dropdown value
+        }
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+        setIsNewUser(null);
+        setDropDownValue(""); // Reset dropdown value
+    };
+
+    // Navigate to verification page
+    const handleProceed = () => {
+        loadUserData();
+        navigate("/selectID", { state: { item } });
+    };
+
+    const handleThumbnailClick = (imageUrl) => {
+        setMainImage(imageUrl);
+        setSelectedThumbnail(imageUrl);
+    };
+
+    if (!item) {
+        return <Typography variant="h6">Product not found!</Typography>;
     }
-  };
-
-  // Handle dialog close
-  const handleClose = () => {
-    setOpen(false);
-    setIsNewUser(null);
-    setDropDownValue("");
-  };
-
-  // Handle optional dropdown (not currently shown in UI)
-  // const handleDropdownChange = (event) => {
-  //   setDropDownValue(event.target.value);
-  // };
-
-  // Navigate to verification page
-  const handleProceed = () => {
-    loadUserData();
-    navigate("/selectID", { state: { item } });
-  };
 
   return (
-    <Container sx={{ paddingTop: "40px", height: '80vh',  marginTop:"40px",  display: 'flex', flexDirection: 'column'}}>
-      <Grid container spacing={3} sx={{ height: '100%',padding:"20px",  display:"flex", justifyContent:'center', boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)" }}>
+    <Container sx={{ paddingTop: "40px", height: '80vh', display: 'flex', flexDirection: 'column'}}>
+      <Grid container spacing={3} sx={{ height: '100%', padding:"20px",  display:"flex", justifyContent:'center', boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)" }}>
         {/* Image Section */}
         <Grid item xs={12} md={6} sx={{ display: "flex", justifyContent: "center",  height: '50%' }}>
           <Box
@@ -198,4 +248,4 @@ const ProductDetails = () => {
   );
 };
 
-export default ProductDetails;
+export default ProductDetail;

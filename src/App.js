@@ -9,25 +9,19 @@ import SelectID from './components/SelectID/SelectID.js';
 import LoginPage from './components/LoginPage/LoginPage.js';
 import ScanFingerprintForLogin from './components/ScanFingerprintForLogin/ScanFingerprintForLogin.js';
 import AddFingerprintForRegistration from './components/AddFingerprintForRegistration/AddFingerprintForRegistration.js';
+import ProductDetail from './components/ProductDetails/ProductDetails.js';
 import { CartProvider } from './context/CartContext';
 import { UserProvider } from './context/UserContext';
 import theme from './context/theme'; 
 import { ThemeProvider } from '@mui/material/styles';
-import ProductDetails from './components/ProductDetails/ProductDetails.js';
+
 
 
 // Wrapper to conditionally render Header on specific routes
 const HeaderWrapper = () => {
   const location = useLocation();
-  const hiddenHeaderRoutes = [
-    '/login',
-    '/register',
-    '/selectID',
-    '/scan-finger-print-forLogin',
-    '/add-finger-print-forRegistration'
-  ];
+  const hiddenHeaderRoutes = ['/login' ,'/register','/selectID','/scan-finger-print-forLogin', '/add-finger-print-forRegistration'];
   return hiddenHeaderRoutes.includes(location.pathname) ? null : <Header />;
-
 };
 
 function App() {
@@ -39,7 +33,7 @@ function App() {
           <HeaderWrapper />
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path='/product/:id' element={<ProductDetails />} />
+            <Route path="/product-detail" element={<ProductDetail />} />
             <Route path="/add-finger-print-forRegistration" element={<AddFingerprintForRegistration />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/selectID" element={<SelectID />} />

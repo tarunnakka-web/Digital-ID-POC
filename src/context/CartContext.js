@@ -1,77 +1,80 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
-// Create CartContext
+// Create the context
 const CartContext = createContext();
 
-// CartProvider component to wrap your app
+// Provider component
 export const CartProvider = ({ children }) => {
-  // Initialize cartItems from localStorage or an empty array
   const [cartItems, setCartItems] = useState(() => {
     const storedCart = localStorage.getItem('cartItems');
     return storedCart ? JSON.parse(storedCart) : [];
   });
 
-  // Save cartItems to localStorage whenever they change
+  // Save to localStorage on change
   useEffect(() => {
-    if (cartItems.length > 0) {
-      localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    }
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // Add item to cart or increase quantity if already exists
-  const addToCart = (item) => {
+  // Add or update item in cart
+  const addToCart = (item, quantity = 1) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((i) => i.id === item.id);
+
       if (existingItem) {
         return prevItems.map((i) =>
           i.id === item.id
-            ? { 
-                ...i, 
-                quantity: i.quantity + 1, 
-                price: item.price * (i.quantity + 1) 
+            ? {
+                ...i,
+                quantity: i.quantity + quantity,
+                price: (i.quantity + quantity) * i.unitPrice,
               }
             : i
         );
       }
-      return [...prevItems, { ...item, quantity: 1, price: item.price }];
+
+      return [
+        ...prevItems,
+        {
+          ...item,
+          quantity,
+          unitPrice: item.unitPrice ?? item.price, // fallback if unitPrice not passed
+          price: (item.unitPrice ?? item.price) * quantity,
+        },
+      ];
     });
   };
 
-  // Remove a specific item
-  const removeFromCart = (itemId) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+  const removeFromCart = (id) => {
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  // Clear entire cart
   const clearCart = () => {
     setCartItems([]);
-    localStorage.removeItem('cartItems'); // Clear from localStorage as well
+    localStorage.removeItem('cartItems');
   };
 
-  // Increase quantity of item and update price based on quantity
   const increaseQuantity = (id) => {
     setCartItems((prev) =>
       prev.map((item) =>
         item.id === id
-          ? { 
-              ...item, 
-              quantity: item.quantity + 1, 
-              price: item.price + item.price / item.quantity
+          ? {
+              ...item,
+              quantity: item.quantity + 1,
+              price: (item.quantity + 1) * item.unitPrice,
             }
           : item
       )
     );
   };
 
-  // Decrease quantity of item (not below 1) and update price based on quantity
   const decreaseQuantity = (id) => {
     setCartItems((prev) =>
       prev.map((item) =>
         item.id === id && item.quantity > 1
-          ? { 
-              ...item, 
-              quantity: item.quantity - 1, 
-              price: item.price - item.price / item.quantity
+          ? {
+              ...item,
+              quantity: item.quantity - 1,
+              price: (item.quantity - 1) * item.unitPrice,
             }
           : item
       )
@@ -94,5 +97,5 @@ export const CartProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use CartContext
+// Hook to use cart
 export const useCart = () => useContext(CartContext);
