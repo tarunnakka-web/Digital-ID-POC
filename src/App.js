@@ -1,4 +1,5 @@
 import React from 'react';
+import Callback from './components/Callback/Callback';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header/Header';
 import HomePage from './components/HomePage/HomePage';
@@ -33,6 +34,7 @@ function App() {
           <HeaderWrapper />
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/callback" element={<Callback />} />
             <Route path="/product-detail" element={<ProductDetail />} />
             <Route path="/add-finger-print-forRegistration" element={<AddFingerprintForRegistration />} />
             <Route path="/login" element={<LoginPage />} />

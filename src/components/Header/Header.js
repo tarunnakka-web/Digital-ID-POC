@@ -19,6 +19,7 @@ import {
 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext'; 
+import userManager from '../../auth/forgerockConfig';
 
 const pages = ['Home', 'Cart'];
 const settings = ['Profile', 'Logout'];
@@ -32,6 +33,10 @@ const Header = () => {
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
+  };
+
+  const handleLogout = () => {
+    userManager.signoutRedirect();
   };
 
   const handleCloseNavMenu = () => {

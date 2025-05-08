@@ -5,6 +5,7 @@ import {
   Tabs, Tab, Box, Typography, TextField,
   Button, Paper, Alert
 } from '@mui/material';
+import userManager from '../../auth/forgerockConfig';
 
 // Utility function to simulate OTP generation (6-digit number)
 const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
@@ -35,6 +36,10 @@ function LoginPage() {
   // Helper validation functions
   const isEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
   const isPhone = (value) => /^\d{10}$/.test(value);
+
+  const handleLogin = () => {
+    userManager.signinRedirect();
+  };
 
   // Handle OTP sending
   const handleSendOtp = () => {
@@ -102,6 +107,7 @@ function LoginPage() {
               variant="contained"
               fullWidth
               sx={{ marginTop: 2, backgroundColor: '#1976d2', '&:hover': { backgroundColor: '#1565c0' } }}
+              onClick={handleLogin}
             >
               Login
             </Button>
