@@ -110,142 +110,261 @@ const ProductDetail = () => {
         return <Typography variant="h6">Product not found!</Typography>;
     }
 
-  return (
-    <Container sx={{ paddingTop: "40px", height: '80vh', display: 'flex', flexDirection: 'column'}}>
-      <Grid container spacing={3} sx={{ height: '100%', padding:"20px",  display:"flex", justifyContent:'center', boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)" }}>
-        {/* Image Section */}
-        <Grid item xs={12} md={6} sx={{ display: "flex", justifyContent: "center",  height: '50%' }}>
-          <Box
-            component="img"
-            src={url}
-            alt={name}
-            sx={{
-              width: "170%",
-              height: "170%",
-              objectFit: "cover", // Make sure image covers the space
-              borderRadius: "8px",
-            }}
-          />
-        </Grid>
+    return (
+        <Container maxWidth="lg" sx={{ mt: "90px", height: "70vh" }}>
+            <Card sx={{ height: "100%", display: "flex", flexDirection: { xs: "column", md: "row" }, boxShadow: 4 }}>
+                {/* Left Section: Main Image with Hover Zoom */}
+                <Box sx={{ width: { xs: "100%", md: "40%" }, p: 3, borderRight: { md: "1px solid #eee" }, overflowY: "auto" }}>
+                    <Box sx={{ position: "relative", mb: 2, borderRadius: 2, overflow: "hidden", cursor: "zoom-in" }}>
+                        <Box
+                            onClick={() => setZoomOpen(true)}
+                            sx={{
+                                width: "100%",
+                                height: 400,
+                                backgroundImage: `url(${mainImage})`,
+                                backgroundSize: "cover",
+                                backgroundPosition: "center",
+                                borderRadius: 2,
+                                transition: "background-size 0.3s ease",
+                                "&:hover": {
+                                    backgroundSize: "200%",
+                                },
+                            }}
+                            onMouseMove={(e) => {
+                                const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+                                const x = ((e.clientX - left) / width) * 100;
+                                const y = ((e.clientY - top) / height) * 100;
+                                e.currentTarget.style.backgroundPosition = `${x}% ${y}%`;
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.backgroundPosition = "center";
+                            }}
+                        >
+                            <Box
+                                sx={{
+                                    position: "absolute",
+                                    top: 8,
+                                    right: 8,
+                                    backgroundColor: "rgba(255,255,255,0.7)",
+                                    borderRadius: "50%",
+                                    p: 1,
+                                }}
+                            >
+                                <AddCircleOutline fontSize="small" />
+                            </Box>
+                        </Box>
+                    </Box>
 
-        {/* Product Details Section */}
-        <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "column", justifyContent: "center", height: '100%' }}>
-          <Typography variant="h4" sx={{ fontWeight: "bold", marginBottom: 2, textAlign: "center" }}>{name}</Typography>
-          <Typography variant="body1" color="textSecondary" sx={{ marginBottom: 2, textAlign: "center" }}>{caption}</Typography>
-          <Typography variant="h6" color="text.primary" sx={{ marginBottom: 2, textAlign: "center" }}>₹{price}/-</Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ marginBottom: 3, textAlign: "center" }}>Availability: In Stock</Typography>
+                    {/* Thumbnails */}
+                    <Grid container spacing={1}>
+                        {thumbnails &&
+                            thumbnails.map((thumb, index) => (
+                                <Grid item xs={3} key={index}>
+                                    <Box
+                                        onClick={() => handleThumbnailClick(thumb.url)}
+                                        sx={{
+                                            cursor: "pointer",
+                                            border: selectedThumbnail === thumb.url ? "2px solid #1976D2" : "1px solid #ccc",
+                                            borderRadius: 1,
+                                            overflow: "hidden",
+                                        }}
+                                    >
+                                        <img
+                                            src={thumb.url}
+                                            alt={`Thumb ${index}`}
+                                            style={{ width: "100%", height: "60px", objectFit: "cover" }}
+                                        />
+                                    </Box>
+                                </Grid>
+                            ))}
+                    </Grid>
+                </Box>
 
+                {/* Right Section: Product Details */}
+                <Box sx={{ width: { xs: "100%", md: "60%" }, p: 3, overflowY: "auto" }}>
+                    <Typography variant="h4" fontWeight={600}>{name}</Typography>
+                    <Typography color="text.secondary" sx={{ mt: 1 }}>{description}</Typography>
+                    <Typography variant="h5" color="primary" sx={{ mt: 2 }}>₹{price}/-</Typography>
 
-          {/* Button to add to cart or proceed */}
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleOpen}
-              sx={{
-                backgroundColor: "#1976D2",
-                padding: "12px 24px",
-                borderRadius: "20px",
-                boxShadow: "0 6px 12px rgba(0, 0, 0, 0.1)",
-                "&:hover": {
-                  boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
-                },
-              }}
+                    {/* Seller Prices */}
+                    {sellerPrice?.length > 0 && (
+                        <Box sx={{ mt: 2 }}>
+                            <Typography variant="body2" color="text.secondary">Prices from other sellers:</Typography>
+                            {sellerPrice.map((s, i) => (
+                                <Typography key={i} variant="body2" color="primary">{s.seller}: ₹{s.price}/-</Typography>
+                            ))}
+                        </Box>
+                    )}
+
+                    {/* <Typography variant="subtitle1" color={inStock ? "green" : "red"} sx={{ mt: 3 }}>
+                        {inStock ? "In Stock" : "Out of Stock"}
+                    </Typography> */}
+                    <TextField
+                        label="Quantity"
+                        type="number"
+                        value={quantity}
+                        onChange={handleQuantityChange}
+                        inputProps={{ min: 1 }}
+                        sx={{ mt: 2, width: "100px" }}
+                    />
+
+                    {/* Features */}
+                    {features?.length > 0 && (
+                        <Box sx={{ mt: 3, maxHeight: "120px", overflowY: "auto" }}>
+                            <Typography variant="subtitle1" fontWeight={500}>Features:</Typography>
+                            <ul>
+                                {features.map((f, i) => (
+                                    <li key={i}><Typography variant="body2">{f}</Typography></li>
+                                ))}
+                            </ul>
+                        </Box>
+                    )}
+
+                    {/* Reviews */}
+                    {reviews?.length > 0 && (
+                        <Box sx={{ mt: 3, maxHeight: "150px", overflowY: "auto" }}>
+                            <Typography variant="subtitle1" fontWeight={500}>Reviews:</Typography>
+                            {reviews.map((r, i) => (
+                                <Box key={i} sx={{ mt: 1 }}>
+                                    <Rating value={r.rating} readOnly size="small" />
+                                    <Typography variant="body2">{r.comment}</Typography>
+                                    <Typography variant="caption" color="text.secondary">- {r.author}</Typography>
+                                </Box>
+                            ))}
+                        </Box>
+                    )}
+
+                    {/* Wishlist & Cart Buttons */}
+                    <Box sx={{ display: "flex", alignItems: "center", mt: 4, gap: 2 }}>
+                        <IconButton onClick={handleWishlistToggle} sx={{ color: wishlist ? "red" : "gray" }}>
+                            <FavoriteBorder />
+                        </IconButton>
+                        <Typography variant="body2">{wishlist ? "Added to Wishlist" : "Add to Wishlist"}</Typography>
+                    </Box>
+
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleOpen}
+                        sx={{ mt: 2, borderRadius: 2, padding: "10px 24px" , backgroundColor:"#006A4D", mr:2 }}
+                    >
+                        Add to Cart
+                    </Button>
+
+                    <Link to="/" style={{ textDecoration: "none" }}>
+                        <Button variant="outlined" color="#006A4D" sx={{ mt: 2 , color:"#006A4D"}}>
+                            Back to Products
+                        </Button>
+                    </Link>
+                </Box>
+            </Card>
+
+            {/* Fullscreen Zoom Modal */}
+            <Dialog open={zoomOpen} onClose={() => setZoomOpen(false)} maxWidth="md">
+                <DialogTitle>Zoomed Image</DialogTitle>
+                <img
+                    src={mainImage}
+                    alt="Zoomed"
+                    style={{
+                        maxWidth: "100%",
+                        maxHeight: "80vh",
+                        objectFit: "contain",
+                    }}
+                />
+                <DialogActions>
+                    <Button onClick={() => setZoomOpen(false)} color="primary">Close</Button>
+                </DialogActions>
+            </Dialog>
+
+            {/* Dialog for Restricted Products */}
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                maxWidth="xs"
+                fullWidth
+                PaperProps={{
+                    sx: {
+                        borderRadius: 4,
+                        p: 2,
+                        bgcolor: "#fefefe",
+                        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                    },
+                }}
             >
-              Add to Cart
-            </Button>
-          </Box>
-        </Grid>
-      </Grid>
-
-    
-    {/* Dialog for Restricted Products */}
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            maxWidth="xs"
-            fullWidth
-            PaperProps={{
-              sx: {
-                borderRadius: 4,
-                p: 2,
-                bgcolor: "#fefefe",
-                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-              },
-            }}
-          >
-            <DialogTitle
-              marginBottom={4}
-              sx={{
-                bgcolor: "#1976D2",
-                color: "#fff",
-                textAlign: "center",
-                borderTopLeftRadius: 8,
-                borderTopRightRadius: 8,
-                pb: 2,
-              }}
-            >
-              <Box display="flex" flexDirection="column" alignItems="center">
-                <Typography
-                  variant="h6"
-                  fontWeight={200}
-                  sx={{ color: "#e0e0e0", mt: 1 }}
+                <DialogTitle
+                    marginBottom={4}
+                    sx={{
+                        bgcolor: "#006A4D",
+                        color: "#fff",
+                        textAlign: "center",
+                        borderTopLeftRadius: 8,
+                        borderTopRightRadius: 8,
+                        pb: 2,
+                    }}
                 >
-                  ID is required to purchase restricted items.
-                </Typography>
-              </Box>
-            </DialogTitle>
-    
-            <DialogActions
-              sx={{
-                px: 3,
-                pb: 2,
-                pt: 1,
-                justifyContent: "space-between",
-                borderTop: "1px solid #eee",
-                backgroundColor: "#f5f5f5",
-              }}
-            >
-              {/* Cancel Button */}
-              <Button
-                onClick={handleClose}
-                variant="outlined"
-                color="primary"
-                sx={{
-                  borderRadius: "20px",
-                  padding: "10px 24px",
-                  textTransform: "none",
-                  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
-                  "&:hover": {
-                    boxShadow: "0 6px 15px rgba(0, 0, 0, 0.3)",
-                  },
-                }}
-              >
-                Cancel
-              </Button>
-    
-              {/* Proceed Button */}
-              <Button
-                onClick={handleProceed}
-                variant="contained"
-                color="primary"
-                disabled={isNewUser && !dropdownValue}
-                sx={{
-                  borderRadius: "20px",
-                  padding: "10px 24px",
-                  textTransform: "none",
-                  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
-                  "&:hover": {
-                    boxShadow: "0 6px 15px rgba(0, 0, 0, 0.3)",
-                  },
-                }}
-              >
-                Look Up IDP
-              </Button>
-            </DialogActions>
-          </Dialog>
-    </Container>
-  );
+                    <Box display="flex" flexDirection="column" alignItems="center">
+                        <Typography
+                            variant="h6"
+                            fontWeight={200}
+                            sx={{ color: "#e0e0e0", mt: 1 }}
+                        >
+                            ID is required to purchase restricted items.
+                        </Typography>
+                    </Box>
+                </DialogTitle>
+
+                <DialogActions
+                    sx={{
+                        px: 3,
+                        pb: 2,
+                        pt: 1,
+                        justifyContent: "space-between",
+                        borderTop: "1px solid #eee",
+                        backgroundColor: "#f5f5f5",
+                    }}
+                >
+                    {/* Cancel Button */}
+                    <Button
+                        onClick={handleClose}
+                        variant="outlined"
+                        color="#006A4D"
+                        sx={{
+                            borderRadius: "20px",
+                            color:"#006A4D",
+                            padding: "10px 24px",
+                            textTransform: "none",
+                            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
+                            "&:hover": {
+                                boxShadow: "0 6px 15px rgba(0, 0, 0, 0.3)",
+                            },
+                        }}
+                    >
+                        Cancel
+                    </Button>
+
+                    {/* Proceed Button */}
+                    <Button
+                        onClick={handleProceed}
+                        variant="contained"
+                        color="primary"
+                        disabled={isNewUser && !dropDownValue}
+                        sx={{
+                            borderRadius: "20px",
+                            backgroundColor:"#006A4D",
+                            padding: "10px 24px",
+                            textTransform: "none",
+                            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
+                            "&:hover": {
+                                boxShadow: "0 6px 15px rgba(0, 0, 0, 0.3)",
+                            },
+                        }}
+                    >
+                        Look Up IDP
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </Container>
+    );
 };
 
 export default ProductDetail;
