@@ -1,6 +1,6 @@
 // Importing necessary dependencies
 import React from 'react';
-import { Container, Typography, Grid, Box, MenuItem, Select, TextField ,IconButton } from '@mui/material';
+import {Typography, Grid, Box, MenuItem, Select, TextField} from '@mui/material';
 import ProductCards from '../ProductCards/ProductCards';
 import SortIcon from '@mui/icons-material/Sort';
 import data from "../data" ; 
@@ -38,10 +38,7 @@ const HomePage = () => {
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: '10px 24px',
-    // border: '1px solid #ccc',
     borderRadius: '8px',
-    // boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-    // backgroundColor: '#fafafa',
     flexWrap: 'wrap',
     gap: 2
   }}
@@ -76,7 +73,22 @@ const HomePage = () => {
       type="search"
       value={search}
       onChange={(e) => setSearch(e.target.value)}
-      sx={{ width: '250px', marginRight:"10px" }}
+      sx={{ 
+        width: '250px', 
+        marginRight:"10px",
+        '& .MuiOutlinedInput-root': {
+      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+        borderColor: '#006a4d', // Custom green shade for border
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#006a4d', // Custom green shade for label
+      '&.Mui-focused': {
+        color: '#006a4d', // Ensure label stays green when focused
+      },
+    },
+
+      }}
     />
 
     {/* Sort */}
@@ -91,24 +103,31 @@ const HomePage = () => {
       <SortIcon />
       <Typography variant='p'>Sort by</Typography>
       <Select
-        value={sort}
-        onChange={(e) => setSort(e.target.value)}
-        sx={{ width: '160px', fontSize:"14px" }}
-        size="small"
-        
-      >
+          value={sort}
+          onChange={(e) => setSort(e.target.value)}
+          sx={{
+              width: '160px',
+              fontSize: '14px',
+              '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#006a4d', // default border color
+              },
+              '&:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#006a4d', // hover state
+              },
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#006a4d', // focused state
+            },
+          }}
+          size="small">
         <MenuItem sx={{fontSize:"13px"}}  value="Price (High-Low)">Price (High-Low)</MenuItem>
         <MenuItem sx={{fontSize:"13px"}}  value="Price (Low-High)">Price (Low-High)</MenuItem>
       </Select>
     </Box>
 
-
-    
   </Box>
 </Box>
 
     {/* Product Grid */}
-
     <Grid
       container
       spacing={2}

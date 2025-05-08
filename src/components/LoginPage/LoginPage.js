@@ -1,11 +1,59 @@
 // Import necessary dependencies from React and MUI
-import React, { useState } from 'react';
+import React, { useState} from 'react';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
 import { useNavigate } from 'react-router-dom';
 import {
   Tabs, Tab, Box, Typography, TextField,
-  Button, Paper, Alert
+  Button, Paper, Alert, Container
 } from '@mui/material';
 import userManager from '../../auth/forgerockConfig';
+
+// Create a custom theme
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#006a4d', // Custom primary color
+    },
+    secondary: {
+      main: '#006a4d', // Custom secondary color (optional)
+    },
+  },
+  components: {
+    // Override the styles for TextField
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiInputBase-root': {
+            '&:hover': {
+              borderColor: '#006a4d', // Hover border color for TextField
+            },
+          },
+        },
+      },
+    },
+    // Override the styles for Select (for dropdowns)
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            borderColor: '#006a4d', // Hover border color for Select
+          },
+        },
+      },
+    },
+    // Override the styles for Button (optional)
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            backgroundColor: '#004d3f', // Darker shade for Button hover
+          },
+        },
+      },
+    },
+  },
+});
 
 // Utility function to simulate OTP generation (6-digit number)
 const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
@@ -74,9 +122,40 @@ function LoginPage() {
   };
 
   const displayNumber = isFocused ? identifier : maskedPhoneNumber(identifier);
+ // margin: 'auto', marginTop: 8,
 
   return (
-    <Paper elevation={4} sx={{ width: 400, padding: 4, margin: 'auto', marginTop: 8, borderRadius: 2 }}>
+    <Container sx={{ height:"100vh", display:"flex", justifyContent:"center", alignItems:"center"}}>
+    <Box
+    sx={{
+      display: 'flex',
+      boxShadow: 3,
+      borderRadius: 3,
+      overflow: 'hidden',
+      height:"70vh",
+    }}
+  >
+     <Box
+      sx={{
+        backgroundColor: '#006a4d',
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems:"center",
+        width:300,
+        padding:4
+      }}
+    >
+          <Typography
+              variant="h2"
+              color="#ffffff"
+              fontWeight="bold"
+              sx={{ whiteSpace: 'pre-line' }}
+          >
+          DIGITAL{'\n'}VERIFICATION
+          </Typography>
+        </Box>
+<ThemeProvider theme={theme} > 
+    <Paper elevation={4} sx={{ padding: 4, width:400}}>
       {/* Title */}
       <Typography fontWeight="bold" variant="h6" align="center" sx={{ marginBottom: 2 }}>
         Secure Login
@@ -106,7 +185,7 @@ function LoginPage() {
             <Button
               variant="contained"
               fullWidth
-              sx={{ marginTop: 2, backgroundColor: '#1976d2', '&:hover': { backgroundColor: '#1565c0' } }}
+              sx={{ marginTop: 2, backgroundColor: '#006a4d', '&:hover': { backgroundColor: '#1a8066' } }}
               onClick={handleLogin}
             >
               Login
@@ -151,7 +230,7 @@ function LoginPage() {
               <Button
                 variant="contained"
                 fullWidth
-                sx={{ marginTop: 1, backgroundColor: '#1976d2', '&:hover': { backgroundColor: '#1565c0' } }}
+                sx={{ marginTop: 1, backgroundColor: '#006a4d', '&:hover': { backgroundColor: '#1a8066' } }}
                 onClick={handleSendOtp}
               >
                 Send OTP
@@ -160,7 +239,7 @@ function LoginPage() {
               <Button
                 variant="contained"
                 fullWidth
-                sx={{ marginTop: 1, backgroundColor: 'info' }}
+                sx={{ marginTop: 1, backgroundColor: '#006a4d', '&:hover': { backgroundColor: '#1a8066' } }}
                 onClick={handleLoginWithOtp}
               >
                 Login with OTP
@@ -187,7 +266,7 @@ function LoginPage() {
               onClick={() => navigate("/scan-finger-print-forLogin")}
               variant="contained"
               fullWidth
-              sx={{ marginTop: 1, padding: '10px 0', backgroundColor: '#1976d2', '&:hover': { backgroundColor: '#1565c0' } }}
+              sx={{ marginTop: 1, padding: '10px 0', backgroundColor: '#006a4d', '&:hover': { backgroundColor: '#1a8066' } }}
             >
               Scan Fingerprint
             </Button>
@@ -201,13 +280,16 @@ function LoginPage() {
         <Button
           variant="text"
           fullWidth
-          sx={{ marginTop: 1, color: '#1976d2', fontWeight: 'bold' }}
+          sx={{ marginTop: 1, color: '#006a4d', fontWeight: 'bold', '&:hover': { color: '#ffffff' } }}
           onClick={() => navigate('/register')}
         >
           Register
         </Button>
       </Box>
     </Paper>
+    </ThemeProvider>
+    </Box>
+    </Container>
   );
 }
 

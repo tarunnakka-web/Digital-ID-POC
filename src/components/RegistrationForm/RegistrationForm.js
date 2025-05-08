@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {
   Box,
   Stepper,
@@ -28,6 +29,52 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 const steps = ['Personal Information', 'Document Submission', 'Set Password', 'Biometric Verification'];
+
+// Create a custom theme
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#006a4d', // Custom primary color
+    },
+    secondary: {
+      main: '#006a4d', // Custom secondary color (optional)
+    },
+  },
+  components: {
+    // Override the styles for TextField
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiInputBase-root': {
+            '&:hover': {
+              borderColor: '#006a4d', // Hover border color for TextField
+            },
+          },
+        },
+      },
+    },
+    // Override the styles for Select (for dropdowns)
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            borderColor: '#006a4d', // Hover border color for Select
+          },
+        },
+      },
+    },
+    // Override the styles for Button (optional)
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            backgroundColor: '#004d3f', // Darker shade for Button hover
+          },
+        },
+      },
+    },
+  },
+});
 
 export default function RegistrationStepper() {
   const navigate = useNavigate();
@@ -138,9 +185,18 @@ export default function RegistrationStepper() {
   };
 
   return (
+    <ThemeProvider theme={theme}>
     <Container maxWidth="xlg" sx={{ mt: 5, mb: 6 }}>
-      <Typography variant='h4' fontWeight={"bold"} mb={4}>Registration Form</Typography>
-      <Paper elevation={4} sx={{ p: 4 }}>
+      <Paper elevation={4} sx={{ p: 4, overflow: 'hidden', borderRadius: 2}}>
+      <Box sx={{ backgroundColor: '#006a4d', p: 3, marginBottom:5}}>
+    <Typography
+      variant="h4"
+      fontWeight="bold"
+      color="white"
+    >
+      Registration Form
+    </Typography>
+    </Box>
         <Stepper nonLinear activeStep={activeStep} sx={{ mb: 4 }}>
           {steps.map((label, index) => (
             <Step key={label} completed={completed[index]}>
@@ -277,5 +333,6 @@ export default function RegistrationStepper() {
         message="Fingerprint captured successfully"
       />
     </Container>
+    </ThemeProvider>
   );
 }

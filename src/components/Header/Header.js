@@ -20,6 +20,7 @@ import {
 import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext'; 
 import userManager from '../../auth/forgerockConfig';
+import HomeIcon from '@mui/icons-material/Home';
 
 const pages = ['Home', 'Cart'];
 const settings = ['Profile', 'Logout'];
@@ -109,7 +110,8 @@ const Header = () => {
                         <ShoppingCartIcon sx={{ verticalAlign: 'middle' }} /> 
                       </Badge>
                     ) : (
-                      page
+                      
+                        <HomeIcon sx={{ verticalAlign: 'middle' }} /> 
                     )}
                   </Typography>
                 </MenuItem>
@@ -153,7 +155,7 @@ const Header = () => {
                     <ShoppingCartIcon />
                   </Badge>
                 ) : (
-                  page
+                  <HomeIcon sx={{ verticalAlign: 'middle' }} />
                 )}
               </Button>
             ))}

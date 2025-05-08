@@ -14,10 +14,6 @@ import {
   Dialog,
   DialogActions,
   DialogTitle,
-  Select,
-  MenuItem,
-  InputLabel,
-  FormControl
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { AddCircleOutline, FavoriteBorder } from "@mui/icons-material";
@@ -60,22 +56,6 @@ const ProductDetail = () => {
    
     const handleWishlistToggle = () => {
         setWishlist((prev) => !prev);
-    };
-
-    const handleAddToCart = () => {
-        if (criteria === "authorized") {
-            addToCart(item); // Add item directly if user is authorized
-            alert(`${name} is added to cart successfully`);
-        } else {
-            // If not authorized, show dialog for ID verification
-            setOpen(true);
-            setIsNewUser(null);
-            setDropDownValue(""); // Reset dropdown value
-        }
-    };
-
-    const handleDropdownChange = (event) => {
-        setDropDownValue(event.target.value);
     };
 
     const handleOpen = () => {
@@ -184,7 +164,7 @@ const ProductDetail = () => {
                 <Box sx={{ width: { xs: "100%", md: "60%" }, p: 3, overflowY: "auto" }}>
                     <Typography variant="h4" fontWeight={600}>{name}</Typography>
                     <Typography color="text.secondary" sx={{ mt: 1 }}>{description}</Typography>
-                    <Typography variant="h5" color="primary" sx={{ mt: 2 }}>₹{price}/-</Typography>
+                    <Typography variant="h5" fontWeight={"bold"} sx={{ mt: 2 }}>₹{price}/-</Typography>
 
                     {/* Seller Prices */}
                     {sellerPrice?.length > 0 && (
@@ -205,9 +185,28 @@ const ProductDetail = () => {
                         value={quantity}
                         onChange={handleQuantityChange}
                         inputProps={{ min: 1 }}
-                        sx={{ mt: 2, width: "100px" }}
+                        sx={{ 
+                            mt: 2, 
+                            width: "100px",
+                            '& .MuiOutlinedInput-root': {
+                                '& .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: '#006a4d', // default
+                            },
+                            '&:hover .MuiOutlinedInput-notchedOutline': {
+                                borderColor: '#006a4d', // hover
+                            },
+                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                borderColor: '#006a4d', // focus
+                            },
+                            },
+                            '& .MuiInputLabel-root': {
+                                color: '#006a4d', // default label color
+                            },
+                            '& .MuiInputLabel-root.Mui-focused': {
+                                color: '#006a4d', // focused label color
+                            }
+                        }}
                     />
-
                     {/* Features */}
                     {features?.length > 0 && (
                         <Box sx={{ mt: 3, maxHeight: "120px", overflowY: "auto" }}>

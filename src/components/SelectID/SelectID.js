@@ -52,7 +52,30 @@ const SelectID = () => {
           </Box>
 
         <form onSubmit={handleSubmit} noValidate>
-          <FormControl fullWidth sx={{ mb: 2 }} error={Boolean(error)}>
+          <FormControl 
+           fullWidth
+           sx={{
+            mb: 2,
+            backgroundColor: "#f5f5f5",
+            borderRadius: "6px",
+            '& .MuiInputLabel-root': {
+              color: '#006a4d', // default label color
+            },
+            '& .MuiInputLabel-root.Mui-focused': {
+              color: '#006a4d', // focused label color
+            },
+            '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#006a4d', // default border
+            },
+            '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#006a4d', // hover border
+            },
+            '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#006a4d', // focus border
+            },
+          }} 
+           error={Boolean(error)}
+           >
             
             <InputLabel id="provider-label">ID Provider</InputLabel>
             <Select
@@ -62,7 +85,10 @@ const SelectID = () => {
               label="ID Provider"
               onChange={handleDropdownChange}
               aria-describedby="provider-helper-text"
-              sx={{backgroundColor: "#f5f5f5" , borderRadius:"6px" }}
+              sx={{
+                backgroundColor: "#f5f5f5", 
+                borderRadius:"6px",
+              }}
             >
               <MenuItem sx={{fontSize:"14px"}} value="LloydsID">Lloyds ID Provider</MenuItem>
               <MenuItem sx={{fontSize:"14px"}} value="ProviderA">Provider A</MenuItem>
