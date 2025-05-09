@@ -186,11 +186,11 @@ export default function RegistrationStepper() {
 
   return (
     <ThemeProvider theme={theme}>
-    <Container maxWidth="xlg" sx={{ mt: 5, mb: 6 }}>
+    <Container maxWidth="xlg" sx={{ mt: 2, mb: 3 }}>
       <Paper elevation={4} sx={{ p: 4, overflow: 'hidden', borderRadius: 2}}>
-      <Box sx={{ backgroundColor: '#006a4d', p: 3, marginBottom:5}}>
+      <Box sx={{ backgroundColor: '#006a4d', p: 2, marginBottom:3}}>
     <Typography
-      variant="h4"
+      variant="h6"
       fontWeight="bold"
       color="white"
     >
