@@ -46,9 +46,9 @@ const SelectID = () => {
     >
       <Paper elevation={6} sx={{ p: 4, width: '100%', maxWidth: 420, borderRadius: 3 }}>
         {/* Header section with a check icon and title */}
-        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: 3 }}>
-            <CheckCircleIcon sx={{ fontSize: 35 }} />
-            <Typography variant='h4' sx={{ fontSize: 30 }} fontWeight={"bold"}>Select ID</Typography>
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: 4, backgroundColor:"#006a4d", padding:3 }}>
+            <CheckCircleIcon sx={{ fontSize: 35, color:"#ffffff" }} />
+            <Typography variant='h4' sx={{ fontSize: 30, color:"#ffffff" }} fontWeight={"bold"}>Select ID</Typography>
           </Box>
 
         <form onSubmit={handleSubmit} noValidate>

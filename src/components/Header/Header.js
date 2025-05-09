@@ -36,9 +36,6 @@ const Header = () => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleLogout = () => {
-    userManager.signoutRedirect();
-  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
