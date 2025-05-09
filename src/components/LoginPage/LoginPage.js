@@ -132,7 +132,7 @@ function LoginPage() {
       boxShadow: 3,
       borderRadius: 3,
       overflow: 'hidden',
-      height:"70vh",
+      height:"75vh",
     }}
   >
      <Box
