@@ -98,7 +98,7 @@ function ScanFingerprintForLogin() {
               opacity: scanning || verified ? 0.5 : 1,
             }}
           >
-            <FingerprintIcon color="primary" sx={{ fontSize: 80 }} />
+            <FingerprintIcon sx={{ fontSize: 80, color:"#006a4d" }} />
           </Box>
 
           {/* Error message display */}

@@ -147,7 +147,7 @@
                       alignItems="center"
                       mt={1}
                     >
-                      <Typography variant="h6" color="primary">
+                      <Typography variant="h6">
                         ₹{price }
                       </Typography>
   
@@ -171,7 +171,7 @@
               <Typography variant="h6" fontWeight="bold">
                 Total:
               </Typography>
-              <Typography variant="h6" color="primary" fontWeight="bold">
+              <Typography variant="h6" color="#006a4d" fontWeight="bold">
                 ₹{getTotal()}
               </Typography>
             </Box>
@@ -198,9 +198,9 @@
   
               <Button
                 variant="contained"
-                color="primary"
                 onClick={handleCheckout}
                 sx={{
+                  backgroundColor: "#006a4d",
                   borderRadius: 3,
                   px: 4,
                   py: 1.5,

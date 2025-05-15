@@ -145,9 +145,8 @@ const AddFingerprintForRegistration = () => {
             <Button
               onClick={() => navigate(-1)}
               variant="contained"
-              color="primary"
               fullWidth
-              sx={{ mt: 2, padding: '12px 24px' }}
+              sx={{ mt: 2, padding: '12px 24px', backgroundColor:"#006a4d" }}
             >
               Continue
             </Button>
