@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -14,9 +14,29 @@ import {
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const SelectID = () => {
+  const [idList, setIdList] = useState([]);
   const [dropdownValue, setDropDownValue] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  
+  console.log(idList);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try{ 
+    const url = "http://localhost:8080/api/idps/list";
+    const response = await fetch(url);
+    const data = await response.json();
+    setIdList(data);
+    }
+      catch(e){
+        console.error("fetching data: ", e);
+      }
+
+    }
+    fetchData()
+  }, [])
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,6 +54,7 @@ const SelectID = () => {
     setDropDownValue(e.target.value);
     if (error) setError('');
   };
+
 
   return (
     <Box
@@ -90,9 +111,13 @@ const SelectID = () => {
                 borderRadius:"6px",
               }}
             >
-              <MenuItem sx={{fontSize:"14px"}} value="LloydsID">Lloyds ID Provider</MenuItem>
-              <MenuItem sx={{fontSize:"14px"}} value="ProviderA">Provider A</MenuItem>
-              <MenuItem sx={{fontSize:"14px"}} value="ProviderB">Provider B</MenuItem>
+             
+              {idList.length > 0 ? 
+              ( idList.map((each) => (
+                 <MenuItem sx={{fontSize:"14px"}} value="LloydsID">{each.displayName}</MenuItem>
+              ))) : 
+              <MenuItem sx={{fontSize:"14px"}} value="LloydsID">Lloyds ID</MenuItem>
+            } 
             </Select>
           </FormControl>
 

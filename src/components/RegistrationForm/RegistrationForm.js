@@ -26,9 +26,11 @@ import {
 import { useNavigate } from 'react-router-dom';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+// import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import DocumentScanner from '../DocumentScanner/DocumentScanner';
+import DocumentScannerTwoToneIcon from '@mui/icons-material/DocumentScannerTwoTone';
 
-const steps = ['Personal Information', 'Document Submission', 'Set Password', 'Biometric Verification'];
+const steps = ['Documents', 'Personal Information', 'Set Password', 'Biometric Verification'];
 
 // Create a custom theme
 const theme = createTheme({
@@ -82,7 +84,7 @@ export default function RegistrationStepper() {
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
   const [formData, setFormData] = useState({
-    firstName: '', lastName: '', gender: '', dob: '',
+    firstName: '', lastName: '', gender: '', dob: '', documentNumber:"",
     phoneNumber: '', address: '', documentType: '', documentFile: null,
     email: '', password: '', confirmPassword: '', biometricCaptured: false,
   });
@@ -91,6 +93,7 @@ export default function RegistrationStepper() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [scanButton, setScanButton] = useState(false);
 
   const totalSteps = () => steps.length;
   const completedSteps = () => Object.keys(completed).length;
@@ -102,13 +105,13 @@ export default function RegistrationStepper() {
     setErrors((prev) => ({ ...prev, [name]: '' }));
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setFormData((prev) => ({ ...prev, documentFile: file }));
-      setErrors((prev) => ({ ...prev, documentFile: '' }));
-    }
-  };
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files?.[0];
+  //   if (file) {
+  //     setFormData((prev) => ({ ...prev, documentFile: file }));
+  //     setErrors((prev) => ({ ...prev, documentFile: '' }));
+  //   }
+  // };
 
   const handleBiometricCapture = () => {
     navigate("/add-finger-print-forRegistration");
@@ -118,20 +121,21 @@ export default function RegistrationStepper() {
 
   const validateStep = (step) => {
     const newErrors = {};
-    const { firstName, lastName, gender, dob, phoneNumber, address, documentType, documentFile, email, password, confirmPassword, biometricCaptured } = formData;
+    const { firstName, lastName, gender, dob, documentNumber, phoneNumber, address, documentType, documentFile, email, password, confirmPassword, biometricCaptured } = formData;
 
     if (step === 0) {
+       if (!documentType) newErrors.documentType = 'Required';
+      if (!documentFile) newErrors.documentFile = 'Please upload a document';
+      if (!documentNumber) newErrors.documentNumber='Please enter number'
+    }
+
+    if (step === 1) {
       if (!firstName.trim()) newErrors.firstName = 'Required';
       if (!lastName.trim()) newErrors.lastName = 'Required';
       if (!gender) newErrors.gender = 'Required';
       if (!dob) newErrors.dob = 'Required';
       if (!phoneNumber.trim()) newErrors.phoneNumber = 'Required';
       if (!address.trim()) newErrors.address = 'Required';
-    }
-
-    if (step === 1) {
-      if (!documentType) newErrors.documentType = 'Required';
-      if (!documentFile) newErrors.documentFile = 'Please upload a document';
     }
 
     if (step === 2) {
@@ -184,6 +188,10 @@ export default function RegistrationStepper() {
     setOpenDialog(false);
   };
 
+  const handleScanButton = () => {
+    setScanButton((prev) => !prev);
+  }
+
   return (
     <ThemeProvider theme={theme}>
     <Container maxWidth="xlg" sx={{ mt: 2, mb: 3 }}>
@@ -214,7 +222,39 @@ export default function RegistrationStepper() {
           <>
             <Box component="form" noValidate autoComplete="off">
               {activeStep === 0 && (
-                <>
+               <>
+                <TextField label="Document Number" name="documentNumber" value={formData.documentNumber} onChange={handleChange} error={!!errors.documentNumber} helperText={errors.documentNumber} fullWidth margin="normal" />
+                  <FormControl fullWidth margin="normal" error={!!errors.documentType}>
+                    <InputLabel id="document-type-label">Document Type</InputLabel>
+                            <Select
+                                labelId="document-type-label"
+                                id="document-type"
+                                name="documentType"
+                                value={formData.documentType}
+                                onChange={handleChange}
+                                label="Document Type" // Important for proper label animation
+                            >
+                              <MenuItem value="">Select</MenuItem>
+                              <MenuItem value="passport">Passport</MenuItem>
+                              <MenuItem value="aadhaar">Aadhaar</MenuItem>
+                              <MenuItem value="license">Driving License</MenuItem>
+                          </Select>
+                       {errors.documentType && (
+                              <Typography color="error" variant="caption">
+                                    {errors.documentType}
+                            </Typography>
+                              )}
+                      </FormControl>
+                  <Button onClick={handleScanButton} variant="contained" component="label" startIcon={<DocumentScannerTwoToneIcon />  } sx={{ mt: 2 }}>
+                      Scan
+                  </Button>
+                  {scanButton && <DocumentScanner />}
+                  {errors.documentFile && <Typography color="error" variant="caption">{errors.documentFile}</Typography>}
+                </>
+              )}
+
+              {activeStep === 1 && (
+                 <>
                   <TextField label="First Name" name="firstName" value={formData.firstName} onChange={handleChange} error={!!errors.firstName} helperText={errors.firstName} fullWidth margin="normal" />
                   <TextField label="Last Name" name="lastName" value={formData.lastName} onChange={handleChange} error={!!errors.lastName} helperText={errors.lastName} fullWidth margin="normal" />
                   <FormControl fullWidth margin="normal" error={!!errors.gender}>
@@ -230,31 +270,6 @@ export default function RegistrationStepper() {
                   <TextField type="date" name="dob" label="DOB" value={formData.dob} onChange={handleChange} InputLabelProps={{ shrink: true }} fullWidth margin="normal" error={!!errors.dob} helperText={errors.dob} />
                   <TextField label="Phone Number" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} fullWidth margin="normal" error={!!errors.phoneNumber} helperText={errors.phoneNumber} />
                   <TextField label="Address" name="address" value={formData.address} onChange={handleChange} fullWidth margin="normal" error={!!errors.address} helperText={errors.address} />
-                </>
-              )}
-
-              {activeStep === 1 && (
-                <>
-                  <FormControl fullWidth margin="normal" error={!!errors.documentType}>
-                    <InputLabel>Document Type</InputLabel>
-                    <Select name="documentType" value={formData.documentType} onChange={handleChange}>
-                      <MenuItem value="">Select</MenuItem>
-                      <MenuItem value="passport">Passport</MenuItem>
-                      <MenuItem value="aadhaar">Aadhaar</MenuItem>
-                      <MenuItem value="license">Driving License</MenuItem>
-                    </Select>
-                    {errors.documentType && <Typography color="error" variant="caption">{errors.documentType}</Typography>}
-                  </FormControl>
-                  <Button variant="contained" component="label" startIcon={<CloudUploadIcon />} sx={{ mt: 2 }}>
-                    Upload Document
-                    <input type="file" hidden onChange={handleFileChange} />
-                  </Button>
-                  {formData.documentFile && (
-                      <Typography variant="body2" sx={{ mt: 1 }}>
-                              Selected File: {formData.documentFile.name}
-                      </Typography>
-                  )}
-                  {errors.documentFile && <Typography color="error" variant="caption">{errors.documentFile}</Typography>}
                 </>
               )}
 
