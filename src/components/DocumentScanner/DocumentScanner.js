@@ -70,7 +70,7 @@ const DocumentScanner = () => {
     <>
       {upload ? (
         <Box p={4} maxWidth="1000px" mx="auto">
-          <Typography variant="h4" textAlign="center" gutterBottom>
+          <Typography variant="h5" textAlign="center" gutterBottom>
             📄 Scan your Document here
           </Typography>
 

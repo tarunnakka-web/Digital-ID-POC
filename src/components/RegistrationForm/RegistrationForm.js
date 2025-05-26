@@ -45,6 +45,7 @@ const theme = createTheme({
   components: {
     // Override the styles for TextField
     MuiTextField: {
+      defaultProps : {size:"small"},
       styleOverrides: {
         root: {
           '& .MuiInputBase-root': {
@@ -57,6 +58,7 @@ const theme = createTheme({
     },
     // Override the styles for Select (for dropdowns)
     MuiSelect: {
+      defaultProps: { size: 'small'},
       styleOverrides: {
         root: {
           '&:hover': {
@@ -67,6 +69,7 @@ const theme = createTheme({
     },
     // Override the styles for Button (optional)
     MuiButton: {
+      defaultProps: { size: 'small', margin:"dense" },
       styleOverrides: {
         root: {
           '&:hover': {
@@ -225,14 +228,15 @@ export default function RegistrationStepper() {
                <>
                 <TextField label="Document Number" name="documentNumber" value={formData.documentNumber} onChange={handleChange} error={!!errors.documentNumber} helperText={errors.documentNumber} fullWidth margin="normal" />
                   <FormControl fullWidth margin="normal" error={!!errors.documentType}>
-                    <InputLabel id="document-type-label">Document Type</InputLabel>
+                    <InputLabel  id="document-type-label" >Document Type</InputLabel>
                             <Select
                                 labelId="document-type-label"
                                 id="document-type"
                                 name="documentType"
+                                label="Document Type"
                                 value={formData.documentType}
                                 onChange={handleChange}
-                                label="Document Type" // Important for proper label animation
+              
                             >
                               <MenuItem value="">Select</MenuItem>
                               <MenuItem value="passport">Passport</MenuItem>
@@ -259,7 +263,7 @@ export default function RegistrationStepper() {
                   <TextField label="Last Name" name="lastName" value={formData.lastName} onChange={handleChange} error={!!errors.lastName} helperText={errors.lastName} fullWidth margin="normal" />
                   <FormControl fullWidth margin="normal" error={!!errors.gender}>
                     <InputLabel>Gender</InputLabel>
-                    <Select name="gender" value={formData.gender} onChange={handleChange} label="Gender">
+                    <Select  name="gender"  value={formData.gender} onChange={handleChange} label="Gender">
                       <MenuItem value="">Select</MenuItem>
                       <MenuItem value="male">Male</MenuItem>
                       <MenuItem value="female">Female</MenuItem>

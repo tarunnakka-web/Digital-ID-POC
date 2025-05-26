@@ -114,7 +114,7 @@ const SelectID = () => {
              
               {idList.length > 0 ? 
               ( idList.map((each) => (
-                 <MenuItem sx={{fontSize:"14px"}} value="LloydsID">{each.displayName}</MenuItem>
+                 <MenuItem sx={{fontSize:"14px"}} value={each.displayName}>{each.displayName}</MenuItem>
               ))) : 
               <MenuItem sx={{fontSize:"14px"}} value="LloydsID">Lloyds ID</MenuItem>
             } 

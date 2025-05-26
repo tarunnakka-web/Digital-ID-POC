@@ -2,57 +2,36 @@
 import React, { useState} from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Tabs, Tab, Box, Typography, TextField,
-  Button, Paper, Alert, Container
+  Button, Paper, Alert, Container, Divider
 } from '@mui/material';
 import userManager from '../../auth/forgerockConfig';
 
 // Create a custom theme
 const theme = createTheme({
   palette: {
-    primary: {
-      main: '#006a4d', // Custom primary color
-    },
-    secondary: {
-      main: '#006a4d', // Custom secondary color (optional)
-    },
+    primary: { main: '#006a4d' },
+    secondary: { main: '#006a4d' }
   },
   components: {
-    // Override the styles for TextField
     MuiTextField: {
-      styleOverrides: {
-        root: {
-          '& .MuiInputBase-root': {
-            '&:hover': {
-              borderColor: '#006a4d', // Hover border color for TextField
-            },
-          },
-        },
-      },
+      defaultProps: { size: 'small', margin: 'dense' }
     },
-    // Override the styles for Select (for dropdowns)
-    MuiSelect: {
-      styleOverrides: {
-        root: {
-          '&:hover': {
-            borderColor: '#006a4d', // Hover border color for Select
-          },
-        },
-      },
-    },
-    // Override the styles for Button (optional)
     MuiButton: {
+      defaultProps: { size: 'small' }
+    },
+    MuiTab: {
       styleOverrides: {
         root: {
-          '&:hover': {
-            backgroundColor: '#004d3f', // Darker shade for Button hover
-          },
-        },
-      },
-    },
-  },
+          fontSize: '0.75rem',
+          minHeight: '32px',
+          padding: '6px 12px'
+        }
+      }
+    }
+  }
 });
 
 // Utility function to simulate OTP generation (6-digit number)
@@ -78,8 +57,9 @@ function LoginPage() {
   const [error, setError] = useState('');                    // Error message
   const [successMsg, setSuccessMsg] = useState('');
   const [isFocused, setIsFocused] = useState(false);          // Success message
-
+ // const location = useLocation();
   const navigate = useNavigate();
+  // const selectedProvider = location.state?.selectedProvider;
 
   // Helper validation functions
   const isEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -132,10 +112,10 @@ function LoginPage() {
       boxShadow: 3,
       borderRadius: 3,
       overflow: 'hidden',
-      height:"75vh",
+      height:"80vh",
     }}
   >
-     <Box
+     {/* <Box
       sx={{
         backgroundColor: '#006a4d',
         display: 'flex',
@@ -151,33 +131,44 @@ function LoginPage() {
               fontWeight="bold"
               sx={{ whiteSpace: 'pre-line' }}
           >
-          DIGITAL{'\n'}VERIFICATION
+          WELCOME TO {'\n'} {selectedProvider}
           </Typography>
-        </Box>
+        </Box> */}
 <ThemeProvider theme={theme} > 
-    <Paper elevation={4} sx={{ padding: 4, width:400}}>
+    <Paper elevation={4} sx={{ padding: 5, width:400}}>
       {/* Title */}
-      <Typography fontWeight="bold" variant="h6" align="center" sx={{ marginBottom: 2 }}>
+      <Typography fontWeight={"bold"} variant="h6" align="center" sx={{ mb: 2}}>
         Secure Login
       </Typography>
 
-      {/* Description */}
-      <Typography variant="body2" align="center" sx={{ marginBottom: 3, color: 'text.secondary' }}>
-        If you are already logged in, select a method to continue.
-      </Typography>
+       {/* Register Link */}
+        <Typography variant="body2" align="center" sx={{ mt: 1, mb:1, color: 'text.secondary', fontWeight:"bold" }}>
+          Get started with your reusable ID
+        </Typography>
+        <Button
+          variant="text"
+          fullWidth
+          sx={{ mt: 1, mb:1, color:"#ffffff", backgroundColor: '#006a4d', '&:hover': { backgroundColor: '#1a8066' } }}
+          // sx={{ mt: 1, mb:1, color: '#ffffff', backgroundColor:"#006a4d"}}
+          onClick={() => navigate('/register')}
+        >
+          Create a new digital ID
+        </Button>
+
+      <Divider>or</Divider>
 
       {/* Tabs for login methods */}
-      <Tabs value={tabIndex} onChange={handleTabChange} centered>
-        <Tab label="Email" sx={{ fontWeight: 'bold' }} />
-        <Tab label="OTP" sx={{ fontWeight: 'bold' }} />
-        <Tab label="Fingerprint" sx={{ fontWeight: 'bold' }} />
+      <Tabs value={tabIndex} onChange={handleTabChange} centered sx={{mb:1, mt:1}}>
+        <Tab label="Email" sx={{ fontWeight: 700 }} />
+        <Tab label="OTP" sx={{ fontWeight: 700 }} />
+        <Tab label="Fingerprint" sx={{ fontWeight: 700 }} />
       </Tabs>
 
-      <Box mt={3}>
+      <Box mt={2}>
         {/* Email Login Form */}
         {tabIndex === 0 && (
-          <Box>
-            <Typography variant="body2" align="center" sx={{ color: 'text.secondary', marginBottom: 2 }}>
+          <Box sx={{border: '1px solid #ddd', borderRadius: 2, p: 3 }}>
+            <Typography variant="body2" align="center" sx={{ color: 'text.secondary', marginBottom: 1 }}>
               Enter your email and password to log in.
             </Typography>
             <TextField label="Username" fullWidth margin="normal" variant="outlined" />
@@ -185,7 +176,7 @@ function LoginPage() {
             <Button
               variant="contained"
               fullWidth
-              sx={{ marginTop: 2, backgroundColor: '#006a4d', '&:hover': { backgroundColor: '#1a8066' } }}
+              sx={{ marginTop: 1, backgroundColor: '#006a4d', '&:hover': { backgroundColor: '#1a8066' } }}
               onClick={handleLogin}
             >
               Login
@@ -195,8 +186,8 @@ function LoginPage() {
 
         {/* OTP Login Form */}
         {tabIndex === 1 && (
-          <Box sx={{ maxWidth: 400, mx: 'auto', mt: 5, p: 3, border: '1px solid #ddd', borderRadius: 2 }}>
-            <Typography variant="body2" align="center" sx={{ color: 'text.secondary', marginBottom: 2 }}>
+          <Box sx={{ maxWidth: 400, maxHeight: 500, overflowY: 'auto', mx: 'auto', mt: 1, p: 3, border: '1px solid #ddd', borderRadius: 2 }}>
+            <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mb: 1 }}>
               Enter your phone/email and OTP to log in.
             </Typography>
 
@@ -249,7 +240,7 @@ function LoginPage() {
             {/* Feedback messages */}
             {error && <Alert severity="error" sx={{ mt: 1 }}>{error}</Alert>}
             {successMsg && (
-              <Alert severity={verified ? "success" : "info"} sx={{ mt: 1 }}>
+              <Alert  severity={verified ? "success" : "info"} sx={{ mt: 1}}>
                 {successMsg}
               </Alert>
             )}
@@ -258,7 +249,7 @@ function LoginPage() {
 
         {/* Fingerprint Login */}
         {tabIndex === 2 && (
-          <Box>
+          <Box sx={{border: '1px solid #ddd', borderRadius: 2, p: 3 }}>
             <Typography variant="body2" align="center" sx={{ color: 'text.secondary', marginBottom: 1 }}>
               Use your fingerprint to log in.
             </Typography>
@@ -272,19 +263,6 @@ function LoginPage() {
             </Button>
           </Box>
         )}
-
-        {/* Register Link */}
-        <Typography variant="body2" align="center" sx={{ marginTop: 2, color: 'text.secondary' }}>
-          Kindly Register if you are a new user.
-        </Typography>
-        <Button
-          variant="text"
-          fullWidth
-          sx={{ marginTop: 1, color: '#006a4d', fontWeight: 'bold', '&:hover': { color: '#ffffff' } }}
-          onClick={() => navigate('/register')}
-        >
-          Register
-        </Button>
       </Box>
     </Paper>
     </ThemeProvider>
